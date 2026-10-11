@@ -26,10 +26,17 @@
     height: 700px;
 }
 
+/* 모바일 화면 */
+@media screen and (max-width: 600px) {
+  .main-text {
+    top: 60%;
+  }
+}
+
 .main-text {
   position: absolute;
-  top: 50%;
   left: 0;
+  top: 50%;
   transform: translateY(-50%);
   width: 100%;
   text-align: center;

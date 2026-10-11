@@ -29,7 +29,7 @@
 /* 모바일 화면 */
 @media screen and (max-width: 600px) {
   .main-text {
-    top: 80%;
+    top: 80% !important;
   }
 }
 

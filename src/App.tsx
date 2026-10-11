@@ -38,7 +38,8 @@ export default function App() {
             <Introduce />
           </section>
         </ScrollReveal>
-        <div style={{ border: debug }}>
+
+        {/* <div style={{ border: debug }}>
           신랑 / 신부 대표사진
         </div>
         <div style={{ border: debug }}>
@@ -58,7 +59,8 @@ export default function App() {
         </div>
         <div style={{ border: debug }}>
           카카오톡 공유하기 / 모청 주소 복사하기
-        </div>
+        </div> */}
+
       </div>
     </>
   )

@@ -2,6 +2,7 @@
   margin: 0 auto;
   text-align: center;
   border-style: solid;
+  background-color: #FAF8F3;
 }
 
 .main-frame {
@@ -104,6 +105,6 @@ body {
 
 /* 모든 섹션에 공통 적용 */
 .page-section {
-  margin-top: 100px;
-  margin-bottom: 100px;
+  background-color: transparent;
+  margin: 100px 0;
 }

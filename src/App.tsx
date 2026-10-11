@@ -1,6 +1,7 @@
 import './style.css'
 import AudioComponent from './component/AudioComponent';
 import mainImage from './assets/main_image.png';
+import ScrollReveal from './component/ScrollReveal';
 
 const debug = import.meta.env.MODE === 'development' ? "solid" : "none";
 
@@ -9,14 +10,16 @@ export default function App() {
     <>
       <div className="main-frame">
         <AudioComponent />
-        <div className="main-image-container" style={{ border: debug }}>
-          <img className="main-image" src={mainImage} alt="메인 이미지" />
-          <div className="main-text">
-            <p>WE ARE GETTING MARRIED</p>
-            <h1>재민 <span>♥</span> 국명</h1>
-            <p>2027. 2. 13 SATURDAY</p>
+        <ScrollReveal>
+          <div className="main-image-container" style={{ border: debug }}>
+            <img className="main-image" src={mainImage} alt="메인 이미지" />
+            <div className="main-text">
+              <p>WE ARE GETTING MARRIED</p>
+              <h1>재민 <span>♥</span> 국명</h1>
+              <p>2027. 2. 13 SATURDAY</p>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
         <div style={{ border: debug }}>
           신랑 / 신부 이름 어디서 언제 결혼 표시 영역
         </div>

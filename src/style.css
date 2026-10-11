@@ -87,3 +87,15 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+.top-letter-name {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.introduce {
+  font-size: 18px;
+  font-style: italic;
+  margin-bottom: 20px;
+}

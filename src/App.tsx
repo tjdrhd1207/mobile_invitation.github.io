@@ -13,7 +13,7 @@ export default function App() {
         <div className="main-text">
           <p>WE ARE GETTING MARRIED</p>
           <h1>재민 <span>♥</span> 국명</h1>
-          <p>2027. 11. 00 SATURDAY</p>
+          <p>2027. 2. 13 SATURDAY</p>
         </div>
         <div style={{ border: debug }}>
           신랑 / 신부 이름 어디서 언제 결혼 표시 영역

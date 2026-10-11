@@ -108,3 +108,81 @@ body {
   background-color: transparent;
   margin: 100px 0;
 }
+
+.wedding-calendar {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  box-sizing: border-box;
+  text-align: center;
+  color: #514b43;
+}
+
+/* 예식 정보 */
+.wedding-calendar-date {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.wedding-calendar-day,
+.wedding-calendar-time,
+.wedding-calendar-location {
+  font-size: 13px;
+  color: #8d857b;
+  margin: 6px 0;
+}
+
+.calendar-weekday-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+.calendar-weekday {
+  text-align: center;
+  font-size: 12px;
+  color: #8d857b;
+}
+
+/* 달력 전체: 주별로 세로 배치 */
+.calendar-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 한 주: 날짜 7개를 가로 배치 */
+.calendar-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: center;
+}
+
+/* 날짜 칸 */
+.calendar-day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  font-size: 13px;
+  border-radius: 50%;
+}
+
+/* 예식 날짜 강조 */
+.calendar-day.wedding-day {
+  background-color: #b69a7d;
+  color: white;
+  font-weight: 600;
+}
+
+/* 일요일과 토요일 */
+.calendar-weekday:first-child {
+  color: #c18b84;
+}
+.calendar-weekday:last-child {
+  color: #8295a6;
+}

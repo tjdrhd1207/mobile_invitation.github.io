@@ -5,21 +5,20 @@ export default function ScrollReveal({ children }: { children: React.ReactNode }
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
+        const element = ref.current;
+
+        if (!element) return;
+
         const observer = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting) {
-                    setVisible(true);
-                    observer.unobserve(entry.target);
-                }
+                setVisible(entry.isIntersecting);
             },
             {
                 threshold: 0.15,
             }
         );
 
-        if (ref.current) {
-            observer.observe(ref.current);
-        }
+        observer.observe(element);
 
         return () => observer.disconnect();
     }, []);

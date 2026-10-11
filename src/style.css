@@ -79,8 +79,10 @@ body {
 /* 기본상태 */
 .scroll-reveal {
   opacity: 0;
-  transform: tranaslateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transform: translateY(70px);
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .scroll-reveal.visible {
@@ -98,4 +100,10 @@ body {
   font-size: 18px;
   font-style: italic;
   margin-bottom: 20px;
+}
+
+/* 모든 섹션에 공통 적용 */
+.page-section {
+  margin-top: 100px;
+  margin-bottom: 100px;
 }

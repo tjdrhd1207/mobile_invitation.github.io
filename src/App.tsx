@@ -11,21 +11,32 @@ export default function App() {
   return (
     <>
       <div className="main-frame">
-        <AudioComponent />
+        <section className="page-section">
+          <AudioComponent />
+        </section>
+
         <ScrollReveal>
-          <TopLetter />
+          <section className="page-section">
+            <TopLetter />
+          </section>
         </ScrollReveal>
+
         <ScrollReveal>
-          <div className="main-image-container" style={{ border: debug }}>
-            <img className="main-image" src={mainImage} alt="메인 이미지" />
-            <div className="main-text">
-              <h2>소중한 분들을 초대합니다</h2>
-              <p>저희 두 사람의 시작을 함께해 주세요.</p>
+          <section className="page-section">
+            <div className="main-image-container" style={{ border: debug }}>
+              <img className="main-image" src={mainImage} alt="메인 이미지" />
+              <div className="main-text">
+                <h2>소중한 분들을 초대합니다</h2>
+                <p>저희 두 사람의 시작을 함께해 주세요.</p>
+              </div>
             </div>
-          </div>
+          </section>
         </ScrollReveal>
+
         <ScrollReveal>
-          <Introduce />
+          <section className="page-section">
+            <Introduce />
+          </section>
         </ScrollReveal>
         <div style={{ border: debug }}>
           신랑 / 신부 대표사진

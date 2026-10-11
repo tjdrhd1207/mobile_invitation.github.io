@@ -4,6 +4,7 @@ import mainImage from './assets/main_image.png';
 import ScrollReveal from './component/ScrollReveal';
 import TopLetter from './component/TopLetter';
 import Introduce from './component/Introduce';
+import WeddingCalendar from './component/WeddingCalendar';
 
 const debug = import.meta.env.MODE === 'development' ? "solid" : "none";
 
@@ -11,10 +12,7 @@ export default function App() {
   return (
     <>
       <div className="main-frame">
-        <section className="page-section">
-          <AudioComponent />
-        </section>
-
+        <AudioComponent />
         <ScrollReveal>
           <section className="page-section">
             <TopLetter />
@@ -25,10 +23,10 @@ export default function App() {
           <section className="page-section">
             <div className="main-image-container" style={{ border: debug }}>
               <img className="main-image" src={mainImage} alt="메인 이미지" />
-              <div className="main-text">
+              {/* <div className="main-text">
                 <h2>소중한 분들을 초대합니다</h2>
                 <p>저희 두 사람의 시작을 함께해 주세요.</p>
-              </div>
+              </div> */}
             </div>
           </section>
         </ScrollReveal>
@@ -36,6 +34,12 @@ export default function App() {
         <ScrollReveal>
           <section className="page-section">
             <Introduce />
+          </section>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <section className="page-section">
+            <WeddingCalendar year={2027} month={2} day={13} />
           </section>
         </ScrollReveal>
 

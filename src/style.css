@@ -32,8 +32,17 @@
 /* 청첩장 전체에 적용 */
 body {
   font-family: 'WeddingFont', serif;
+  background-color: #f8f5ee;
 }
 
+/* 종이 질감 공통 배경 */
+.paper-section {
+  background-image: url('./assets/paper-texture.png');
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+  background-color: #f7f2e9;
+}
 
 .main-image-container {
   position: relative;

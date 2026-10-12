@@ -14,13 +14,13 @@ export default function App() {
       <div className="main-frame">
         <AudioComponent />
         <ScrollReveal>
-          <section className="page-section">
+          <section className="page-section paper-section">
             <TopLetter />
           </section>
         </ScrollReveal>
 
         <ScrollReveal>
-          <section className="page-section">
+          <section className="page-section paper-section">
             <div className="main-image-container" style={{ border: debug }}>
               <img className="main-image" src={mainImage} alt="메인 이미지" />
               {/* <div className="main-text">
@@ -32,13 +32,13 @@ export default function App() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <section className="page-section">
+          <section className="page-section paper-section">
             <Introduce />
           </section>
         </ScrollReveal>
 
         <ScrollReveal>
-          <section className="page-section">
+          <section className="page-section paper-section">
             <WeddingCalendar year={2027} month={2} day={13} />
           </section>
         </ScrollReveal>

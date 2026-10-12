@@ -10,8 +10,14 @@ import photo9 from '../assets/gallery/photo9.png';
 import photo10 from '../assets/gallery/photo10.png';
 import { useState, type CSSProperties } from 'react';
 
+type Photo = {
+  id: number;
+  src: string;
+  alt: string;
+  rotate: number;
+};
 
-const photos = [
+const photos: Photo[] = [
     { id: 1, src: photo1, alt: '우리의 첫 번째 추억', rotate: -4 },
     { id: 2, src: photo2, alt: '함께한 소중한 순간', rotate: 3 },
     { id: 3, src: photo3, alt: '우리의 행복한 하루', rotate: -2 },
@@ -26,28 +32,46 @@ const photos = [
 ];
 
 export default function PolaroidGallery() {
-    const [selectedPhoto, setSelectedPhoto] = useState(null);
+    const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
     return (
-        <section className="polaroid-gallery">
-            <div className="gallery-grid">
-                {photos.map((photo: any) =>
-                (
-                    <button
-                        key={photo.id}
-                        className="gallery-item"
-                        style={{ '--rotate': `${photo.rotate}deg` } as CSSProperties}
-                        onClick={() => setSelectedPhoto(photo)}
-                        aria-label={`${photo.alt} 확대하기`}
-                    >
-                        <div className='polaroid'>
-                            <img src={photo.src} alt={photo.alt} />
-                        </div>
-
-                    </button>
-                )
-                )}
+    <section className="polaroid-gallery">
+      <div className="gallery-grid">
+        {photos.map((photo: any) => (
+          <button
+            key={photo.id}
+            className="gallery-item"
+            style={{ '--rotate': `${photo.rotate}deg` } as CSSProperties} 
+            onClick={() => setSelectedPhoto(photo)}
+            aria-label={`${photo.alt} 확대하기`}
+          >
+            <div className="polaroid">
+              <img src={photo.src} alt={photo.alt} />
             </div>
-        </section>
-    )
+          </button>
+        ))}
+      </div>
+
+      {selectedPhoto && (
+        <div
+          className="gallery-modal"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <button
+            className="gallery-close"
+            onClick={() => setSelectedPhoto(null)}
+            aria-label="사진 닫기"
+          >
+            ×
+          </button>
+
+          <img
+            src={selectedPhoto.src}
+            alt={selectedPhoto.alt}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+    </section>
+  );
 }

@@ -11,7 +11,7 @@ const debug = import.meta.env.MODE === 'development' ? "solid" : "none";
 export default function App() {
   return (
     <>
-      <div className="main-frame">
+      <div className="main-frame paper-section">
         <AudioComponent />
         <ScrollReveal>
           <section className="page-section paper-section">
@@ -21,12 +21,11 @@ export default function App() {
 
         <ScrollReveal>
           <section className="page-section paper-section">
-            <div className="main-image-container" style={{ border: debug }}>
-              <img className="main-image" src={mainImage} alt="메인 이미지" />
-              {/* <div className="main-text">
+            <div className="main-image-container polaroid" style={{ border: debug }}>
+              <img className="main-image polaroid-image" src={mainImage} alt="메인 이미지" />
+              <div className="main-text polaroid-caption">
                 <h2>소중한 분들을 초대합니다</h2>
-                <p>저희 두 사람의 시작을 함께해 주세요.</p>
-              </div> */}
+              </div>
             </div>
           </section>
         </ScrollReveal>

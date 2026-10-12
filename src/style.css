@@ -70,20 +70,16 @@ body {
 
 .main-image-container::before {
   top: 0;
-  background: linear-gradient(
-    to bottom,
-    white,
-    transparent
-  );
+  background: linear-gradient(to bottom,
+      white,
+      transparent);
 }
 
 .main-image-container::after {
   bottom: 0;
-  background: linear-gradient(
-    to top,
-    white,
-    transparent
-  );
+  background: linear-gradient(to top,
+      white,
+      transparent);
 }
 
 /* 기본상태 */
@@ -192,6 +188,45 @@ body {
 .calendar-weekday:first-child {
   color: #c18b84;
 }
+
 .calendar-weekday:last-child {
   color: #8295a6;
+}
+
+/* 폴라로이드 */
+.polaroid {
+  width: 82%;
+  max-width: 320px;
+  margin: 40px auto;
+  padding: 10px 10px 0;
+  box-sizing: border-box;
+
+  background: #fffdf9;
+  box-shadow:
+    0 5px 12px rgba(65, 48, 32, 0.10),
+    0 18px 35px rgba(65, 48, 32, 0.08);
+
+  transform: rotate(-2deg);
+  transition: transform 0.4s ease;
+}
+
+.polaroid-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.polaroid-caption {
+  min-height: 52px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: Georgia, serif;
+  font-size: 13px;
+  font-style: italic;
+  color: #75685a;
+  letter-spacing: 0.5px;
 }

@@ -24,7 +24,7 @@ export default function App() {
             <div className="main-image-container polaroid" style={{ border: debug }}>
               <img className="main-image polaroid-image" src={mainImage} alt="메인 이미지" />
               <div className="main-text polaroid-caption">
-                <h2>소중한 분들을 초대합니다</h2>
+                <p>소중한 분들을 초대합니다</p>
               </div>
             </div>
           </section>

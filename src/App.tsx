@@ -21,7 +21,7 @@ export default function App() {
 
         <ScrollReveal>
           <section className="page-section paper-section">
-            <div className="main-image-container polaroid" style={{ border: debug }}>
+            <div className="main-image-container polaroid">
               <img className="main-image polaroid-image" src={mainImage} alt="메인 이미지" />
               <div className="main-text polaroid-caption">
                 <p>소중한 분들을 초대합니다</p>

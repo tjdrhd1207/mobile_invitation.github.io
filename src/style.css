@@ -1,7 +1,6 @@
 #root {
   margin: 0 auto;
   text-align: center;
-  border-style: solid;
   background-color: #FAF8F3;
 }
 
@@ -97,13 +96,13 @@ body {
 }
 
 .top-letter-name {
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
 .introduce {
-  font-size: 18px;
+  font-size: 15px;
   font-style: italic;
   margin-bottom: 20px;
 }

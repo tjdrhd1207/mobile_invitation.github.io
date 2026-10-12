@@ -6,8 +6,6 @@ import TopLetter from './component/TopLetter';
 import Introduce from './component/Introduce';
 import WeddingCalendar from './component/WeddingCalendar';
 
-const debug = import.meta.env.MODE === 'development' ? "solid" : "none";
-
 export default function App() {
   return (
     <>

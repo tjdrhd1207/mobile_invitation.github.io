@@ -5,6 +5,7 @@ import ScrollReveal from './component/ScrollReveal';
 import TopLetter from './component/TopLetter';
 import Introduce from './component/Introduce';
 import WeddingCalendar from './component/WeddingCalendar';
+import PolaroidGallery from './component/PolaroidGallery';
 
 export default function App() {
   return (
@@ -40,6 +41,11 @@ export default function App() {
           </section>
         </ScrollReveal>
 
+        <ScrollReveal>
+          <section className="page-section paper-section">
+            <PolaroidGallery></PolaroidGallery>
+          </section>
+        </ScrollReveal>
         {/* <div style={{ border: debug }}>
           신랑 / 신부 대표사진
         </div>

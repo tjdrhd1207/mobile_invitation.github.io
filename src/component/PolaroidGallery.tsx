@@ -15,38 +15,43 @@ type Photo = {
   src: string;
   alt: string;
   rotate: number;
+  square?: boolean;
 };
 
 const photos: Photo[] = [
-    { id: 1, src: photo1, alt: '우리의 첫 번째 추억', rotate: -4 },
-    { id: 2, src: photo2, alt: '함께한 소중한 순간', rotate: 3 },
-    { id: 3, src: photo3, alt: '우리의 행복한 하루', rotate: -2 },
-    { id: 4, src: photo4, alt: '함께 찍은 사진', rotate: 5 },
-    { id: 5, src: photo5, alt: '우리의 첫 번째 추억', rotate: -4 },
-    { id: 6, src: photo6, alt: '함께한 소중한 순간', rotate: 3 },
-    { id: 7, src: photo7, alt: '우리의 행복한 하루', rotate: -2 },
-    { id: 8, src: photo8, alt: '함께 찍은 사진', rotate: 5 },
-    { id: 9, src: photo9, alt: '우리의 행복한 하루', rotate: -2 },
-    { id: 10, src: photo10, alt: '함께 찍은 사진', rotate: 5 },
+  { id: 1, src: photo1, alt: '우리의 첫 번째 추억', rotate: -4 },
+  { id: 2, src: photo2, alt: '함께한 소중한 순간', rotate: 8 },
+  { id: 3, src: photo3, alt: '우리의 행복한 하루', rotate: -8, square: true },
+  { id: 4, src: photo4, alt: '함께 찍은 사진', rotate: 5 },
+  { id: 5, src: photo5, alt: '우리의 첫 번째 추억', rotate: -10 },
+  { id: 6, src: photo6, alt: '함께한 소중한 순간', rotate: 15, square: true },
+  { id: 7, src: photo7, alt: '우리의 행복한 하루', rotate: 2 },
+  { id: 8, src: photo8, alt: '함께 찍은 사진', rotate: 5, square: true },
+  { id: 9, src: photo9, alt: '우리의 행복한 하루', rotate: -2, square: true },
+  { id: 10, src: photo10, alt: '함께 찍은 사진', rotate: 5 },
 
 ];
 
 export default function PolaroidGallery() {
-    const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
-    return (
+  return (
     <section className="polaroid-gallery">
       <div className="gallery-grid">
         {photos.map((photo: any) => (
           <button
             key={photo.id}
             className="gallery-item"
-            style={{ '--rotate': `${photo.rotate}deg` } as CSSProperties} 
+            style={{ '--rotate': `${photo.rotate}deg` } as CSSProperties}
             onClick={() => setSelectedPhoto(photo)}
             aria-label={`${photo.alt} 확대하기`}
           >
             <div className="polaroid">
-              <img src={photo.src} alt={photo.alt} />
+              <img
+                className={photo.square ? 'square-photo' : ''}
+                src={photo.src}
+                alt={photo.alt}
+              />
             </div>
           </button>
         ))}

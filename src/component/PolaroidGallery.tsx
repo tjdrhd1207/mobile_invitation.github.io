@@ -1,13 +1,13 @@
-import photo1 from '../assets/gallery/photo1.png';
-import photo2 from '../assets/gallery/photo2.png';
-import photo3 from '../assets/gallery/photo3.png';
-import photo4 from '../assets/gallery/photo4.png';
-import photo5 from '../assets/gallery/photo5.png';
-import photo6 from '../assets/gallery/photo6.png';
-import photo7 from '../assets/gallery/photo7.png';
-import photo8 from '../assets/gallery/photo8.png';
-import photo9 from '../assets/gallery/photo9.png';
-import photo10 from '../assets/gallery/photo10.png';
+import photo1 from '../assets/polaroid/photo1.webp';
+import photo2 from '../assets/polaroid/photo2.webp';
+import photo3 from '../assets/polaroid/photo3.webp';
+import photo4 from '../assets/polaroid/photo4.webp';
+import photo5 from '../assets/polaroid/photo5.webp';
+import photo6 from '../assets/polaroid/photo6.webp';
+import photo7 from '../assets/polaroid/photo7.webp';
+import photo8 from '../assets/polaroid/photo8.webp';
+import photo9 from '../assets/polaroid/photo9.webp';
+import photo10 from '../assets/polaroid/photo10.webp';
 import { useState, type CSSProperties } from 'react';
 
 type Photo = {
@@ -51,6 +51,8 @@ export default function PolaroidGallery() {
                 className={photo.square ? 'square-photo' : ''}
                 src={photo.src}
                 alt={photo.alt}
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </button>

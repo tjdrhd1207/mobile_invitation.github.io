@@ -6,6 +6,8 @@ import TopLetter from './component/TopLetter';
 import Introduce from './component/Introduce';
 import WeddingCalendar from './component/WeddingCalendar';
 import PolaroidGallery from './component/PolaroidGallery';
+import LocationSection from './component/LocationSection';
+import AccountSection from './component/AccountSection';
 
 export default function App() {
   return (
@@ -46,6 +48,15 @@ export default function App() {
             <PolaroidGallery></PolaroidGallery>
           </section>
         </ScrollReveal>
+
+        <ScrollReveal>
+            <LocationSection></LocationSection>
+        </ScrollReveal>
+
+        <ScrollReveal>
+            <AccountSection></AccountSection>
+        </ScrollReveal>
+
         {/* <div style={{ border: debug }}>
           신랑 / 신부 대표사진
         </div>

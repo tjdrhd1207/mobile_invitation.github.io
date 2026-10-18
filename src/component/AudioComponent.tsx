@@ -36,7 +36,7 @@ export default function AudioComponent() {
 
     return (
         <>
-            <div style={{ border: debug, textAlign: "right" }}>
+            <div style={{ textAlign: "right" }}>
                 <img
                     src={audioIcon}
                     alt="배경음악 및 일시정지"

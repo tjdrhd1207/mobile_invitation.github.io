@@ -275,3 +275,388 @@ body {
 .polaroid img.square-photo {
   aspect-ratio: 3 / 3;
 }
+
+
+.location-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 64px 20px;
+  color: #37342f;
+  text-align: center;
+}
+
+.location-eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: #8c806f;
+}
+
+.location-title {
+  margin: 0 0 28px;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+.location-info {
+  margin-bottom: 24px;
+}
+
+.location-info h3 {
+  margin: 0 0 10px;
+  font-size: 19px;
+}
+
+.location-info p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.address-copy {
+  margin-top: 12px;
+  padding: 8px 14px;
+  border: 1px solid #d9d1c5;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.location-map {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #e9e6df;
+}
+
+.location-map-canvas {
+  width: 100%;
+  height: 320px;
+}
+
+.map-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: #f1eee8;
+  font-size: 13px;
+}
+
+.map-fallback p {
+  margin: 0;
+}
+
+.map-fallback a {
+  color: #5d5144;
+  text-underline-offset: 3px;
+}
+
+.location-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.map-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 4px;
+  box-sizing: border-box;
+  border: 1px solid #ded8cf;
+  border-radius: 6px;
+  color: #37342f;
+  background: #fff;
+  font-size: 12px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.map-button:hover {
+  background: #eee9e0;
+}
+
+.location-guide {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #e4ded5;
+  text-align: left;
+}
+
+.location-guide p {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.location-guide strong {
+  font-weight: 600;
+}
+
+@media (max-width: 360px) {
+  .location-section {
+    padding: 48px 14px;
+  }
+
+  .location-map-canvas {
+    height: 270px;
+  }
+
+  .location-buttons {
+    gap: 5px;
+  }
+
+  .map-button {
+    font-size: 11px;
+  }
+}
+
+.account-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 64px 20px;
+  color: #37342f;
+  text-align: center;
+}
+
+.account-heading {
+  margin-bottom: 30px;
+}
+
+.account-eyebrow {
+  margin: 0 0 10px;
+  color: #9b8b77;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+}
+
+.account-title {
+  margin: 0 0 18px;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+.account-description {
+  margin: 0;
+  color: #827b72;
+  font-size: 13px;
+  line-height: 1.9;
+  word-break: keep-all;
+}
+
+.account-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.account-group {
+  overflow: hidden;
+  border: 1px solid #e5ded4;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.65);
+  transition: border-color 0.2s ease;
+}
+
+.account-group.is-open {
+  border-color: #cfc2b1;
+}
+
+.account-group-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 76px;
+  padding: 17px 20px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.account-group-toggle:focus-visible,
+.account-copy-button:focus-visible {
+  outline: 2px solid #a3917b;
+  outline-offset: 3px;
+}
+
+.account-group-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.account-group-title {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.account-group-subtitle {
+  color: #a49a8d;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+}
+
+.account-chevron {
+  display: inline-block;
+  color: #998a78;
+  font-size: 24px;
+  line-height: 1;
+  transform: rotate(0deg);
+  transition: transform 0.25s ease;
+}
+
+.account-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.account-panel {
+  padding: 0 20px 8px;
+  border-top: 1px solid #ebe5dc;
+}
+
+.account-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 5px;
+  padding: 19px 0;
+}
+
+.account-item-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+}
+
+.account-relation {
+  color: #9b8b77;
+  font-size: 11px;
+}
+
+.account-holder {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.account-number {
+  max-width: 100%;
+  color: #777067;
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.account-copy-button {
+  min-width: 54px;
+  min-height: 34px;
+  padding: 7px 12px;
+  border: 1px solid #dcd2c5;
+  border-radius: 4px;
+  background: #fffdf9;
+  color: #716353;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.account-copy-button:hover {
+  border-color: #bca991;
+  background: #f2ece3;
+}
+
+.account-feedback {
+  grid-column: 1 / -1;
+  margin: 3px 0 0;
+  color: #88765f;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.account-item-divider {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: #eee8df;
+}
+
+.account-footer {
+  margin: 27px 0 0;
+  color: #a09689;
+  font-size: 11px;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 390px) {
+  .account-section {
+    padding: 52px 16px;
+  }
+
+  .account-title {
+    font-size: 25px;
+  }
+
+  .account-group-toggle {
+    min-height: 70px;
+    padding: 15px 16px;
+  }
+
+  .account-panel {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .account-item {
+    column-gap: 8px;
+  }
+
+  .account-copy-button {
+    min-width: 48px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .account-chevron,
+  .account-group,
+  .account-copy-button {
+    transition: none;
+  }
+}

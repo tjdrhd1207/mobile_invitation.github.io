@@ -2,8 +2,6 @@ import audioIcon from '../assets/audio.svg'
 import { useEffect, useRef, useState } from 'react';
 import audioFile from '../assets/background_music.mp3';
 
-const debug = import.meta.env.MODE === 'development' ? "solid" : "none";
-
 export default function AudioComponent() {
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);

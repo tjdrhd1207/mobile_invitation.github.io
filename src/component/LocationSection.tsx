@@ -45,6 +45,12 @@ export default function LocationSection() {
 
             const geocoder = new kakao.maps.services.Geocoder();
 
+
+            console.log("[1] 지도 초기화 시작");
+console.log("[2] kakao 객체:", window.kakao);
+console.log("[3] services:", window.kakao?.maps?.services);
+console.log("[4] geocoder:", geocoder);
+
             geocoder.addressSearch(
                 ADDRESS,
                 (result: any[], status: string) => {

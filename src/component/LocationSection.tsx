@@ -7,7 +7,7 @@ declare global {
 }
 
 const VENUE = "웨딩시티";
-const ADDRESS = "서울특별시 구로구 새말로 97 신도림테크노마트 8층";
+const ADDRESS = "서울특별시 구로구 새말로 97";
 
 const KAKAO_KEY = import.meta.env.VITE_KAKAO_MAP_KEY as | string | undefined;
 
@@ -48,6 +48,9 @@ export default function LocationSection() {
             geocoder.addressSearch(
                 ADDRESS,
                 (result: any[], status: string) => {
+                    console.log("[Kakao Map] 주소 검색 상태:", status);
+                    console.log("[Kakao Map] 검색 결과:", result);
+
                     if (cancelled || !mapRef.current) return;
 
                     if (

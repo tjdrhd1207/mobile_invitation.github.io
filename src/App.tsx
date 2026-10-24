@@ -8,6 +8,7 @@ import WeddingCalendar from './component/WeddingCalendar';
 import PolaroidGallery from './component/PolaroidGallery';
 import LocationSection from './component/LocationSection';
 import AccountSection from './component/AccountSection';
+import Thankyou from './component/Thankyou';
 
 export default function App() {
   return (
@@ -28,6 +29,13 @@ export default function App() {
                 <p>소중한 분들을 초대합니다</p>
               </div>
             </div>
+          </section>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <section>
+            <Thankyou>
+            </Thankyou>
           </section>
         </ScrollReveal>
 

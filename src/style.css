@@ -95,6 +95,12 @@ body {
   transform: translateY(0);
 }
 
+.top-letter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .top-letter-name {
   font-size: 20px;
   font-weight: bold;

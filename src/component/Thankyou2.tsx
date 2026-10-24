@@ -1,6 +1,3 @@
-import bride from '../assets/gallery/bride.webp';
-import groom from '../assets/gallery/groom.webp';
-import heart from '../assets/gallery/heart.webp';
 import babyBg from '../assets/gallery/baby-removebg.webp';
 
 export default function Thankyou2() {

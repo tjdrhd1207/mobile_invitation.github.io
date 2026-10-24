@@ -9,6 +9,7 @@ import PolaroidGallery from './component/PolaroidGallery';
 import LocationSection from './component/LocationSection';
 import AccountSection from './component/AccountSection';
 import Thankyou from './component/Thankyou';
+import Thankyou2 from './component/Thankyou2';
 
 export default function App() {
   return (
@@ -21,21 +22,20 @@ export default function App() {
           </section>
         </ScrollReveal>
 
-        <ScrollReveal>
+{/*         <ScrollReveal>
           <section className="page-section paper-section">
             <div className="main-image-container polaroid">
-              <img className="main-image polaroid-image" src={mainImage} alt="메인 이미지" />
               <div className="main-text polaroid-caption">
                 <p>소중한 분들을 초대합니다</p>
               </div>
             </div>
           </section>
-        </ScrollReveal>
+        </ScrollReveal> */}
 
         <ScrollReveal>
-          <section>
-            <Thankyou>
-            </Thankyou>
+          <section className="page-section paper-section">
+            <Thankyou2>
+            </Thankyou2>
           </section>
         </ScrollReveal>
 

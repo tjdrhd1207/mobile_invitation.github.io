@@ -1,6 +1,5 @@
 import './style.css'
 import AudioComponent from './component/AudioComponent';
-import mainImage from './assets/main_image.png';
 import ScrollReveal from './component/ScrollReveal';
 import TopLetter from './component/TopLetter';
 import Introduce from './component/Introduce';
@@ -8,7 +7,6 @@ import WeddingCalendar from './component/WeddingCalendar';
 import PolaroidGallery from './component/PolaroidGallery';
 import LocationSection from './component/LocationSection';
 import AccountSection from './component/AccountSection';
-import Thankyou from './component/Thankyou';
 import Thankyou2 from './component/Thankyou2';
 
 export default function App() {

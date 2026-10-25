@@ -1,4 +1,6 @@
 #root {
+  width: 100%;
+  max-width: 390px;
   margin: 0 auto;
   text-align: center;
   background-color: #FAF8F3;
@@ -8,10 +10,17 @@
   display: flex;
   flex-direction: column;
   color: #a69b9b;
-  background-color: rgb(251, 251, 251);
+  background-color: #0f0f0e;
+  background-image: url('./assets/paper-texture3.png');
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
   font-family: 'WeddingFont', serif;
+
   width: 100%;
   max-width: 390px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 @media (max-width: 1400px) {
@@ -21,6 +30,7 @@
 }
 
 @media (max-width: 500px) {
+  #root,
   .main-frame {
     max-width: none;
   }
@@ -38,7 +48,7 @@
 body {
   margin: 0;
   font-family: 'WeddingFont', serif;
-  background-color: #f8f5ee;
+  background-color: #0f0f0e;
 }
 
 /* 종이 질감 공통 배경 */
@@ -47,7 +57,7 @@ body {
   background-repeat: repeat-y;
   background-position: top center;
   background-size: 100% auto;
-  background-color: #f7f2e9;
+  background-color: #0f0f0e;
 }
 
 .main-image-container {

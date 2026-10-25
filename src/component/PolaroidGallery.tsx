@@ -10,7 +10,7 @@ import photo9 from '../assets/polaroid/photo9.webp';
 import photo10 from '../assets/polaroid/photo10.webp';
 import { useState, type CSSProperties } from 'react';
 
-type Photo = {
+export type Photo = {
   id: number;
   src: string;
   alt: string;
@@ -18,7 +18,7 @@ type Photo = {
   square?: boolean;
 };
 
-const photos: Photo[] = [
+export const photos: Photo[] = [
   { id: 1, src: photo1, alt: '우리의 첫 번째 추억', rotate: -4 },
   { id: 2, src: photo2, alt: '함께한 소중한 순간', rotate: 8 },
   { id: 3, src: photo3, alt: '우리의 행복한 하루', rotate: -8, square: true },

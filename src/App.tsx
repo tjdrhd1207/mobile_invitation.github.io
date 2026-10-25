@@ -4,7 +4,7 @@ import ScrollReveal from './component/ScrollReveal';
 import TopLetter from './component/TopLetter';
 import Introduce from './component/Introduce';
 import WeddingCalendar from './component/WeddingCalendar';
-import PolaroidGallery from './component/PolaroidGallery';
+import GridGallery from './component/GridGallery';
 import LocationSection from './component/LocationSection';
 import AccountSection from './component/AccountSection';
 import Thankyou2 from './component/Thankyou2';
@@ -51,7 +51,7 @@ export default function App() {
 
         <ScrollReveal>
           <section className="page-section paper-section">
-            <PolaroidGallery></PolaroidGallery>
+            <GridGallery />
           </section>
         </ScrollReveal>
 

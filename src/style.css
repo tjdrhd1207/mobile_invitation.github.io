@@ -48,7 +48,7 @@
 body {
   margin: 0;
   font-family: 'WeddingFont', serif;
-  background-color: #0f0f0e;
+  background-color: #1d1d0b;
 }
 
 /* 종이 질감 공통 배경 */
@@ -133,7 +133,7 @@ body {
 /* 모든 섹션에 공통 적용 */
 .page-section {
   background-color: transparent;
-  margin: 100px 0;
+  margin: 10px 0 0 0;
 }
 
 .wedding-calendar {
@@ -144,6 +144,7 @@ body {
   box-sizing: border-box;
   text-align: center;
   color: #514b43;
+  background: #dfe1cf;
 }
 
 /* 예식 정보 */
@@ -306,6 +307,7 @@ body {
   padding: 64px 20px;
   color: #37342f;
   text-align: center;
+  background-color: #dfe1cf;
 }
 
 .location-eyebrow {
@@ -737,4 +739,60 @@ body {
 .thank-heart img {
   width: 40%;
   margin: 0;
+}
+/* 바둑판 갤러리 */
+.grid-gallery {
+  width: 100%;
+}
+
+.grid-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 64px;
+  grid-auto-flow: dense;
+  gap: 3px;
+}
+
+.grid-gallery-item {
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.grid-gallery-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 사진 확대 */
+.gallery-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.gallery-modal img {
+  max-width: 92vw;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.gallery-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
 }

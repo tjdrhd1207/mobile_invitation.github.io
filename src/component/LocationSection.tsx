@@ -141,7 +141,7 @@ export default function LocationSection() {
 
     return (
         <section className="location-section paper-section" id="location">
-            <div>
+            <div className="location-panel">
                 <p className="location-eyebrow">LOCATION</p>
 
                 <h2 className="location-title">오시는 길</h2>

@@ -1,8 +1,9 @@
 import { WEDDING } from '../data/wedding';
 import CyGallery from './CyGallery';
 import CyCalendar from './CyCalendar';
+import CyLocation from './CyLocation';
 import proposeImage from '../assets/propose.webp?w=860&format=webp&imagetools';
-import cyAvatar from '../assets/gallery/mainImage.webp?w=860&format=webp&imagetools';
+import cyAvatar from '../assets/gallery/baby-removebg.webp?w=860&format=webp&imagetools';
 
 const { groom, bride, date } = WEDDING;
 
@@ -59,6 +60,11 @@ export default function CyworldApp() {
             <section className="cy-card">
                 <h2 className="cy-section-title">Calendar</h2>
                 <CyCalendar />
+            </section>
+
+            <section className="cy-card">
+                <h2 className="cy-section-title">Location</h2>
+                <CyLocation />
             </section>
 
             <section className="cy-card">

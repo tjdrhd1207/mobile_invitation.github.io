@@ -515,3 +515,260 @@ body {
 .cy-btn:active {
     background: linear-gradient(#e6e6e6, #ffffff);
 }
+
+/* Account */
+.cy-account-guide {
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: #888;
+}
+
+.cy-account-group + .cy-account-group {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.cy-account-group-title {
+    font-size: 13px;
+    color: var(--cy-blue);
+    margin-bottom: 8px;
+}
+
+.cy-account-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.cy-account-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.cy-account-radio {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.cy-account-radio input {
+    margin: 0;
+    accent-color: #555;
+}
+
+.cy-account-option.selected .cy-account-radio {
+    font-weight: bold;
+}
+
+/* 썸네일: 지붕 모양 편지봉투 (신랑측 크림 / 신부측 핑크) */
+.cy-account-thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    /* clip-path로 자른 모양에 테두리를 두르려면 바깥 요소에 drop-shadow를 줘야 함 */
+    filter: drop-shadow(0 0 0.5px #b9b0a0) drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.12));
+    transition: transform 0.15s;
+}
+
+.cy-account-option.selected .cy-account-thumb {
+    filter: drop-shadow(1.5px 0 0 var(--cy-orange)) drop-shadow(-1.5px 0 0 var(--cy-orange))
+            drop-shadow(0 1.5px 0 var(--cy-orange)) drop-shadow(0 -1.5px 0 var(--cy-orange));
+    transform: translateY(-2px);
+}
+
+.cy-envelope {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(50% 0%, 100% 32%, 100% 100%, 0% 100%, 0% 32%);
+}
+
+/* 칸마다 살짝 삐뚤게 */
+.cy-account-option:nth-child(2) .cy-envelope {
+    clip-path: polygon(46% 2%, 100% 36%, 97% 96%, 3% 100%, 0% 28%);
+}
+
+.cy-account-option:nth-child(3) .cy-envelope {
+    clip-path: polygon(55% 0%, 98% 30%, 100% 100%, 0% 97%, 2% 38%);
+}
+
+.cy-account-thumb.groom .cy-envelope { background: #f8efd9; }
+.cy-account-option:nth-child(2) .cy-account-thumb.groom .cy-envelope { background: #f1e8cf; }
+.cy-account-option:nth-child(3) .cy-account-thumb.groom .cy-envelope { background: #e3dccb; }
+
+.cy-account-thumb.bride .cy-envelope { background: #f9dbe3; }
+.cy-account-option:nth-child(2) .cy-account-thumb.bride .cy-envelope { background: #f3c9d6; }
+.cy-account-option:nth-child(3) .cy-account-thumb.bride .cy-envelope { background: #e6b6c8; }
+
+/* 봉투 가운데 작은 하트 씰 */
+.cy-envelope-seal {
+    position: absolute;
+    left: 50%;
+    top: 62%;
+    width: 12px;
+    height: 12px;
+    background: #e8798f;
+    transform: translate(-50%, -50%) rotate(45deg);
+    border-radius: 2px 0 2px 0;
+}
+
+.cy-envelope-seal::before,
+.cy-envelope-seal::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: inherit;
+}
+
+.cy-envelope-seal::before { left: -6px; top: 0; }
+.cy-envelope-seal::after { left: 0; top: -6px; }
+
+.cy-account-thumb.groom .cy-envelope-seal { background: #c9a46a; }
+
+/* 주황 말풍선 안내 박스: 화살표가 선택된 칸을 가리킴 */
+.cy-account-tip {
+    position: relative;
+    margin-top: 12px;
+    padding: 8px 10px;
+    border: 1px solid #f5b98a;
+    background: #fffaf3;
+    color: var(--cy-orange);
+    font-size: 12px;
+    line-height: 1.6;
+    word-break: keep-all;
+}
+
+.cy-account-tip::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: var(--tip-left, 50%);
+    width: 9px;
+    height: 9px;
+    background: #fffaf3;
+    border-top: 1px solid #f5b98a;
+    border-left: 1px solid #f5b98a;
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.cy-account-tip b {
+    font-weight: normal;
+    color: #c75a14;
+}
+
+.cy-account-holder {
+    color: #999;
+    font-size: 11px;
+}
+
+.cy-account-message {
+    margin-top: 4px;
+    color: var(--cy-blue);
+    font-size: 11px;
+}
+
+.cy-account-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.cy-btn:disabled {
+    color: #bbb;
+    cursor: default;
+}
+
+/* BGM 플레이어: 회색 미니 바 */
+.bgm {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cy-bgm-player {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 4px 2px 8px;
+    border: 1px solid #c8c8c8;
+    border-radius: 3px;
+    background: linear-gradient(#fafafa, #e9e9e9);
+    font-size: 11px;
+    color: #666;
+}
+
+.cy-bgm-player button {
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.cy-bgm-divider {
+    color: #bbb;
+}
+
+.cy-bgm-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 12px;
+    margin-left: 2px;
+    border: 1px solid #b5b5b5;
+    border-radius: 2px;
+    background: #fff;
+    font-family: sans-serif;
+    font-size: 7px;
+    color: #777;
+}
+
+.cy-bgm-icon.playing {
+    color: var(--cy-orange);
+}
+
+.cy-bgm-title {
+    position: relative;
+    width: 84px;
+    height: 14px;
+    margin-right: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.cy-bgm-title span {
+    position: absolute;
+    top: 0;
+    color: var(--cy-blue);
+    line-height: 14px;
+    animation: cy-bgm-flow 6s linear infinite;
+    /* 처음엔 가운데쯤에 보이도록 애니메이션 중간 지점에서 시작 */
+    animation-delay: -3s;
+    animation-play-state: paused;
+}
+
+.cy-bgm-title span.playing {
+    animation-play-state: running;
+}
+
+/* 왼쪽 밖에서 들어와 오른쪽 밖으로 나감 */
+@keyframes cy-bgm-flow {
+    from {
+        left: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        left: 100%;
+        transform: translateX(0);
+    }
+}

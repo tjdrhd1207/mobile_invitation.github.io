@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type Account = {
+export type Account = {
     id: string;
     relation: string;
     name: string;
@@ -8,14 +8,14 @@ type Account = {
     accountNumber: string;
 };
 
-type AccountGroup = {
+export type AccountGroup = {
     id: "groom" | "bride";
     title: string;
     subtitle: string;
     accounts: Account[];
 };
 
-const accountGroups: AccountGroup[] = [
+export const accountGroups: AccountGroup[] = [
     {
         id: "groom",
         title: "신랑측",

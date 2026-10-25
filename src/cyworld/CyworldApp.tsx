@@ -2,6 +2,8 @@ import { WEDDING } from '../data/wedding';
 import CyGallery from './CyGallery';
 import CyCalendar from './CyCalendar';
 import CyLocation from './CyLocation';
+import CyAccount from './CyAccount';
+import CyBgm from './CyBgm';
 import proposeImage from '../assets/propose.webp?w=860&format=webp&imagetools';
 import cyAvatar from '../assets/gallery/baby-removebg.webp?w=860&format=webp&imagetools';
 
@@ -13,6 +15,12 @@ export default function CyworldApp() {
             <header className="cy-topbar" />
 
             <h1 className="cy-title">{groom.name} ♥ {bride.name}의 미니홈피</h1>
+
+            <section className="cy-card">
+                <div className="bgm">
+                    <CyBgm />
+                </div>
+            </section >
 
             <section className="cy-card cy-profile">
                 <div className="cy-avatar" >
@@ -65,6 +73,11 @@ export default function CyworldApp() {
             <section className="cy-card">
                 <h2 className="cy-section-title">Location</h2>
                 <CyLocation />
+            </section>
+
+            <section className="cy-card">
+                <h2 className="cy-section-title">Account</h2>
+                <CyAccount />
             </section>
 
             <section className="cy-card">

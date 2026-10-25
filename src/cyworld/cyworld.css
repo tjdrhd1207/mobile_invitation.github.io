@@ -1,0 +1,398 @@
+:root {
+    --cy-blue: #1ea0d7;
+    --cy-orange: #f07b2a;
+    --cy-bg: #eef1f4;
+    --cy-text: #333;
+}
+
+body {
+    margin: 0;
+    background: var(--cy-bg);
+    color: var(--cy-text);
+    font-family: 'WeddingFont', serif;
+}
+
+@font-face {
+  font-family: 'WeddingFont';
+  src: url('../assets/fonts/DOSSaemmul.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.cy-frame {
+    max-width: 430px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+.cy-topbar {
+    height: 44px;
+    background: var(--cy-blue);
+}
+
+.cy-title {
+    font-size: 17px;
+    font-weight: 500;
+    margin: 20px 12px 12px;
+}
+
+.cy-card {
+    background: #fff;
+    border-radius: 10px;
+    margin: 0 8px 10px;
+    padding: 16px;
+}
+
+.cy-profile {
+    display: flex;
+    gap: 16px;
+}
+
+.cy-avatar {
+    width: 200px;
+    height: 150px;
+    border-radius: 12px;
+    background: #ddd;
+    flex-shrink: 0;
+}
+
+.cy-today {
+    font-family: var(--cy-dot);
+    font-size: 11px;
+    color: #999;
+}
+
+.cy-today b {
+    color: var(--cy-orange);
+}
+
+.cy-name {
+    font-size: 16px;
+    margin: 6px 0;
+}
+
+.cy-desc {
+    font-size: 13px;
+}
+
+.cy-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    color: var(--cy-blue);
+    font-size: 14px;
+}
+
+.cy-menu span {
+    color: var(--cy-orange);
+}
+
+.cy-section-title {
+    font-family: var(--cy-dot);
+    color: var(--cy-blue);
+    font-size: 15px;
+    margin: 0 0 12px;
+}
+
+.cy-miniroom {
+    aspect-ratio: 16 / 10;
+    background: #f7c6cf;
+    overflow: hidden;
+}
+
+.cy-miniroom img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cy-avatar-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+/* Gallery */
+.cy-gallery {
+    position: relative;
+    padding: 0 18px;
+}
+
+.cy-gallery-list {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding: 4px 2px;
+}
+
+.cy-gallery-list::-webkit-scrollbar {
+    display: none;
+}
+
+.cy-gallery-card {
+    flex: 0 0 calc((100% - 20px) / 3);
+    scroll-snap-align: start;
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.cy-gallery-thumb {
+    aspect-ratio: 1 / 1;
+    padding: 4px;
+    background: #fff;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
+}
+
+.cy-gallery-card.selected .cy-gallery-thumb {
+    border-color: var(--cy-orange);
+}
+
+.cy-gallery-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cy-gallery-caption {
+    margin-top: 6px;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cy-gallery-author {
+    font-size: 11px;
+    color: var(--cy-blue);
+}
+
+.cy-gallery-arrow {
+    position: absolute;
+    top: 35%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #bbb;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.cy-gallery-arrow.left {
+    left: 0;
+}
+
+.cy-gallery-arrow.right {
+    right: 0;
+}
+
+.cy-gallery-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+}
+
+.cy-gallery-modal img {
+    max-width: 100%;
+    max-height: 80vh;
+    border: 6px solid #fff;
+}
+
+/* Calendar */
+.cy-cal-top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.cy-cal-year {
+    color: var(--cy-orange);
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+.cy-cal-tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.cy-cal-tabs button {
+    padding: 2px 3px;
+    border: none;
+    background: none;
+    font: inherit;
+    font-size: 11px;
+    color: #999;
+    cursor: pointer;
+}
+
+.cy-cal-tabs button.active {
+    color: var(--cy-blue);
+    border-bottom: 2px solid var(--cy-blue);
+}
+
+.cy-cal-book {
+    position: relative;
+    display: flex;
+    min-height: 260px;
+    border: 1px solid #ccc;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.cy-cal-left {
+    width: 30%;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    padding: 12px 14px 12px 8px;
+    border-right: 1px solid #ccc;
+}
+
+.cy-cal-month {
+    font-size: 10px;
+    color: #9cc3e0;
+    border-bottom: 1px solid #b9d6ec;
+    padding-bottom: 2px;
+    margin-bottom: 10px;
+}
+
+.cy-cal-todos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.cy-cal-todos li {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.cy-cal-todos li.done {
+    color: #aaa;
+    text-decoration: line-through;
+}
+
+.cy-cal-checkbox {
+    flex-shrink: 0;
+    width: 9px;
+    height: 9px;
+    margin-top: 2px;
+    border: 1px solid #aaa;
+    font-size: 9px;
+    line-height: 9px;
+    text-align: center;
+    color: var(--cy-orange);
+}
+
+/* 스프링 링: 왼쪽 페이지 경계선 위에 걸쳐서 배치 */
+.cy-cal-rings {
+    position: absolute;
+    top: 14%;
+    bottom: 14%;
+    left: 30%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.cy-cal-rings span {
+    display: block;
+    width: 20px;
+    height: 7px;
+    border-radius: 4px;
+    background: linear-gradient(#eee, #777 50%, #ccc);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.cy-cal-right {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 6px 10px 14px;
+}
+
+.cy-cal-weekdays,
+.cy-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.cy-cal-weekdays div {
+    text-align: center;
+    font-size: 8px;
+    font-weight: bold;
+    color: #444;
+    padding-bottom: 4px;
+}
+
+.cy-cal-grid {
+    border-top: 1px solid #999;
+    border-left: 4px solid #ccc;
+}
+
+.cy-cal-cell {
+    min-height: 36px;
+    padding: 2px;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+    font-size: 9px;
+    overflow: hidden;
+}
+
+.cy-cal-num {
+    text-decoration: underline;
+}
+
+.cy-cal-cell.sun .cy-cal-num {
+    color: #e53935;
+}
+
+.cy-cal-cell.sat .cy-cal-num {
+    color: #1e5fb4;
+}
+
+.cy-cal-cell.wedding {
+    background: #fff0f3;
+}
+
+.cy-cal-cell.wedding .cy-cal-num {
+    color: #e53935;
+}
+
+.cy-cal-label {
+    display: block;
+    margin-top: 2px;
+    font-size: 8px;
+    color: #e53935;
+    white-space: nowrap;
+}

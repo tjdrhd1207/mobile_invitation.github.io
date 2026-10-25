@@ -20,6 +20,12 @@
   }
 }
 
+@media (max-width: 500px) {
+  .main-frame {
+    max-width: none;
+  }
+}
+
 @font-face {
   font-family: 'WeddingFont';
   src: url('./assets/fonts/WeddingFont.ttf') format('truetype');
@@ -30,6 +36,7 @@
 
 /* 청첩장 전체에 적용 */
 body {
+  margin: 0;
   font-family: 'WeddingFont', serif;
   background-color: #f8f5ee;
 }

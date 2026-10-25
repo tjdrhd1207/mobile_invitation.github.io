@@ -11,7 +11,7 @@
   flex-direction: column;
   color: #a69b9b;
   background-color: #0f0f0e;
-  background-image: url('./assets/paper-texture3.png');
+  background-image: url('./assets/paper-texture3.webp');
   background-repeat: repeat-y;
   background-position: top center;
   background-size: 100% auto;
@@ -53,7 +53,7 @@ body {
 
 /* 종이 질감 공통 배경 */
 .paper-section {
-  background-image: url('./assets/paper-texture3.png');
+  background-image: url('./assets/paper-texture3.webp');
   background-repeat: repeat-y;
   background-position: top center;
   background-size: 100% auto;

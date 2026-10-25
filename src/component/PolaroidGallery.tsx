@@ -1,34 +1,45 @@
-import photo1 from '../assets/polaroid/photo1.webp';
-import photo2 from '../assets/polaroid/photo2.webp';
-import photo3 from '../assets/polaroid/photo3.webp';
-import photo4 from '../assets/polaroid/photo4.webp';
-import photo5 from '../assets/polaroid/photo5.webp';
-import photo6 from '../assets/polaroid/photo6.webp';
-import photo7 from '../assets/polaroid/photo7.webp';
-import photo8 from '../assets/polaroid/photo8.webp';
-import photo9 from '../assets/polaroid/photo9.webp';
-import photo10 from '../assets/polaroid/photo10.webp';
+import photo1 from '../assets/polaroid/photo1.webp?w=1280&format=webp&imagetools';
+import thumb1 from '../assets/polaroid/photo1.webp?w=240&format=webp&imagetools';
+import photo2 from '../assets/polaroid/photo2.webp?w=1280&format=webp&imagetools';
+import thumb2 from '../assets/polaroid/photo2.webp?w=240&format=webp&imagetools';
+import photo3 from '../assets/polaroid/photo3.webp?w=1280&format=webp&imagetools';
+import thumb3 from '../assets/polaroid/photo3.webp?w=240&format=webp&imagetools';
+import photo4 from '../assets/polaroid/photo4.webp?w=1280&format=webp&imagetools';
+import thumb4 from '../assets/polaroid/photo4.webp?w=240&format=webp&imagetools';
+import photo5 from '../assets/polaroid/photo5.webp?w=1280&format=webp&imagetools';
+import thumb5 from '../assets/polaroid/photo5.webp?w=240&format=webp&imagetools';
+import photo6 from '../assets/polaroid/photo6.webp?w=1280&format=webp&imagetools';
+import thumb6 from '../assets/polaroid/photo6.webp?w=240&format=webp&imagetools';
+import photo7 from '../assets/polaroid/photo7.webp?w=1280&format=webp&imagetools';
+import thumb7 from '../assets/polaroid/photo7.webp?w=240&format=webp&imagetools';
+import photo8 from '../assets/polaroid/photo8.webp?w=1280&format=webp&imagetools';
+import thumb8 from '../assets/polaroid/photo8.webp?w=240&format=webp&imagetools';
+import photo9 from '../assets/polaroid/photo9.webp?w=1280&format=webp&imagetools';
+import thumb9 from '../assets/polaroid/photo9.webp?w=240&format=webp&imagetools';
+import photo10 from '../assets/polaroid/photo10.webp?w=1280&format=webp&imagetools';
+import thumb10 from '../assets/polaroid/photo10.webp?w=240&format=webp&imagetools';
 import { useState, type CSSProperties } from 'react';
 
 export type Photo = {
   id: number;
   src: string;
+  thumb: string;
   alt: string;
   rotate: number;
   square?: boolean;
 };
 
 export const photos: Photo[] = [
-  { id: 1, src: photo1, alt: '우리의 첫 번째 추억', rotate: -4 },
-  { id: 2, src: photo2, alt: '함께한 소중한 순간', rotate: 8 },
-  { id: 3, src: photo3, alt: '우리의 행복한 하루', rotate: -8, square: true },
-  { id: 4, src: photo4, alt: '함께 찍은 사진', rotate: 5 },
-  { id: 5, src: photo5, alt: '우리의 첫 번째 추억', rotate: -10 },
-  { id: 6, src: photo6, alt: '함께한 소중한 순간', rotate: 15, square: true },
-  { id: 7, src: photo7, alt: '우리의 행복한 하루', rotate: 2 },
-  { id: 8, src: photo8, alt: '함께 찍은 사진', rotate: 5, square: true },
-  { id: 9, src: photo9, alt: '우리의 행복한 하루', rotate: -2, square: true },
-  { id: 10, src: photo10, alt: '함께 찍은 사진', rotate: 5 },
+  { id: 1, src: photo1, thumb: thumb1, alt: '우리의 첫 번째 추억', rotate: -4 },
+  { id: 2, src: photo2, thumb: thumb2, alt: '함께한 소중한 순간', rotate: 8 },
+  { id: 3, src: photo3, thumb: thumb3, alt: '우리의 행복한 하루', rotate: -8, square: true },
+  { id: 4, src: photo4, thumb: thumb4, alt: '함께 찍은 사진', rotate: 5 },
+  { id: 5, src: photo5, thumb: thumb5, alt: '우리의 첫 번째 추억', rotate: -10 },
+  { id: 6, src: photo6, thumb: thumb6, alt: '함께한 소중한 순간', rotate: 15, square: true },
+  { id: 7, src: photo7, thumb: thumb7, alt: '우리의 행복한 하루', rotate: 2 },
+  { id: 8, src: photo8, thumb: thumb8, alt: '함께 찍은 사진', rotate: 5, square: true },
+  { id: 9, src: photo9, thumb: thumb9, alt: '우리의 행복한 하루', rotate: -2, square: true },
+  { id: 10, src: photo10, thumb: thumb10, alt: '함께 찍은 사진', rotate: 5 },
 
 ];
 

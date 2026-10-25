@@ -1,10 +1,18 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { photos } from './PolaroidGallery';
 
 export default function ThumbnailGallery() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const listRef = useRef<HTMLDivElement | null>(null);
   const selectedPhoto = photos[selectedIndex];
+
+  // 화살표로 넘길 때 바로 보이도록 앞뒤 사진을 미리 불러오기
+  useEffect(() => {
+    [selectedIndex - 1, selectedIndex + 1].forEach((index) => {
+      const photo = photos[(index + photos.length) % photos.length];
+      new Image().src = photo.src;
+    });
+  }, [selectedIndex]);
 
   const selectPhoto = (index: number) => {
     // 처음/끝에서 넘기면 반대쪽으로 이어지도록
@@ -59,7 +67,7 @@ export default function ThumbnailGallery() {
             aria-label={`${photo.alt} 보기`}
           >
             <img
-              src={photo.src}
+              src={photo.thumb}
               alt=""
               loading="lazy"
               decoding="async"

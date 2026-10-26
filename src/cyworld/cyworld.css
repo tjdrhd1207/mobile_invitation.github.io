@@ -693,23 +693,35 @@ body {
     color: #bbb;
 }
 
-.cy-bgm-icon {
+.cy-bgm-controls {
+    display: inline-flex;
+    gap: 2px;
+    margin-left: 2px;
+}
+
+/* .cy-bgm-player button 보다 우선 적용되도록 부모 클래스까지 지정 */
+.cy-bgm-player .cy-bgm-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 14px;
+    min-width: 14px;
     height: 12px;
-    margin-left: 2px;
+    padding: 0 2px;
     border: 1px solid #b5b5b5;
     border-radius: 2px;
     background: #fff;
     font-family: sans-serif;
     font-size: 7px;
+    letter-spacing: -1px;
     color: #777;
 }
 
-.cy-bgm-icon.playing {
+.cy-bgm-player .cy-bgm-icon.playing {
     color: var(--cy-orange);
+}
+
+.cy-bgm-player .cy-bgm-icon:active {
+    background: #eee;
 }
 
 .cy-bgm-title {
@@ -746,4 +758,60 @@ body {
         left: 100%;
         transform: translateX(0);
     }
+}
+
+/* 따라다니는 탭 메뉴: 본문 오른쪽 끝에 붙어 있는 파란 인덱스 탭 */
+.cy-layout {
+    display: flex;
+    align-items: flex-start;
+    padding-right: 4px;
+}
+
+.cy-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* 탭이 카드 오른쪽 끝에 바로 붙도록 카드 오른쪽 여백 제거 */
+.cy-content .cy-card {
+    margin-right: 0;
+}
+
+/* 탭 클릭으로 이동했을 때 섹션 위쪽에 약간의 여유 */
+.cy-content [id^="cy-"] {
+    scroll-margin-top: 12px;
+}
+
+.cy-nav {
+    position: sticky;
+    top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 42px;
+    flex-shrink: 0;
+    /* 첫 카드 높이쯤에서 시작 */
+    margin-top: 56px;
+}
+
+.cy-nav button {
+    padding: 6px 2px;
+    border: 1px solid #13719f;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    background: linear-gradient(90deg, #1a8cc4, #2aa6e0);
+    color: #fff;
+    font: inherit;
+    font-size: 10px;
+    line-height: 1.2;
+    word-break: keep-all;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* 현재 보고 있는 섹션 탭은 흰색 */
+.cy-nav button.active {
+    background: #fff;
+    color: #13719f;
+    font-weight: bold;
 }

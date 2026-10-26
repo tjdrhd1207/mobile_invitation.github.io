@@ -760,38 +760,27 @@ body {
     }
 }
 
-/* 따라다니는 탭 메뉴: 본문 오른쪽 끝에 붙어 있는 파란 인덱스 탭 */
-.cy-layout {
-    display: flex;
-    align-items: flex-start;
-    padding-right: 4px;
-}
-
-.cy-content {
-    flex: 1;
-    min-width: 0;
-}
-
-/* 탭이 카드 오른쪽 끝에 바로 붙도록 카드 오른쪽 여백 제거 */
-.cy-content .cy-card {
-    margin-right: 0;
-}
-
 /* 탭 클릭으로 이동했을 때 섹션 위쪽에 약간의 여유 */
-.cy-content [id^="cy-"] {
+.cy-frame [id^="cy-"] {
     scroll-margin-top: 12px;
 }
 
+/*
+ * 따라다니는 탭 메뉴
+ * 본문 폭은 그대로 두고 화면에 고정(fixed)해서 본문 프레임(430px) 오른쪽 바깥에 붙임.
+ * 화면이 좁아 바깥에 자리가 없으면 화면 오른쪽 끝에 붙음 (min()).
+ */
 .cy-nav {
-    position: sticky;
-    top: 12px;
+    --nav-width: 42px;
+    position: fixed;
+    top: 96px;
+    left: min(calc(50% + 215px), calc(100% - var(--nav-width)));
+    z-index: 50;
     display: flex;
     flex-direction: column;
     gap: 2px;
-    width: 42px;
-    flex-shrink: 0;
-    /* 첫 카드 높이쯤에서 시작 */
-    margin-top: 56px;
+    width: var(--nav-width);
+    transition: transform 0.25s;
 }
 
 .cy-nav button {
@@ -814,4 +803,34 @@ body {
     background: #fff;
     color: #13719f;
     font-weight: bold;
+}
+
+/* 접기 버튼: 탭이 본문과 겹치는 좁은 화면에서만 보임 */
+.cy-nav .cy-nav-toggle {
+    display: none;
+    /* 접혔을 때 보이는 왼쪽 14px 안에 화살표가 오도록 왼쪽 정렬 */
+    padding: 2px 0 2px 3px;
+    text-align: left;
+    background: #fff;
+    color: #13719f;
+}
+
+/* 좁은 화면(본문 430px + 탭이 들어갈 자리가 없을 때): 화면 오른쪽 끝에서 튀어나온 탭 */
+@media (max-width: 520px) {
+    .cy-nav button {
+        border-left: 1px solid #13719f;
+        border-right: none;
+        border-radius: 5px 0 0 5px;
+        background: linear-gradient(270deg, #1a8cc4, #2aa6e0);
+        box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.15);
+    }
+
+    .cy-nav .cy-nav-toggle {
+        display: block;
+    }
+
+    /* 접으면 탭 왼쪽 끝 14px만 보이게 오른쪽으로 밀어냄 */
+    .cy-nav.folded {
+        transform: translateX(calc(var(--nav-width) - 14px));
+    }
 }

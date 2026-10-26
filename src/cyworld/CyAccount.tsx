@@ -1,5 +1,6 @@
 import { useState, type CSSProperties } from 'react';
 import { accountGroups, type Account } from '../component/AccountSection';
+import { envelopeSrc } from './envelope';
 
 const COLUMNS = 3;
 
@@ -34,7 +35,7 @@ export default function CyAccount() {
                         <div className="cy-account-group-title">{group.title}</div>
 
                         <div className="cy-account-options">
-                            {group.accounts.map(account => (
+                            {group.accounts.map((account, index) => (
                                 <label
                                     key={account.id}
                                     className={`cy-account-option ${account.id === selectedId ? 'selected' : ''}`}
@@ -49,11 +50,9 @@ export default function CyAccount() {
                                         {account.relation}
                                     </span>
 
-                                    {/* 편지봉투 썸네일: 바깥은 선택 테두리, 안쪽은 봉투 모양 */}
-                                    <span className={`cy-account-thumb ${group.id}`} aria-hidden="true">
-                                        <span className="cy-envelope">
-                                            <span className="cy-envelope-seal" />
-                                        </span>
+                                    {/* 도트 편지봉투 썸네일 */}
+                                    <span className="cy-account-thumb" aria-hidden="true">
+                                        <img className="cy-envelope" src={envelopeSrc(group.id, index)} alt="" />
                                     </span>
                                 </label>
                             ))}

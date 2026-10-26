@@ -27,8 +27,29 @@ body {
 }
 
 .cy-topbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     height: 44px;
+    padding: 0 12px;
     background: var(--cy-blue);
+}
+
+/* 로고 이미지에 흰 배경이 있어서 흰 동그라미 배지로 감쌈 */
+.cy-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff;
+    object-fit: cover;
+}
+
+.cy-logo-text {
+    font-family: var(--cy-dot);
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 0.5px;
 }
 
 .cy-title {
@@ -566,73 +587,27 @@ body {
     font-weight: bold;
 }
 
-/* 썸네일: 지붕 모양 편지봉투 (신랑측 크림 / 신부측 핑크) */
+/* 썸네일: 도트 편지봉투 (그림은 envelope.ts) */
 .cy-account-thumb {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
-    /* clip-path로 자른 모양에 테두리를 두르려면 바깥 요소에 drop-shadow를 줘야 함 */
-    filter: drop-shadow(0 0 0.5px #b9b0a0) drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.12));
+    filter: drop-shadow(1px 2px 0 rgba(0, 0, 0, 0.08));
     transition: transform 0.15s;
 }
 
+/* 선택된 봉투는 주황 도트 테두리 + 살짝 떠오름 */
 .cy-account-option.selected .cy-account-thumb {
-    filter: drop-shadow(1.5px 0 0 var(--cy-orange)) drop-shadow(-1.5px 0 0 var(--cy-orange))
-            drop-shadow(0 1.5px 0 var(--cy-orange)) drop-shadow(0 -1.5px 0 var(--cy-orange));
+    filter: drop-shadow(2px 0 0 var(--cy-orange)) drop-shadow(-2px 0 0 var(--cy-orange))
+            drop-shadow(0 2px 0 var(--cy-orange)) drop-shadow(0 -2px 0 var(--cy-orange));
     transform: translateY(-2px);
 }
 
 .cy-envelope {
-    position: relative;
     display: block;
     width: 100%;
-    height: 100%;
-    clip-path: polygon(50% 0%, 100% 32%, 100% 100%, 0% 100%, 0% 32%);
+    height: auto;
+    image-rendering: pixelated;
 }
-
-/* 칸마다 살짝 삐뚤게 */
-.cy-account-option:nth-child(2) .cy-envelope {
-    clip-path: polygon(46% 2%, 100% 36%, 97% 96%, 3% 100%, 0% 28%);
-}
-
-.cy-account-option:nth-child(3) .cy-envelope {
-    clip-path: polygon(55% 0%, 98% 30%, 100% 100%, 0% 97%, 2% 38%);
-}
-
-.cy-account-thumb.groom .cy-envelope { background: #f8efd9; }
-.cy-account-option:nth-child(2) .cy-account-thumb.groom .cy-envelope { background: #f1e8cf; }
-.cy-account-option:nth-child(3) .cy-account-thumb.groom .cy-envelope { background: #e3dccb; }
-
-.cy-account-thumb.bride .cy-envelope { background: #f9dbe3; }
-.cy-account-option:nth-child(2) .cy-account-thumb.bride .cy-envelope { background: #f3c9d6; }
-.cy-account-option:nth-child(3) .cy-account-thumb.bride .cy-envelope { background: #e6b6c8; }
-
-/* 봉투 가운데 작은 하트 씰 */
-.cy-envelope-seal {
-    position: absolute;
-    left: 50%;
-    top: 62%;
-    width: 12px;
-    height: 12px;
-    background: #e8798f;
-    transform: translate(-50%, -50%) rotate(45deg);
-    border-radius: 2px 0 2px 0;
-}
-
-.cy-envelope-seal::before,
-.cy-envelope-seal::after {
-    content: '';
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: inherit;
-}
-
-.cy-envelope-seal::before { left: -6px; top: 0; }
-.cy-envelope-seal::after { left: 0; top: -6px; }
-
-.cy-account-thumb.groom .cy-envelope-seal { background: #c9a46a; }
 
 /* 주황 말풍선 안내 박스: 화살표가 선택된 칸을 가리킴 */
 .cy-account-tip {

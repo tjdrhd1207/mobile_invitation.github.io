@@ -4,6 +4,7 @@ import CyCalendar from './CyCalendar';
 import CyLocation from './CyLocation';
 import CyAccount from './CyAccount';
 import CyBgm from './CyBgm';
+import logo from '../assets/logo.webp?w=96&format=webp&imagetools';
 import proposeImage from '../assets/propose.webp?w=860&format=webp&imagetools';
 import cyAvatar from '../assets/gallery/baby-removebg.webp?w=860&format=webp&imagetools';
 
@@ -12,7 +13,10 @@ const { groom, bride, date } = WEDDING;
 export default function CyworldApp() {
     return (
         <div className="cy-frame">
-            <header className="cy-topbar" />
+            <header className="cy-topbar">
+                <img className="cy-logo" src={logo} alt="" />
+                <span className="cy-logo-text">MarryWorld</span>
+            </header>
 
             <h1 className="cy-title">{groom.name} ♥ {bride.name}의 미니홈피</h1>
 

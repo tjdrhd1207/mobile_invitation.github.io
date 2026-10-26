@@ -3,6 +3,7 @@
     --cy-orange: #f07b2a;
     --cy-bg: #eef1f4;
     --cy-text: #333;
+    --cy-frame: #a8d5e5;   /* 상단바 + 오른쪽 테두리 띠 */
 }
 
 body {
@@ -27,12 +28,24 @@ body {
 }
 
 .cy-topbar {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
     height: 44px;
     padding: 0 12px;
-    background: var(--cy-blue);
+    background: var(--cy-frame);
+}
+
+/* 상단바 아래쪽 흰 점선: 오른쪽 끝에서 세로 점선과 만나 ㄱ자로 이어짐 */
+.cy-topbar::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 43px;
+    bottom: 6px;
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.95);
+    pointer-events: none;
 }
 
 /* 로고 이미지에 흰 배경이 있어서 흰 동그라미 배지로 감쌈 */
@@ -760,38 +773,70 @@ body {
     }
 }
 
+/* 따라다니는 탭 메뉴: 본문 오른쪽 끝에 붙어 있는 파란 인덱스 탭 */
+.cy-layout {
+    --frame-color: var(--cy-frame);   /* 테두리 띠: 상단바와 같은 연한 하늘색 */
+    --tab-color: #2b8db3;     /* 탭: 띠보다 진한 청록 파랑 */
+    --tab-border: #1f6f8f;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    padding-right: 4px;
+    /* 오른쪽 46px(점선 여백 4px + 탭 38px + 여백 4px)을 위아래 끝까지 테두리 띠로 */
+    background: linear-gradient(to left, var(--frame-color) 46px, transparent 46px);
+}
+
+/* 테두리 띠 안쪽의 노트 같은 흰 점선 */
+.cy-layout::after {
+    content: '';
+    position: absolute;
+    /* 위로 끌어올려 상단바 점선과 모서리에서 이어지게 (상단바 점선 bottom 6px + 두께 2px) */
+    top: -8px;
+    bottom: 8px;
+    right: 43px;
+    border-left: 2px dashed rgba(255, 255, 255, 0.95);
+    pointer-events: none;
+}
+
+.cy-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* 탭이 카드 오른쪽 끝에 바로 붙도록 카드 오른쪽 여백 제거 */
+.cy-content .cy-card {
+    margin-right: 0;
+}
+
 /* 탭 클릭으로 이동했을 때 섹션 위쪽에 약간의 여유 */
-.cy-frame [id^="cy-"] {
+.cy-content [id^="cy-"] {
     scroll-margin-top: 12px;
 }
 
-/*
- * 따라다니는 탭 메뉴
- * 본문 폭은 그대로 두고 화면에 고정(fixed)해서 본문 프레임(430px) 오른쪽 바깥에 붙임.
- * 화면이 좁아 바깥에 자리가 없으면 화면 오른쪽 끝에 붙음 (min()).
- */
 .cy-nav {
-    --nav-width: 42px;
-    position: fixed;
-    top: 96px;
-    left: min(calc(50% + 215px), calc(100% - var(--nav-width)));
-    z-index: 50;
+    position: sticky;
+    top: 12px;
     display: flex;
     flex-direction: column;
     gap: 2px;
-    width: var(--nav-width);
-    transition: transform 0.25s;
+    width: 38px;
+    flex-shrink: 0;
+    /* 점선 오른쪽에서 탭이 시작되도록 */
+    margin-left: 4px;
+    z-index: 1;
+    /* 첫 카드 높이쯤에서 시작 */
+    margin-top: 56px;
 }
 
 .cy-nav button {
     padding: 6px 2px;
-    border: 1px solid #13719f;
-    border-left: none;
+    border: 1px solid var(--tab-border);
     border-radius: 0 5px 5px 0;
-    background: linear-gradient(90deg, #1a8cc4, #2aa6e0);
+    background: var(--tab-color);
     color: #fff;
     font: inherit;
     font-size: 10px;
+    letter-spacing: -0.5px;
     line-height: 1.2;
     word-break: keep-all;
     text-align: center;
@@ -801,36 +846,6 @@ body {
 /* 현재 보고 있는 섹션 탭은 흰색 */
 .cy-nav button.active {
     background: #fff;
-    color: #13719f;
+    color: var(--tab-border);
     font-weight: bold;
-}
-
-/* 접기 버튼: 탭이 본문과 겹치는 좁은 화면에서만 보임 */
-.cy-nav .cy-nav-toggle {
-    display: none;
-    /* 접혔을 때 보이는 왼쪽 14px 안에 화살표가 오도록 왼쪽 정렬 */
-    padding: 2px 0 2px 3px;
-    text-align: left;
-    background: #fff;
-    color: #13719f;
-}
-
-/* 좁은 화면(본문 430px + 탭이 들어갈 자리가 없을 때): 화면 오른쪽 끝에서 튀어나온 탭 */
-@media (max-width: 520px) {
-    .cy-nav button {
-        border-left: 1px solid #13719f;
-        border-right: none;
-        border-radius: 5px 0 0 5px;
-        background: linear-gradient(270deg, #1a8cc4, #2aa6e0);
-        box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.15);
-    }
-
-    .cy-nav .cy-nav-toggle {
-        display: block;
-    }
-
-    /* 접으면 탭 왼쪽 끝 14px만 보이게 오른쪽으로 밀어냄 */
-    .cy-nav.folded {
-        transform: translateX(calc(var(--nav-width) - 14px));
-    }
 }

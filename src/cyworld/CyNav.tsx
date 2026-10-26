@@ -14,8 +14,6 @@ export const NAV_ITEMS = [
 
 export default function CyNav() {
     const [activeId, setActiveId] = useState(NAV_ITEMS[0].id);
-    // 좁은 화면에서 탭이 본문을 가릴 때 접어둘 수 있게
-    const [folded, setFolded] = useState(false);
 
     // 화면 위쪽 1/3 지점을 지나가는 섹션을 현재 탭으로 표시
     useEffect(() => {
@@ -42,16 +40,7 @@ export default function CyNav() {
     };
 
     return (
-        <nav className={`cy-nav ${folded ? 'folded' : ''}`} aria-label="미니홈피 메뉴">
-            <button
-                type="button"
-                className="cy-nav-toggle"
-                onClick={() => setFolded(prev => !prev)}
-                aria-label={folded ? '메뉴 펼치기' : '메뉴 접기'}
-                aria-expanded={!folded}
-            >
-                {folded ? '◀' : '▶'}
-            </button>
+        <nav className="cy-nav" aria-label="미니홈피 메뉴">
             {NAV_ITEMS.map(item => (
                 <button
                     key={item.id}

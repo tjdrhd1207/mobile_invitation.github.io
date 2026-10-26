@@ -24,8 +24,11 @@ export default function CyworldApp() {
                     <h1 id="cy-home" className="cy-title">{groom.name} ♥ {bride.name}의 미니홈피</h1>
 
                     <section className="cy-card">
-                        <div className="bgm">
-                            <CyBgm />
+                        <div className="cy-jukebox">
+                            <div className="cy-today">TODAY <b>0</b> | 0 </div>
+                            <div className="bgm">
+                                <CyBgm />
+                            </div>
                         </div>
                     </section >
 
@@ -34,7 +37,6 @@ export default function CyworldApp() {
                             <img className="cy-avatar-img" src={cyAvatar} alt="미니룸" />
                         </div>
                         <div className="cy-profile-info">
-                            <div className="cy-today">TODAY <b>0</b> | 0</div>
                             <div className="cy-name">{groom.name} ♥ {bride.name}</div>
                             <div className="cy-desc">{date.year}.{date.month}.{date.day} 결혼합니다</div>
                         </div>

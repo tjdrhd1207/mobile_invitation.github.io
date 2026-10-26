@@ -799,6 +799,7 @@ body {
 }
 
 .cy-content {
+    padding-right: 4px;
     flex: 1;
     min-width: 0;
 }
@@ -835,7 +836,7 @@ body {
     background: var(--tab-color);
     color: #fff;
     font: inherit;
-    font-size: 10px;
+    font-size: 8.5px;
     letter-spacing: -0.5px;
     line-height: 1.2;
     word-break: keep-all;

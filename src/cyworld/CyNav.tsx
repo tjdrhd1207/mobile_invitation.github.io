@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // 탭 이름과 이동할 섹션 id (CyworldApp의 section id와 맞춰야 함)
 export const NAV_ITEMS = [
@@ -14,11 +14,14 @@ export const NAV_ITEMS = [
 
 export default function CyNav() {
     const [activeId, setActiveId] = useState(NAV_ITEMS[0].id);
+    // 탭 클릭으로 스크롤 중일 때는 지나가는 섹션들로 탭이 바뀌지 않도록 잠금
+    const isClickScrolling = useRef(false);
 
     // 화면 위쪽 1/3 지점을 지나가는 섹션을 현재 탭으로 표시
     useEffect(() => {
         const observer = new IntersectionObserver(
             entries => {
+                if (isClickScrolling.current) return;
                 entries.forEach(entry => {
                     if (entry.isIntersecting) setActiveId(entry.target.id);
                 });
@@ -35,8 +38,28 @@ export default function CyNav() {
     }, []);
 
     const moveTo = (id: string) => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setActiveId(id);
+        isClickScrolling.current = true;
+
+        // 스크롤 이벤트가 150ms 동안 없으면 스크롤이 끝난 것으로 보고 잠금 해제
+        // (이미 그 위치라 스크롤이 안 일어나는 경우도 150ms 뒤 해제됨)
+        let timer = window.setTimeout(unlock, 150);
+        function onScroll() {
+            window.clearTimeout(timer);
+            timer = window.setTimeout(unlock, 150);
+        }
+        function unlock() {
+            isClickScrolling.current = false;
+            window.removeEventListener('scroll', onScroll);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // 홈은 상단바까지 보이도록 페이지 맨 위로
+        if (id === NAV_ITEMS[0].id) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     };
 
     return (

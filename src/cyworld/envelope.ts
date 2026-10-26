@@ -85,10 +85,10 @@ function toSvg(rows: string[], palette: Palette) {
 const CLOSED = withHeart(closedEnvelope());
 const OPEN = withHeart(openEnvelope());
 
-// 가운데 칸만 열린 봉투로 해서 칸마다 모양이 조금씩 다르게
-export function envelopeSrc(groupId: 'groom' | 'bride', index: number) {
+// 선택된 칸은 열린 봉투, 나머지는 닫힌 봉투
+export function envelopeSrc(groupId: 'groom' | 'bride', index: number, selected: boolean) {
     const palettes = PALETTES[groupId];
     const palette = palettes[index % palettes.length];
-    const rows = index % 3 === 1 ? OPEN : CLOSED;
+    const rows = selected ? OPEN : CLOSED;
     return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(toSvg(rows, palette))}`;
 }

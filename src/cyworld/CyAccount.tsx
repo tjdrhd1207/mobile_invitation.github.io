@@ -52,7 +52,7 @@ export default function CyAccount() {
 
                                     {/* 도트 편지봉투 썸네일 */}
                                     <span className="cy-account-thumb" aria-hidden="true">
-                                        <img className="cy-envelope" src={envelopeSrc(group.id, index)} alt="" />
+                                        <img className="cy-envelope" src={envelopeSrc(group.id, index, account.id === selectedId)} alt="" />
                                     </span>
                                 </label>
                             ))}

@@ -54,12 +54,8 @@ export default function CyNav() {
         }
         window.addEventListener('scroll', onScroll, { passive: true });
 
-        // 홈은 상단바까지 보이도록 페이지 맨 위로
-        if (id === NAV_ITEMS[0].id) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     return (

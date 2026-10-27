@@ -531,6 +531,105 @@ body {
     margin-top: 10px;
 }
 
+/* 오시는 길 안내 */
+.cy-route {
+    margin-top: 16px;
+    font-size: 12px;
+    line-height: 1.6;
+    word-break: keep-all;
+}
+
+.cy-route-heading {
+    padding: 6px 10px;
+    border-left: 3px solid var(--cy-orange);
+    background: #fffaf3;
+    color: var(--cy-orange);
+    font-size: 13px;
+}
+
+.cy-route-section {
+    padding: 12px 2px;
+    border-bottom: 1px dashed #d5d5d5;
+}
+
+.cy-route-section:last-child {
+    border-bottom: none;
+}
+
+.cy-route-title {
+    margin-bottom: 6px;
+    color: var(--cy-blue);
+    font-size: 13px;
+}
+
+.cy-route-icon {
+    margin-right: 2px;
+}
+
+.cy-route-desc {
+    margin: 4px 0 0;
+    color: #666;
+}
+
+.cy-route-desc b {
+    color: var(--cy-text);
+    font-weight: normal;
+    text-decoration: underline dotted;
+}
+
+.cy-route-lines {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* 지하철 호선 / 버스 종류 배지 */
+.cy-line-badge,
+.cy-bus-badge {
+    display: inline-block;
+    flex-shrink: 0;
+    padding: 0 6px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.cy-line-badge.line1 { background: #0052a4; }
+.cy-line-badge.line2 { background: #00a84d; }
+
+.cy-bus-badge.blue { background: #3d6fd6; }
+.cy-bus-badge.green { background: #4caf3a; }
+.cy-bus-badge.red { background: #e04848; }
+.cy-bus-badge.lime { background: #8cbf3f; }
+.cy-bus-badge.gray { background: #8a8a8a; }
+.cy-bus-badge.sky { background: #3fa9d6; }
+
+.cy-bus-stop {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: #f7f9fb;
+    border: 1px solid #e3e8ec;
+    border-radius: 6px;
+}
+
+.cy-bus-stop-name {
+    color: var(--cy-text);
+}
+
+.cy-bus-list {
+    margin: 6px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cy-bus-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 2px 0;
+}
+
 /* 싸이월드풍 작은 회색 버튼 */
 .cy-btn {
     display: inline-block;

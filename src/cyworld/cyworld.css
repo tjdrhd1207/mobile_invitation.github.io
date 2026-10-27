@@ -92,9 +92,11 @@ body {
 }
 
 .cy-today {
+    flex-shrink: 0;
     font-family: var(--cy-dot);
     font-size: 11px;
     color: #999;
+    white-space: nowrap;
 }
 
 .cy-today b {
@@ -955,5 +957,23 @@ body {
     flex-direction: row;
     align-items: center;
     gap: 5px;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+
+/* 모바일: TODAY가 한 줄에 들어가도록 플레이어를 작게 */
+@media (max-width: 480px) {
+    .cy-bgm-player {
+        gap: 3px;
+        padding: 2px 3px 2px 6px;
+    }
+
+    .cy-bgm-title {
+        width: 64px;
+        margin-right: 2px;
+    }
+
+    .cy-bgm-toggle-text,
+    .cy-bgm-divider {
+        display: none;
+    }
 }

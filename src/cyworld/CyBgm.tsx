@@ -78,7 +78,8 @@ export default function CyBgm() {
             </div>
             <button type="button" onClick={scrap}>{scrapped ? '복사됨' : '스크랩'}</button>
             <span className="cy-bgm-divider">|</span>
-            <button type="button" onClick={toggle} aria-pressed={isPlaying}>
+            {/* 모바일에서는 아래 ▶ 버튼과 역할이 같아서 숨김 */}
+            <button type="button" className="cy-bgm-toggle-text" onClick={toggle} aria-pressed={isPlaying}>
                 {isPlaying ? '음악정지' : '음악재생'}
             </button>
             <div className="cy-bgm-controls">

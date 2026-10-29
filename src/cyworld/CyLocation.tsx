@@ -6,29 +6,19 @@ import { MINIMI_SRC } from './minimi';
 const { venue, address } = WEDDING;
 const MAP_LINKS = getMapLinks(venue, address);
 
-// 버스 정류장별 노선 (color: 배지 색상 클래스)
-const BUS_STOPS = [
+// 버스 정류장별 노선 (color: 배지 색상 클래스, desc: 정류장 위치 설명 - 없으면 생략)
+const BUS_STOPS: { name: string; desc?: string; buses: { type: string; color: string; numbers: string }[] }[] = [
     {
-        name: '신도림역 (17-102)',
-        desc: '지하철 신도림역 3번 출구 쪽',
+        name: '신도림역',
         buses: [
-            { type: '지선', color: 'green', numbers: '5619, 6411, 6511, 6611' },
-            { type: '직행', color: 'red', numbers: '5200' },
-            { type: '마을', color: 'lime', numbers: '영등포09, 영등포12, 영등포13' },
-        ],
-    },
-    {
-        name: '신도림역 (17-001)',
-        desc: '지하철 신도림역 1번 출구 쪽 (하차 후 지하보도 이용, 지하철 3번 출구 방면으로 이동 후 테크노마트 판매동 지하 1층 통로 이용)',
-        buses: [
-            { type: '간선', color: 'blue', numbers: '160, 503, 600, 660, 662' },
-            { type: '지선', color: 'green', numbers: '5615, 5714, 6512, 6515, 6516, 6637, 6640A, 6713' },
-            { type: '직행', color: 'red', numbers: '301, 320' },
-            { type: '일반', color: 'gray', numbers: '10, 11-1, 11-2, 83, 88, 530' },
-            { type: '공항', color: 'sky', numbers: '6018' },
+            { type: '지선', color: 'green', numbers: '5619, 6411, 6511' },
+            { type: '마을', color: 'lime', numbers: '영등포09, 12, 13' },
         ],
     },
 ];
+
+// 안내용 상세 주소 (지도 검색에는 WEDDING.address 사용)
+const FULL_ADDRESS = '서울 구로구 새말로 97 (구로동 3-25) 신도림 테크노마트 8층';
 
 export default function CyLocation() {
     const mapRef = useRef<HTMLDivElement>(null);
@@ -62,6 +52,13 @@ export default function CyLocation() {
 
     return (
         <div className="cy-location">
+            <div className="cy-route-section">
+                <div className="cy-location-venue">{venue}</div>
+            </div>
+            <div className="cy-route-title">
+                <span className="cy-route-icon">📍</span> 주소
+            </div>
+            <p className="cy-route-desc">{FULL_ADDRESS}</p>
             <div className="cy-map-frame">
                 <div ref={mapRef} className="cy-map-canvas" aria-label={`${venue} 위치 지도`} />
 
@@ -75,7 +72,6 @@ export default function CyLocation() {
             </div>
 
             <div className="cy-location-info">
-                <div className="cy-location-venue">{venue}</div>
                 <div className="cy-location-address">
                     <span>{address}</span>
                     <button type="button" className="cy-btn" onClick={copyAddress}>
@@ -102,7 +98,7 @@ export default function CyLocation() {
                         <span>신도림역</span>
                     </div>
                     <p className="cy-route-desc">
-                        신도림역 <b>③번 출구</b> 테크노마트 판매동 지하 1층과 직접 연결되어 있습니다.
+                        신도림역 <b>②, ③번 출구</b> (지하철 역과 건물 지하 직접 연결)
                     </p>
                 </div>
 
@@ -114,7 +110,7 @@ export default function CyLocation() {
                     {BUS_STOPS.map(stop => (
                         <div key={stop.name} className="cy-bus-stop">
                             <div className="cy-bus-stop-name">{stop.name} 정류장 하차</div>
-                            <p className="cy-route-desc">{stop.desc}</p>
+                            {stop.desc && <p className="cy-route-desc">{stop.desc}</p>}
                             <ul className="cy-bus-list">
                                 {stop.buses.map(bus => (
                                     <li key={bus.type}>
@@ -132,11 +128,12 @@ export default function CyLocation() {
                         <span className="cy-route-icon">🚗</span> 주차 안내
                     </div>
                     <p className="cy-route-desc">
-                        테크노마트 지하주차장 이용 <b>(B3~B7)</b>
+                        웨딩홀 건물 지하주차장 <b>B3~B7</b>
                         <br />
-                        주차요원의 안내를 받으세요.
+                        약 2,500대 수용 / <b>3시간 무료</b>
                     </p>
                 </div>
+
             </div>
         </div>
     );

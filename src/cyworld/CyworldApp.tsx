@@ -5,6 +5,7 @@ import CyLocation from './CyLocation';
 import CyAccount from './CyAccount';
 import CyBgm from './CyBgm';
 import CyNav from './CyNav';
+import { useTodayCounter } from '../hooks/useTodayCounter';
 import logo from '../assets/logo.webp?w=96&format=webp&imagetools';
 import proposeImage from '../assets/propose.webp?w=860&format=webp&imagetools';
 import cyAvatar from '../assets/gallery/baby-removebg.webp?w=860&format=webp&imagetools';
@@ -12,6 +13,8 @@ import cyAvatar from '../assets/gallery/baby-removebg.webp?w=860&format=webp&ima
 const { groom, bride, date } = WEDDING;
 
 export default function CyworldApp() {
+    const counts = useTodayCounter();
+
     return (
         <div className="cy-frame">
             <header className="cy-topbar">
@@ -21,24 +24,29 @@ export default function CyworldApp() {
 
             <div className="cy-layout">
                 <main className="cy-content">
-                    <h1 id="cy-home" className="cy-title">{groom.name} ♥ {bride.name}의 미니홈피</h1>
+                    <h1 id="cy-home" className="cy-title">{groom.name} ♥ {bride.name} 결혼합니다.</h1>
 
                     <section className="cy-card">
                         <div className="cy-jukebox">
-                            <div className="cy-today">TODAY <b>0</b> | 0 </div>
+                            {/* 불러오는 중이거나 실패하면 '-' 표시 */}
+                            <div className="cy-today">
+                                TODAY <b>{counts?.today ?? '-'}</b> | {counts?.total ?? '-'}
+                            </div>
                             <div className="bgm">
                                 <CyBgm />
                             </div>
                         </div>
                     </section >
 
-                    <section className="cy-card cy-profile">
+                    <section className="cy-card2 cy-profile">
                         <div className="cy-avatar" >
                             <img className="cy-avatar-img" src={cyAvatar} alt="미니룸" />
                         </div>
                         <div className="cy-profile-info">
                             <div className="cy-name">{groom.name} ♥ {bride.name}</div>
-                            <div className="cy-desc">{date.year}.{date.month}.{date.day} 결혼합니다</div>
+                            <div className="cy-desc">{date.year}.{date.month}.{date.day} 토요일 12:10</div>
+                            <div className="cy-text">신도림 웨딩시티 8F 아모르홀 </div>
+                            <div className="cy-text">저희 결혼합니다.</div>
                         </div>
                     </section>
 
@@ -52,13 +60,22 @@ export default function CyworldApp() {
                     <section id="cy-introduce" className="cy-card">
                         <div>
                             <h2 className="cy-section-title">Introduce</h2>
-                            <p>함께하면 더 편하고, 더 재밌어서</p>
-                            <p>결국엔 인생을 같이 해보기로 했어요.</p>
-                            <p>좋은 일, 힘든 일도 나눌 수 있는</p>
-                            <p>든든한 사람이 되어주려 합니다.</p>
-                            <p>저희의 시작이 되는 날,</p>
-                            <p>시간 괜찮으시면 얼굴 보러 와주세요!</p>
-                            <p>웃으며 만날 수 있다면 더 바랄 게 없습니다.</p>
+
+                            <p>오랜 시간 곁에서 서로를 아껴온 저희가</p>
+                            <p>깊은 신뢰를 바탕으로 평생을 함께하기로 했습니다.</p>
+                            <p>겨울의 끝자락에서 새로운 출발을 다짐하는 자리에</p>
+                            <p>소중한 분들을 모시고자 합니다.</p>
+                            <p>오셔서 축복해 주시면</p>
+                            <p>큰 기쁨과 감사한 마음으로 잘 살겠습니다.</p>
+                            <br></br>
+                            <div className="cy-all-family">
+                                <div className="cy-family">
+                                    <div className="cy-person-name">김승준</div>&nbsp;<div className="cy-person-name">조춘열</div>&nbsp;의 아들&nbsp;<div className="cy-person-name">김재민</div>
+                                </div>
+                                <div className="cy-family">
+                                    <div className="cy-person-name">공진환</div>&nbsp;<div className="cy-person-name">안미환</div>&nbsp;의 딸&nbsp;<div className="cy-person-name">공국명</div>
+                                </div>
+                            </div>
                         </div>
                     </section >
 

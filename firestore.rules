@@ -1,0 +1,31 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 방문자 수: visits/total, visits/YYYY-MM-DD
+    // 누구나 읽을 수 있고, 쓰기는 count 필드를 1씩 올리는 것만 허용
+    match /visits/{dayId} {
+      allow read: if true;
+
+      allow create: if isVisitDoc(dayId)
+        && request.resource.data.keys().hasOnly(['count'])
+        && request.resource.data.count == 1;
+
+      allow update: if isVisitDoc(dayId)
+        && request.resource.data.keys().hasOnly(['count'])
+        && request.resource.data.count == resource.data.count + 1;
+
+      allow delete: if false;
+    }
+
+    function isVisitDoc(id) {
+      return id == 'total' || id.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
+    }
+
+    // 그 외 모든 문서는 접근 금지
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

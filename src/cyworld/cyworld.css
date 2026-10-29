@@ -3,7 +3,8 @@
     --cy-orange: #f07b2a;
     --cy-bg: #eef1f4;
     --cy-text: #333;
-    --cy-frame: #a8d5e5;   /* 상단바 + 오른쪽 테두리 띠 */
+    --cy-frame: #a8d5e5;
+    /* 상단바 + 오른쪽 테두리 띠 */
 }
 
 body {
@@ -14,11 +15,19 @@ body {
 }
 
 @font-face {
-  font-family: 'WeddingFont';
-  src: url('../assets/fonts/DOSSaemmul.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'WeddingFont';
+    src: url('../assets/fonts/DOSSaemmul.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'WeddingFontBolder';
+    src: url('../assets/fonts/DOSGothic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
 }
 
 .cy-frame {
@@ -78,17 +87,24 @@ body {
     padding: 16px;
 }
 
+.cy-card2 {
+    background: #fff;
+    border-radius: 10px;
+    margin: 0 8px 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
 .cy-profile {
     display: flex;
     gap: 16px;
 }
 
 .cy-avatar {
-    width: 200px;
-    height: 150px;
-    border-radius: 12px;
     background: #ddd;
     flex-shrink: 0;
+    border: 1px #b7adad solid;
 }
 
 .cy-today {
@@ -104,12 +120,18 @@ body {
 }
 
 .cy-name {
-    font-size: 16px;
+    font-size: 18px;
     margin: 6px 0;
 }
 
+.cy-text {
+    color: #6858e3;
+    font-family: 'WeddingFontBolder', serif;
+    font-style: italic
+}
+
 .cy-desc {
-    font-size: 13px;
+    font-size: 18px;
 }
 
 .cy-menu {
@@ -149,6 +171,7 @@ body {
     width: 100%;
     height: 100%;
 }
+
 /* Gallery */
 .cy-gallery {
     position: relative;
@@ -265,7 +288,7 @@ body {
 
 .cy-cal-year {
     color: var(--cy-orange);
-    font-size: 11px;
+    font-size: 18px;
     flex-shrink: 0;
 }
 
@@ -275,7 +298,8 @@ body {
     scrollbar-width: none;
 }
 
-.cy-cal-tabs button {
+.cy-cal-tabs button,
+.cy-cal-tabs span {
     padding: 2px 3px;
     border: none;
     background: none;
@@ -285,7 +309,8 @@ body {
     cursor: pointer;
 }
 
-.cy-cal-tabs button.active {
+.cy-cal-tabs button.active,
+.cy-cal-tabs span.active {
     color: var(--cy-blue);
     border-bottom: 2px solid var(--cy-blue);
 }
@@ -481,8 +506,7 @@ body {
 .cy-map-marker img {
     width: 36px;
     image-rendering: pixelated;
-    filter: drop-shadow(1px 0 0 #555) drop-shadow(-1px 0 0 #555)
-            drop-shadow(0 1px 0 #555) drop-shadow(0 -1px 0 #555);
+    filter: drop-shadow(1px 0 0 #555) drop-shadow(-1px 0 0 #555) drop-shadow(0 1px 0 #555) drop-shadow(0 -1px 0 #555);
 }
 
 .cy-map-bubble {
@@ -597,15 +621,37 @@ body {
     line-height: 1.7;
 }
 
-.cy-line-badge.line1 { background: #0052a4; }
-.cy-line-badge.line2 { background: #00a84d; }
+.cy-line-badge.line1 {
+    background: #0052a4;
+}
 
-.cy-bus-badge.blue { background: #3d6fd6; }
-.cy-bus-badge.green { background: #4caf3a; }
-.cy-bus-badge.red { background: #e04848; }
-.cy-bus-badge.lime { background: #8cbf3f; }
-.cy-bus-badge.gray { background: #8a8a8a; }
-.cy-bus-badge.sky { background: #3fa9d6; }
+.cy-line-badge.line2 {
+    background: #00a84d;
+}
+
+.cy-bus-badge.blue {
+    background: #3d6fd6;
+}
+
+.cy-bus-badge.green {
+    background: #4caf3a;
+}
+
+.cy-bus-badge.red {
+    background: #e04848;
+}
+
+.cy-bus-badge.lime {
+    background: #8cbf3f;
+}
+
+.cy-bus-badge.gray {
+    background: #8a8a8a;
+}
+
+.cy-bus-badge.sky {
+    background: #3fa9d6;
+}
 
 .cy-bus-stop {
     margin-top: 8px;
@@ -658,7 +704,7 @@ body {
     color: #888;
 }
 
-.cy-account-group + .cy-account-group {
+.cy-account-group+.cy-account-group {
     margin-top: 16px;
     padding-top: 14px;
     border-top: 1px solid #e5e5e5;
@@ -711,8 +757,7 @@ body {
 
 /* 선택된 봉투는 주황 도트 테두리 + 살짝 떠오름 */
 .cy-account-option.selected .cy-account-thumb {
-    filter: drop-shadow(2px 0 0 var(--cy-orange)) drop-shadow(-2px 0 0 var(--cy-orange))
-            drop-shadow(0 2px 0 var(--cy-orange)) drop-shadow(0 -2px 0 var(--cy-orange));
+    filter: drop-shadow(2px 0 0 var(--cy-orange)) drop-shadow(-2px 0 0 var(--cy-orange)) drop-shadow(0 2px 0 var(--cy-orange)) drop-shadow(0 -2px 0 var(--cy-orange));
     transform: translateY(-2px);
 }
 
@@ -868,6 +913,7 @@ body {
         left: 0;
         transform: translateX(-100%);
     }
+
     to {
         left: 100%;
         transform: translateX(0);
@@ -876,8 +922,10 @@ body {
 
 /* 따라다니는 탭 메뉴: 본문 오른쪽 끝에 붙어 있는 파란 인덱스 탭 */
 .cy-layout {
-    --frame-color: var(--cy-frame);   /* 테두리 띠: 상단바와 같은 연한 하늘색 */
-    --tab-color: #2b8db3;     /* 탭: 띠보다 진한 청록 파랑 */
+    --frame-color: var(--cy-frame);
+    /* 테두리 띠: 상단바와 같은 연한 하늘색 */
+    --tab-color: #2b8db3;
+    /* 탭: 띠보다 진한 청록 파랑 */
     --tab-border: #1f6f8f;
     position: relative;
     display: flex;
@@ -958,6 +1006,28 @@ body {
     align-items: center;
     gap: 5px;
     justify-content: space-between;
+}
+
+.cy-profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cy-family {
+    display: flex;
+}
+
+.cy-all-family {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.cy-person-name {
+    font-style: italic;
+    font-weight: bold;
+    color: #5555a1;
 }
 
 /* 모바일: TODAY가 한 줄에 들어가도록 플레이어를 작게 */

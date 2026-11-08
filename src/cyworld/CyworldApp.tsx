@@ -7,8 +7,9 @@ import CyBgm from './CyBgm';
 import CyNav from './CyNav';
 import { useTodayCounter } from '../hooks/useTodayCounter';
 import logo from '../assets/logo.webp?w=96&format=webp&imagetools';
-import proposeImage from '../assets/propose.webp?w=860&format=webp&imagetools';
 import cyAvatar from '../assets/gallery/baby-removebg.webp?w=860&format=webp&imagetools';
+import CyMiniRoom from './CyMiniRoom';
+import CyGuestbook from './CyGuestbook';
 
 const { groom, bride, date } = WEDDING;
 
@@ -80,10 +81,7 @@ export default function CyworldApp() {
                     </section >
 
                     <section id="cy-miniroom" className="cy-card">
-                        <h2 className="cy-section-title">Mini Room</h2>
-                        <div className="cy-miniroom" >
-                            <img src={proposeImage} alt="미니룸" />
-                        </div>
+                        <CyMiniRoom />
                     </section>
 
                     <section id="cy-gallery" className="cy-card">
@@ -108,6 +106,7 @@ export default function CyworldApp() {
 
                     <section id="cy-guestbook" className="cy-card">
                         <h2 className="cy-section-title">What Friends Say</h2>
+                        <CyGuestbook />
                     </section>
                 </main>
 

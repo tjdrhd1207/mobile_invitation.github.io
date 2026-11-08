@@ -154,16 +154,28 @@ body {
 }
 
 .cy-miniroom {
+   position: relative;
     aspect-ratio: 16 / 10;
     background: #f7c6cf;
     overflow: hidden;
 }
 
 .cy-miniroom img {
+   position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    
+    image-rendering: pixelated;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+   
+}
+
+.cy-miniroom img.is-active {
+    opacity: 1;
 }
 
 .cy-avatar-img {
@@ -173,89 +185,66 @@ body {
 }
 
 /* Gallery */
-.cy-gallery {
-    position: relative;
-    padding: 0 18px;
+.cy-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
 }
 
-.cy-gallery-list {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    padding: 4px 2px;
-}
-
-.cy-gallery-list::-webkit-scrollbar {
-    display: none;
-}
-
-.cy-gallery-card {
-    flex: 0 0 calc((100% - 20px) / 3);
-    scroll-snap-align: start;
-    background: none;
-    border: none;
+.cy-gallery-grid-item {
+    aspect-ratio: 1 / 1;
     padding: 0;
-    text-align: left;
-    font: inherit;
-    color: inherit;
+    border: 2px solid transparent;
+    background: #eee;
+    overflow: hidden;
     cursor: pointer;
 }
 
-.cy-gallery-thumb {
-    aspect-ratio: 1 / 1;
-    padding: 4px;
-    background: #fff;
-    border: 2px solid #ddd;
-    box-sizing: border-box;
-}
-
-.cy-gallery-card.selected .cy-gallery-thumb {
+.cy-gallery-grid-item.selected {
     border-color: var(--cy-orange);
 }
 
-.cy-gallery-thumb img {
+.cy-gallery-grid-item img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.2s;
 }
 
-.cy-gallery-caption {
-    margin-top: 6px;
-    font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.cy-gallery-grid-item:hover img {
+    transform: scale(1.05);
 }
 
-.cy-gallery-author {
-    font-size: 11px;
-    color: var(--cy-blue);
+.cy-gallery-pager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-top: 10px;
 }
 
-.cy-gallery-arrow {
-    position: absolute;
-    top: 35%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 32px;
-    padding: 0;
+.cy-gallery-pager button {
+    min-width: 22px;
+    height: 22px;
+    padding: 0 4px;
     border: none;
     background: none;
-    color: #bbb;
-    font-size: 24px;
-    line-height: 1;
+    font: inherit;
+    font-size: 12px;
+    color: #999;
     cursor: pointer;
 }
 
-.cy-gallery-arrow.left {
-    left: 0;
+.cy-gallery-pager button.active {
+    color: var(--cy-orange);
+    font-weight: bold;
+    text-decoration: underline;
 }
 
-.cy-gallery-arrow.right {
-    right: 0;
+.cy-gallery-pager button:disabled {
+    color: #ddd;
+    cursor: default;
 }
 
 .cy-gallery-modal {
@@ -1046,4 +1035,268 @@ body {
     .cy-bgm-divider {
         display: none;
     }
+}
+/* Guestbook */
+.cy-guestbook-write {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border: 1px dashed var(--cy-blue);
+    background: #f5fbfe;
+    color: var(--cy-blue);
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.cy-guestbook-write:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.cy-guestbook-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fafafa;
+}
+
+.cy-guestbook-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    font: inherit;
+    font-size: 13px;
+    resize: vertical;
+}
+
+.cy-guestbook-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cy-guestbook-count {
+    margin-right: auto;
+    font-size: 11px;
+    color: #999;
+}
+
+.cy-guestbook-actions button {
+    padding: 4px 12px;
+    border: 1px solid #ccc;
+    background: #fff;
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.cy-guestbook-actions button.primary {
+    border-color: var(--cy-orange);
+    background: var(--cy-orange);
+    color: #fff;
+}
+
+.cy-guestbook-actions button:disabled {
+    opacity: 0.6;
+}
+
+.cy-guestbook-empty {
+    margin: 16px 0;
+    text-align: center;
+    font-size: 13px;
+    color: #999;
+}
+
+.cy-guestbook-list {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cy-guestbook-entry + .cy-guestbook-entry {
+    margin-top: 14px;
+}
+
+.cy-guestbook-head {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 6px 8px;
+    border-top: 2px solid #999;
+    background: #f2f2f2;
+    font-size: 12px;
+}
+
+.cy-guestbook-no {
+    color: #555;
+}
+
+.cy-guestbook-name {
+    color: var(--cy-blue);
+    font-weight: bold;
+}
+
+.cy-guestbook-date {
+    font-size: 10px;
+    color: #aaa;
+}
+
+.cy-guestbook-body {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 8px;
+}
+
+.cy-guestbook-minimi {
+    flex: 0 0 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+.cy-guestbook-minimi img {
+    height: 60px;
+    image-rendering: pixelated;
+}
+
+.cy-guestbook-message {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Minimi editor */
+.cy-minimi-editor {
+    display: flex;
+    gap: 10px;
+}
+
+.cy-minimi-preview {
+    flex: 0 0 90px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+.cy-minimi-preview img {
+    height: 96px;
+    image-rendering: pixelated;
+}
+
+.cy-minimi-panel {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cy-minimi-tabs {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+}
+
+.cy-minimi-tabs button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 2px 6px 4px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    font: inherit;
+    font-size: 11px;
+    color: #888;
+    cursor: pointer;
+}
+
+.cy-minimi-tabs button.active {
+    border-bottom-color: var(--cy-orange);
+    color: var(--cy-orange);
+    font-weight: bold;
+}
+
+.cy-minimi-tabs img {
+    height: 30px;
+    image-rendering: pixelated;
+}
+
+.cy-minimi-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+    gap: 4px;
+}
+
+.cy-minimi-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+    height: 58px;
+    padding: 3px 2px;
+    border: 2px solid #eee;
+    background: #fff;
+    font: inherit;
+    cursor: pointer;
+}
+
+.cy-minimi-item.selected {
+    border-color: var(--cy-orange);
+}
+
+.cy-minimi-item img {
+    height: 36px;
+    image-rendering: pixelated;
+}
+
+.cy-minimi-none {
+    height: 36px;
+    line-height: 36px;
+    font-size: 10px;
+    color: #bbb;
+}
+
+.cy-minimi-item-label {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 9px;
+    color: #777;
+}
+
+.cy-minimi-colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.cy-minimi-colors button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #ccc;
+    cursor: pointer;
+}
+
+.cy-minimi-colors button.selected {
+    box-shadow: 0 0 0 2px var(--cy-orange);
 }

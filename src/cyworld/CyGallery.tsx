@@ -1,46 +1,52 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { photos, type Photo } from '../component/PolaroidGallery';
-import { WEDDING } from '../data/wedding';
 
-const { groom, bride } = WEDDING;
+// 바둑판 한 페이지: 3열 x 4행
+const PAGE_SIZE = 12;
+const totalPages = Math.ceil(photos.length / PAGE_SIZE);
 
 export default function CyGallery() {
-    const listRef = useRef<HTMLDivElement>(null);
     const [selectedId, setSelectedId] = useState<number>(photos[0].id);
     const [openPhoto, setOpenPhoto] = useState<Photo | null>(null);
+    const [page, setPage] = useState(0);
+    const pagePhotos = photos.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
-    // 카드 한 장 너비만큼 좌우로 스크롤
-    const scrollBy = (dir: 1 | -1) => {
-        const list = listRef.current;
-        const card = list?.firstElementChild as HTMLElement | null;
-        if (!list || !card) return;
-        list.scrollBy({ left: dir * (card.offsetWidth + 10), behavior: 'smooth' });
+    const open = (photo: Photo) => {
+        setSelectedId(photo.id);
+        setOpenPhoto(photo);
     };
 
     return (
-        <div className="cy-gallery">
-            <button className="cy-gallery-arrow left" onClick={() => scrollBy(-1)} aria-label="이전 사진">‹</button>
-
-            <div className="cy-gallery-list" ref={listRef}>
-                {photos.map((photo, i) => (
+        <div>
+            <div className="cy-gallery-grid">
+                {pagePhotos.map((photo) => (
                     <button
                         key={photo.id}
-                        className={`cy-gallery-card ${selectedId === photo.id ? 'selected' : ''}`}
-                        onClick={() => {
-                            setSelectedId(photo.id);
-                            setOpenPhoto(photo);
-                        }}
+                        className={`cy-gallery-grid-item ${selectedId === photo.id ? 'selected' : ''}`}
+                        onClick={() => open(photo)}
+                        aria-label={photo.alt}
                     >
-                        <div className="cy-gallery-thumb">
-                            <img src={photo.thumb} alt={photo.alt} loading="lazy" decoding="async" />
-                        </div>
-                        <div className="cy-gallery-caption">{photo.alt}</div>
-                        <div className="cy-gallery-author">{i % 2 === 0 ? groom.name : bride.name}</div>
+                        <img src={photo.thumb} alt={photo.alt} loading="lazy" decoding="async" />
                     </button>
                 ))}
             </div>
 
-            <button className="cy-gallery-arrow right" onClick={() => scrollBy(1)} aria-label="다음 사진">›</button>
+            {totalPages > 1 && (
+                <div className="cy-gallery-pager">
+                    <button onClick={() => setPage((p) => p - 1)} disabled={page === 0} aria-label="이전 페이지">‹</button>
+                    {Array.from({ length: totalPages }, (_, i) => (
+                        <button
+                            key={i}
+                            className={i === page ? 'active' : ''}
+                            onClick={() => setPage(i)}
+                            aria-current={i === page ? 'page' : undefined}
+                        >
+                            {i + 1}
+                        </button>
+                    ))}
+                    <button onClick={() => setPage((p) => p + 1)} disabled={page === totalPages - 1} aria-label="다음 페이지">›</button>
+                </div>
+            )}
 
             {openPhoto && (
                 <div className="cy-gallery-modal" onClick={() => setOpenPhoto(null)}>

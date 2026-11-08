@@ -47,6 +47,7 @@ export default function CyGallery() {
                     <button onClick={() => setPage((p) => p + 1)} disabled={page === totalPages - 1} aria-label="다음 페이지">›</button>
                 </div>
             )}
+            
 
             {openPhoto && (
                 <div className="cy-gallery-modal" onClick={() => setOpenPhoto(null)}>

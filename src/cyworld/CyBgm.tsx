@@ -70,6 +70,7 @@ export default function CyBgm() {
     };
 
     return (
+        <>
         <div className="cy-bgm-player">
             {/* 재생 중에는 곡 제목이 왼쪽→오른쪽으로 흐르고, 정지하면 그 자리에 멈춤 */}
             <div className="cy-bgm-title" aria-label={`배경음악 ${track.title}`}>
@@ -95,5 +96,6 @@ export default function CyBgm() {
                 <button type="button" className="cy-bgm-icon" onClick={() => move(1)} aria-label="다음 곡">▶▶</button>
             </div>
         </div>
+        </>
     );
 }

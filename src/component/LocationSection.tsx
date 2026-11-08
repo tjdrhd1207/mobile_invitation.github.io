@@ -5,7 +5,7 @@ import { getMapLinks, useKakaoMap } from "../hooks/useKakaoMap";
 const VENUE = WEDDING.venue;
 const ADDRESS = WEDDING.address;
 
-const MAP_LINKS = getMapLinks(VENUE, ADDRESS);
+const MAP_LINKS = getMapLinks(VENUE);
 
 
 export default function LocationSection() {

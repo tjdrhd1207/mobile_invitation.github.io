@@ -47,33 +47,32 @@ export type Photo = {
   id: number;
   src: string;
   thumb: string;
-  alt: string;
   rotate: number;
   square?: boolean;
 };
 
 export const photos: Photo[] = [
-  { id: 1, src: photo1, thumb: thumb1, alt: '우리의 첫 번째 추억', rotate: -4 },
-  { id: 2, src: photo2, thumb: thumb2, alt: '함께한 소중한 순간', rotate: 8 },
-  { id: 3, src: photo3, thumb: thumb3, alt: '우리의 행복한 하루', rotate: -8, square: true },
-  { id: 4, src: photo4, thumb: thumb4, alt: '함께 찍은 사진', rotate: 5 },
-  { id: 5, src: photo5, thumb: thumb5, alt: '우리의 첫 번째 추억', rotate: -10 },
-  { id: 6, src: photo6, thumb: thumb6, alt: '함께한 소중한 순간', rotate: 15, square: true },
-  { id: 7, src: photo7, thumb: thumb7, alt: '우리의 행복한 하루', rotate: 2 },
-  { id: 8, src: photo8, thumb: thumb8, alt: '함께 찍은 사진', rotate: 5, square: true },
-  { id: 9, src: photo9, thumb: thumb9, alt: '우리의 행복한 하루', rotate: -2, square: true },
-  { id: 10, src: photo10, thumb: thumb10, alt: '함께 찍은 사진', rotate: 5 },
-  { id: 11, src: photo11, thumb: thumb11, alt: '우리의 첫 번째 추억', rotate: -4 },
-  { id: 12, src: photo12, thumb: thumb12, alt: '함께한 소중한 순간', rotate: 8 },
-  { id: 13, src: photo13, thumb: thumb13, alt: '우리의 행복한 하루', rotate: -8, square: true },
-  { id: 14, src: photo14, thumb: thumb14, alt: '함께 찍은 사진', rotate: 5 },
-  { id: 15, src: photo15, thumb: thumb15, alt: '우리의 첫 번째 추억', rotate: -10 },
-  { id: 16, src: photo16, thumb: thumb16, alt: '함께한 소중한 순간', rotate: 15, square: true },
-  { id: 17, src: photo17, thumb: thumb17, alt: '우리의 행복한 하루', rotate: 2 },
-  { id: 18, src: photo18, thumb: thumb18, alt: '함께 찍은 사진', rotate: 5, square: true },
-  { id: 19, src: photo19, thumb: thumb19, alt: '우리의 행복한 하루', rotate: -2, square: true },
-  { id: 20, src: photo20, thumb: thumb20, alt: '함께 찍은 사진', rotate: 5 },
-  { id: 21, src: photo21, thumb: thumb21, alt: '함께 찍은 사진', rotate: 5 },
+  { id: 1, src: photo1, thumb: thumb1, rotate: -4 },
+  { id: 2, src: photo2, thumb: thumb2, rotate: 8 },
+  { id: 3, src: photo3, thumb: thumb3, rotate: -8, square: true },
+  { id: 4, src: photo4, thumb: thumb4, rotate: 5 },
+  { id: 5, src: photo5, thumb: thumb5, rotate: -10 },
+  { id: 6, src: photo6, thumb: thumb6, rotate: 15, square: true },
+  { id: 7, src: photo7, thumb: thumb7, rotate: 2 },
+  { id: 8, src: photo8, thumb: thumb8, rotate: 5, square: true },
+  { id: 9, src: photo9, thumb: thumb9, rotate: -2, square: true },
+  { id: 10, src: photo10, thumb: thumb10, rotate: 5 },
+  { id: 11, src: photo11, thumb: thumb11, rotate: -4 },
+  { id: 12, src: photo12, thumb: thumb12, rotate: 8 },
+  { id: 13, src: photo13, thumb: thumb13, rotate: -8, square: true },
+  { id: 14, src: photo14, thumb: thumb14, rotate: 5 },
+  { id: 15, src: photo15, thumb: thumb15, rotate: -10 },
+  { id: 16, src: photo16, thumb: thumb16, rotate: 15, square: true },
+  { id: 17, src: photo17, thumb: thumb17, rotate: 2 },
+  { id: 18, src: photo18, thumb: thumb18, rotate: 5, square: true },
+  { id: 19, src: photo19, thumb: thumb19, rotate: -2, square: true },
+  { id: 20, src: photo20, thumb: thumb20, rotate: 5 },
+  { id: 21, src: photo21, thumb: thumb21, rotate: 5 },
 ];
 
 export default function PolaroidGallery() {
@@ -118,7 +117,6 @@ export default function PolaroidGallery() {
 
           <img
             src={selectedPhoto.src}
-            alt={selectedPhoto.alt}
             onClick={(e) => e.stopPropagation()}
           />
         </div>

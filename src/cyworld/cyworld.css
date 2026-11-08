@@ -23,6 +23,19 @@ body {
 }
 
 @font-face {
+    font-family: 'OksuniSNostalgicHandwriting';
+    src: url('../assets/fonts/NanumBugGeugSeong.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+.cy-intro-text {
+    font-family: 'OksuniSNostalgicHandwriting', cursive;
+    font-weight: bold;
+}
+
+@font-face {
     font-family: 'WeddingFontBolder';
     src: url('../assets/fonts/DOSGothic.woff2') format('woff2');
     font-weight: 400;
@@ -258,12 +271,81 @@ body {
     padding: 20px;
     background: rgba(0, 0, 0, 0.8);
     color: #fff;
+    /* 확대 화면 위에서 드래그·스크롤해도 뒤 페이지로 전달되지 않게 (좌우 스와이프는 JS로 처리) */
+    touch-action: none;
+    overscroll-behavior: contain;
+}
+
+/* 세로 사진이 화면을 꽉 채우지 않도록 높이를 65%로 제한
+   (dvh: 모바일 주소창을 뺀 실제 보이는 높이, 지원 안 하는 브라우저는 vh 사용) */
+/* 사진과 화살표를 감싸는 상자: 크기가 사진과 같아짐 */
+.cy-gallery-modal-photo {
+    position: relative;
+    display: inline-flex;
 }
 
 .cy-gallery-modal img {
-    max-width: 100%;
-    max-height: 80vh;
-    border: 6px solid #fff;
+    display: block;
+    /* 상자가 사진 크기를 따라가므로 %가 아닌 화면 기준으로 최대 너비 지정 (좌우 여백 20px씩) */
+    max-width: min(calc(100vw - 40px), 400px);
+    max-height: 65vh;
+    max-height: 65dvh;
+    object-fit: contain;
+    box-sizing: border-box;
+    animation: cy-modal-fade 0.2s ease-out;
+}
+
+@keyframes cy-modal-fade {
+    from {
+        opacity: 0;
+    }
+}
+
+.cy-gallery-modal-arrow,
+.cy-gallery-modal-close {
+    position: absolute;
+    padding: 0;
+    border: none;
+    background: none;
+    color: rgba(255, 255, 255, 0.85);
+    font: inherit;
+    line-height: 1;
+    cursor: pointer;
+}
+
+/* 사진 양끝 안쪽에 붙는 화살표 (밝은 사진 위에서도 보이게 반투명 배경) */
+.cy-gallery-modal-arrow {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 52px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-size: 30px;
+}
+
+.cy-gallery-modal-arrow.left {
+    left: 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.cy-gallery-modal-arrow.right {
+    right: 0;
+    border-radius: 4px 0 0 4px;
+}
+
+.cy-gallery-modal-close {
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+}
+
+.cy-gallery-modal-count {
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 /* Calendar */
@@ -813,7 +895,15 @@ body {
 /* BGM 플레이어: 회색 미니 바 */
 .bgm {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.cy-bgm-hint {
+    margin: 3px 2px 0 0;
+    font-size: 10px;
+    color: #aaa;
+    text-align: right;
 }
 
 .cy-bgm-player {
@@ -1014,7 +1104,6 @@ body {
 }
 
 .cy-person-name {
-    font-style: italic;
     font-weight: bold;
     color: #5555a1;
 }
@@ -1299,4 +1388,9 @@ body {
 
 .cy-minimi-colors button.selected {
     box-shadow: 0 0 0 2px var(--cy-orange);
+}
+
+.cy-son-font {
+    margin-bottom: -10px;
+    font-size: 20px;
 }

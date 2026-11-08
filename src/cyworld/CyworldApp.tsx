@@ -37,6 +37,7 @@ export default function CyworldApp() {
                                 <CyBgm />
                             </div>
                         </div>
+                        <p className="cy-bgm-hint">♪ 재생 버튼을 누르시면 배경음악과 함께 보실 수 있어요</p>
                     </section >
 
                     <section className="cy-card2 cy-profile">
@@ -44,37 +45,40 @@ export default function CyworldApp() {
                             <img className="cy-avatar-img" src={cyAvatar} alt="미니룸" />
                         </div>
                         <div className="cy-profile-info">
-                            <div className="cy-name">{groom.name} ♥ {bride.name}</div>
                             <div className="cy-desc">{date.year}.{date.month}.{date.day} 토요일 12:10</div>
-                            <div className="cy-text">신도림 웨딩시티 8F 아모르홀 </div>
-                            <div className="cy-text">저희 결혼합니다.</div>
+                            <div className="cy-desc">신도림 웨딩시티 8F 아모르홀 </div>
                         </div>
                     </section>
 
-                    <section className="cy-card cy-menu">
+                    {/* <section className="cy-card cy-menu">
                         <div>다이어리 <span>0/0</span></div>
                         <div>사진첩 <span>0/0</span></div>
                         <div>쥬크박스 <span>1/1</span></div>
                         <div>방명록 <span>0/0</span></div>
-                    </section>
+                    </section> */}
 
                     <section id="cy-introduce" className="cy-card">
                         <div>
                             <h2 className="cy-section-title">Introduce</h2>
-
-                            <p>오랜 시간 곁에서 서로를 아껴온 저희가</p>
-                            <p>깊은 신뢰를 바탕으로 평생을 함께하기로 했습니다.</p>
-                            <p>겨울의 끝자락에서 새로운 출발을 다짐하는 자리에</p>
-                            <p>소중한 분들을 모시고자 합니다.</p>
-                            <p>오셔서 축복해 주시면</p>
-                            <p>큰 기쁨과 감사한 마음으로 잘 살겠습니다.</p>
-                            <br></br>
-                            <div className="cy-all-family">
-                                <div className="cy-family">
-                                    <div className="cy-person-name">김승준</div>&nbsp;<div className="cy-person-name">조춘열</div>&nbsp;의 아들&nbsp;<div className="cy-person-name">김재민</div>
-                                </div>
-                                <div className="cy-family">
-                                    <div className="cy-person-name">공진환</div>&nbsp;<div className="cy-person-name">안미환</div>&nbsp;의 딸&nbsp;<div className="cy-person-name">공국명</div>
+                            <div className="cy-intro-text">
+                                <p className="cy-son-font">오랜 시간 곁에서 서로를 아껴온 저희가</p>
+                                <p className="cy-son-font">깊은 신뢰를 바탕으로 평생을 </p>
+                                <p className="cy-son-font">함께하기로 했습니다.</p>
+                                <br></br>
+                                <p className="cy-son-font">겨울의 끝자락에서</p>
+                                <p className="cy-son-font">새로운 출발을 다짐하는 자리에</p>
+                                <p className="cy-son-font">소중한 분들을 모시고자 합니다.</p>
+                                <p className="cy-son-font">오셔서 축복해 주시면</p>
+                                <p className="cy-son-font">큰 기쁨과 감사한 마음으로 잘 살겠습니다.</p>
+                                <br></br>
+                                <br></br>
+                                <div className="cy-all-family">
+                                    <div className="cy-family">
+                                        <div className="cy-person-name">김승준</div>&nbsp;<div className="cy-person-name">조춘열</div>&nbsp;의 아들&nbsp;<div className="cy-person-name">김재민</div>
+                                    </div>
+                                    <div className="cy-family">
+                                        <div className="cy-person-name">공진환</div>&nbsp;<div className="cy-person-name">안미환</div>&nbsp;의 딸&nbsp;<div className="cy-person-name">공국명</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

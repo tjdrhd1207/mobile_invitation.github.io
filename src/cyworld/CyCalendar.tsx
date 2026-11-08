@@ -45,7 +45,7 @@ export default function CyCalendar() {
         <div className="cy-cal">
             <div className="cy-cal-top">
                 <span className="cy-cal-year">
-                    {date.year}/{date.month}/{date.day} {dayOfWeek} {hour}시 {minute}분
+                    {date.year}.{date.month}.{date.day} {dayOfWeek} {hour}:{minute}
                 </span>
                 {/* 다이어리 인덱스 탭 느낌으로 결혼하는 달 하나만 표시 */}
                 <div className="cy-cal-tabs">

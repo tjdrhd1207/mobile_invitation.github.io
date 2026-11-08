@@ -122,11 +122,11 @@ export function useKakaoMap(
     return { mapError };
 }
 
-const encodedQuery = (venue: string, address: string) =>
-    encodeURIComponent(`${venue} ${address}`);
+const encodedQuery = (venue: string) =>
+    encodeURIComponent(`${venue}`);
 
-export const getMapLinks = (venue: string, address: string) => ({
-    kakao: `https://map.kakao.com/link/search/${encodedQuery(venue, address)}`,
-    naver: `https://map.naver.com/p/search/${encodedQuery(venue, address)}`,
+export const getMapLinks = (venue: string) => ({
+    kakao: `https://map.kakao.com/link/search/${encodedQuery(venue)}`,
+    naver: `https://map.naver.com/p/search/${encodedQuery(venue)}`,
     tmap: `https://www.tmap.co.kr/`,
 });

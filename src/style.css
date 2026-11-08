@@ -23,6 +23,8 @@
   box-sizing: border-box;
 }
 
+
+
 @media (max-width: 1400px) {
   .main-frame {
     width: 100%;

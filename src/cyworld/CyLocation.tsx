@@ -4,7 +4,7 @@ import { getMapLinks, useKakaoMap } from '../hooks/useKakaoMap';
 import { MINIMI_SRC } from './minimi';
 
 const { venue, address } = WEDDING;
-const MAP_LINKS = getMapLinks(venue, address);
+const MAP_LINKS = getMapLinks(venue);
 
 // 버스 정류장별 노선 (color: 배지 색상 클래스, desc: 정류장 위치 설명 - 없으면 생략)
 const BUS_STOPS: { name: string; desc?: string; buses: { type: string; color: string; numbers: string }[] }[] = [

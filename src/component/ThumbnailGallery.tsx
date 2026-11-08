@@ -38,7 +38,6 @@ export default function ThumbnailGallery() {
         <img
           key={selectedPhoto.id}
           src={selectedPhoto.src}
-          alt={selectedPhoto.alt}
           decoding="async"
         />
 
@@ -64,7 +63,6 @@ export default function ThumbnailGallery() {
             key={photo.id}
             className={`thumb-gallery-item ${index === selectedIndex ? 'is-active' : ''}`}
             onClick={() => selectPhoto(index)}
-            aria-label={`${photo.alt} 보기`}
           >
             <img
               src={photo.thumb}

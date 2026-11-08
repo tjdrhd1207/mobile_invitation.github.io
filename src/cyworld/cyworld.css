@@ -1,4 +1,6 @@
 :root {
+    /* 밝은 화면 전용 (다크모드 강제 변환 방지, index.html의 meta와 같은 설정) */
+    color-scheme: only light;
     --cy-blue: #1ea0d7;
     --cy-orange: #f07b2a;
     --cy-bg: #eef1f4;

@@ -24,7 +24,7 @@ body {
 
 @font-face {
     font-family: 'OksuniSNostalgicHandwriting';
-    src: url('../assets/fonts/NanumBugGeugSeong.ttf') format('truetype');
+    src: url('../assets/fonts/NanumBugGeugSeong.woff2') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -47,6 +47,12 @@ body {
     max-width: 430px;
     margin: 0 auto;
     padding-bottom: 40px;
+    transition: opacity 0.3s ease-out;
+}
+
+/* 폰트 준비 전에는 숨겼다가 Main.tsx에서 fonts-ready를 붙이면 나타남 */
+html:not(.fonts-ready) .cy-frame {
+    opacity: 0;
 }
 
 .cy-topbar {
@@ -757,6 +763,20 @@ body {
     border-radius: 2px;
     background: linear-gradient(#ffffff, #e6e6e6);
     color: #555;
+    font: inherit;
+    font-size: 11px;
+    line-height: 1.6;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cy-btn-complete {
+        display: inline-block;
+    padding: 2px 8px;
+    border: 1px solid #b5b5b5;
+    border-radius: 2px;
+    background: linear-gradient(#ffffff, #e6e6e6);
+    color: #ff3b3b;
     font: inherit;
     font-size: 11px;
     line-height: 1.6;

@@ -19,11 +19,9 @@ export default function GridGallery() {
             className="grid-gallery-item"
             style={{ gridRow: `span ${getSpan(photo)}` }}
             onClick={() => setSelectedPhoto(photo)}
-            aria-label={`${photo.alt} 확대하기`}
           >
             <img
               src={photo.src}
-              alt={photo.alt}
               loading="lazy"
               decoding="async"
             />
@@ -46,7 +44,6 @@ export default function GridGallery() {
 
           <img
             src={selectedPhoto.src}
-            alt={selectedPhoto.alt}
             onClick={(e) => e.stopPropagation()}
           />
         </div>

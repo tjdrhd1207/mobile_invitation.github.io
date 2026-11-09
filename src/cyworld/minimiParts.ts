@@ -44,10 +44,29 @@ const BODY: Part = {
     ],
 };
 
-export const SKINS = [
-    { name: '밝은 피부', color: '#ffe3c8' },
-    { name: '보통 피부', color: '#f5c59b' },
-    { name: '구릿빛 피부', color: '#c98b5e' },
+// 저장된 방명록은 색 순번(index)을 기억하므로, 새 색은 항상 뒤에 추가한다
+export const SKIN_COLORS = [
+    '#ffe3c8', // 밝은 피부
+    '#f5c59b', // 보통 피부
+    '#c98b5e', // 구릿빛 피부
+    '#ffd7b5', // 복숭아
+    '#f08fb0', // 핑크
+    '#d4a373', // 밀빛
+    '#8d5a3b', // 짙은 갈색
+    '#6b4228', // 다크 브라운
+    // 재미용 색
+    '#8e2c3e', // 와인
+    '#d9653b', // 오렌지
+    '#9a9a9a', // 애쉬그레이
+    '#3d5aa8', // 블루
+    '#c8f0c8', // 연두
+    '#bfe3ff', // 하늘
+    '#ffd1e8', // 핑크
+    '#e2d4ff', // 라벤더
+    '#b8f0e6', // 민트
+    '#fff5a8', // 레몬
+    '#d9d9d9', // 회색
+    '#ffffff', // 흰색
 ];
 
 export const HAIRS: Part[] = [
@@ -623,7 +642,7 @@ const pick = (value: unknown, length: number) =>
 
 export function normalizeMinimi(value: Partial<MinimiConfig> | undefined): MinimiConfig {
     return {
-        skin: pick(value?.skin, SKINS.length),
+        skin: pick(value?.skin, SKIN_COLORS.length),
         hair: pick(value?.hair, HAIRS.length),
         hairColor: pick(value?.hairColor, HAIR_COLORS.length),
         outfit: pick(value?.outfit, OUTFITS.length),
@@ -638,7 +657,7 @@ function shade(hex: string, amount = 0.25) {
 }
 
 function paletteFor(cfg: MinimiConfig): Record<string, string> {
-    const skin = SKINS[cfg.skin].color;
+    const skin = SKIN_COLORS[cfg.skin];
     const hair = HAIR_COLORS[cfg.hairColor];
     const outfit = OUTFIT_COLORS[cfg.outfitColor];
     return {

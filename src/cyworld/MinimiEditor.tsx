@@ -4,7 +4,7 @@ import {
     HAIR_COLORS,
     OUTFITS,
     OUTFIT_COLORS,
-    SKINS,
+    SKIN_COLORS,
     renderMinimi,
     renderPart,
     type MinimiConfig,
@@ -51,16 +51,6 @@ export default function MinimiEditor({ value, onChange }: Props) {
                 </div>
 
                 <div className="cy-minimi-items">
-                    {tab === 'body' &&
-                        SKINS.map((skin, i) => (
-                            <ItemButton
-                                key={skin.name}
-                                label={skin.name}
-                                src={renderMinimi({ ...value, skin: i, hair: 0, outfit: 0 })}
-                                selected={value.skin === i}
-                                onClick={() => set({ skin: i })}
-                            />
-                        ))}
                     {tab === 'hair' &&
                         HAIRS.map((hair, i) => (
                             <ItemButton
@@ -89,6 +79,14 @@ export default function MinimiEditor({ value, onChange }: Props) {
                         selected={value.hairColor}
                         onSelect={i => set({ hairColor: i })}
                         label="머리 색"
+                    />
+                )}
+                {tab === 'body' && (
+                    <ColorSwatches
+                        colors={SKIN_COLORS}
+                        selected={value.skin}
+                        onSelect={i => set({ skin: i })}
+                        label="피부 색"
                     />
                 )}
                 {tab === 'outfit' && (

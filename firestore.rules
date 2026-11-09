@@ -47,7 +47,7 @@ service cloud.firestore {
       return m is map
         && m.keys().hasOnly(['skin', 'hair', 'hairColor', 'outfit', 'outfitColor'])
         && m.keys().hasAll(['skin', 'hair', 'hairColor', 'outfit', 'outfitColor'])
-        && isIndex(m.skin, 3)
+        && isIndex(m.skin, 20)
         && isIndex(m.hair, 17)
         && isIndex(m.hairColor, 20)
         && isIndex(m.outfit, 17)

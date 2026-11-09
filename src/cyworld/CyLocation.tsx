@@ -74,7 +74,7 @@ export default function CyLocation() {
             <div className="cy-location-info">
                 <div className="cy-location-address">
                     <span>{address}</span>
-                    <button type="button" className="cy-btn" onClick={copyAddress}>
+                    <button type="button" className={copied ? 'cy-btn' : 'cy-btn-complete'} onClick={copyAddress}>
                         {copied ? '복사완료' : '주소복사'}
                     </button>
                 </div>

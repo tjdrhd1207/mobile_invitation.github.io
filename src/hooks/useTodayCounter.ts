@@ -8,10 +8,11 @@ const COUNTED_KEY = 'cy-today-counted';
 const todayKey = () =>
     new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date());
 
-// 같은 기기에서는 하루 한 번만 집계 (새로고침으로 숫자가 부풀지 않게)
+// 방문할 때마다 집계: 페이지를 새로 열면 +1, 같은 탭에서 새로고침하면 제외
+// (sessionStorage는 탭을 닫으면 지워지고, 새로고침에는 유지됨)
 function alreadyCounted(key: string) {
     try {
-        return localStorage.getItem(COUNTED_KEY) === key;
+        return sessionStorage.getItem(COUNTED_KEY) === key;
     } catch {
         return false;
     }
@@ -19,7 +20,7 @@ function alreadyCounted(key: string) {
 
 function markCounted(key: string) {
     try {
-        localStorage.setItem(COUNTED_KEY, key);
+        sessionStorage.setItem(COUNTED_KEY, key);
     } catch {
         // 저장이 막힌 환경(사생활 보호 모드 등)이면 무시
     }

@@ -12,54 +12,89 @@ export const NAV_ITEMS = [
     { id: 'cy-guestbook', label: '방명록' },
 ];
 
+// 화면 맨 위에서 이 거리(px) 안에 섹션 윗부분이 들어오면 그 섹션을 현재 탭으로 봄
+// (CSS의 scroll-margin-top 12px보다 조금 크게: 탭으로 이동한 섹션이 짧아도 그대로 잡히도록)
+const ACTIVE_LINE = 40;
+
+// 현재 스크롤 위치에서 보고 있는 섹션 id
+function findActiveId() {
+    const sections = NAV_ITEMS
+        .map(({ id }) => document.getElementById(id))
+        .filter((el): el is HTMLElement => el !== null);
+    if (sections.length === 0) return NAV_ITEMS[0].id;
+
+    // 페이지 맨 아래: 마지막 섹션이 화면 위까지 못 올라오므로 화면에 보이는 마지막 섹션
+    const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    if (atBottom) {
+        const visible = sections.filter(el => el.getBoundingClientRect().top < window.innerHeight);
+        return (visible[visible.length - 1] ?? sections[0]).id;
+    }
+
+    // 윗부분이 기준선을 지난 섹션 중 마지막 것
+    let active = sections[0];
+    for (const el of sections) {
+        if (el.getBoundingClientRect().top <= ACTIVE_LINE) active = el;
+        else break;
+    }
+    return active.id;
+}
+
 export default function CyNav() {
     const [activeId, setActiveId] = useState(NAV_ITEMS[0].id);
-    // 탭 클릭으로 스크롤 중일 때는 지나가는 섹션들로 탭이 바뀌지 않도록 잠금
-    const isClickScrolling = useRef(false);
+    // 탭을 눌러 이동한 뒤에는, 사용자가 직접 스크롤하기 전까지 누른 탭을 유지
+    // (시간으로 스크롤 끝을 추측하면 모바일에서 옆 탭이 깜빡이는 문제가 있었음)
+    const lockedByClick = useRef(false);
+    const navRef = useRef<HTMLElement>(null);
 
-    // 화면 위쪽 1/3 지점을 지나가는 섹션을 현재 탭으로 표시
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            entries => {
-                if (isClickScrolling.current) return;
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) setActiveId(entry.target.id);
-                });
-            },
-            { rootMargin: '-30% 0px -65% 0px' }
-        );
+        let frame = 0;
+        const onScroll = () => {
+            if (lockedByClick.current || frame) return;
+            // 스크롤 중 계산은 한 프레임에 한 번만
+            frame = requestAnimationFrame(() => {
+                frame = 0;
+                if (!lockedByClick.current) setActiveId(findActiveId());
+            });
+        };
 
-        NAV_ITEMS.forEach(({ id }) => {
-            const el = document.getElementById(id);
-            if (el) observer.observe(el);
-        });
+        // 사용자가 직접 스크롤을 시작하면 잠금 해제
+        // 단, 탭 메뉴 안을 누른 것은 제외: 탭을 누를 때도 touchstart/mousedown이 click보다 먼저 와서,
+        // 이전 이동 스크롤이 진행 중이면 그 순간 지나가던 섹션(예: 오시는길)이 깜빡였음
+        const unlock = (e: Event) => {
+            if (e.target instanceof Node && navRef.current?.contains(e.target)) return;
+            lockedByClick.current = false;
+        };
+        const onKey = (e: KeyboardEvent) => {
+            if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key)) unlock(e);
+        };
 
-        return () => observer.disconnect();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('wheel', unlock, { passive: true });
+        window.addEventListener('touchstart', unlock, { passive: true });
+        // PC에서 스크롤바를 끌어서 움직이는 경우
+        window.addEventListener('mousedown', unlock);
+        window.addEventListener('keydown', onKey);
+        setActiveId(findActiveId());
+
+        return () => {
+            cancelAnimationFrame(frame);
+            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('wheel', unlock);
+            window.removeEventListener('touchstart', unlock);
+            window.removeEventListener('mousedown', unlock);
+            window.removeEventListener('keydown', onKey);
+        };
     }, []);
 
     const moveTo = (id: string) => {
         setActiveId(id);
-        isClickScrolling.current = true;
-
-        // 스크롤 이벤트가 150ms 동안 없으면 스크롤이 끝난 것으로 보고 잠금 해제
-        // (이미 그 위치라 스크롤이 안 일어나는 경우도 150ms 뒤 해제됨)
-        let timer = window.setTimeout(unlock, 150);
-        function onScroll() {
-            window.clearTimeout(timer);
-            timer = window.setTimeout(unlock, 150);
-        }
-        function unlock() {
-            isClickScrolling.current = false;
-            window.removeEventListener('scroll', onScroll);
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-
-
+        lockedByClick.current = true;
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     return (
-        <nav className="cy-nav" aria-label="미니홈피 메뉴">
+        <nav className="cy-nav" aria-label="미니홈피 메뉴" ref={navRef}>
             {NAV_ITEMS.map(item => (
                 <button
                     key={item.id}

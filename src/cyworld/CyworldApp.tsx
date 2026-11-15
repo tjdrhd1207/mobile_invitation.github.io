@@ -6,7 +6,7 @@ import CyAccount from './CyAccount';
 import CyBgm from './CyBgm';
 import CyNav from './CyNav';
 import { useTodayCounter } from '../hooks/useTodayCounter';
-import logo from '../assets/logo.webp?w=96&format=webp&imagetools';
+import logo from '../assets/logo-circle.webp?w=96&format=webp&imagetools';
 import cyAvatar from '../assets/gallery/baby-removebg.webp?w=860&format=webp&imagetools';
 import CyMiniRoom from './CyMiniRoom';
 import CyGuestbook from './CyGuestbook';

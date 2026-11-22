@@ -26,7 +26,8 @@ const BUS_STOPS: { name: string; desc?: string; buses: { type: string; color: st
 ];
 
 // 안내용 상세 주소 (지도 검색에는 WEDDING.address 사용)
-const FULL_ADDRESS = '서울 구로구 새말로 97 (구로동 3-25) 신도림 테크노마트 8층';
+const FULL_ADDRESS1 = '서울 구로구 새말로 97 (구로동 3-25)';
+const FULL_ADDRESS2 = '신도림 테크노마트 8층 아모르홀';
 
 export default function CyLocation() {
     const mapRef = useRef<HTMLDivElement>(null);
@@ -68,7 +69,17 @@ export default function CyLocation() {
             <div className="cy-route-title">
                 <span className="cy-route-icon">📍</span> 주소
             </div>
-            <p className="cy-route-desc">{FULL_ADDRESS}</p>
+            <p className="cy-route-desc">{FULL_ADDRESS1}</p>
+            <p className="cy-route-desc">{FULL_ADDRESS2}</p>
+            <div className="cy-location-buttons">
+
+                <button type="button" className={copied ? 'cy-btn' : 'cy-btn-complete'} onClick={copyAddress}>
+                    {copied ? '복사완료' : '주소복사'}
+                </button>
+                <a className="cy-btn" href={MAP_LINKS.kakao} target="_blank" rel="noreferrer">카카오맵</a>
+                <a className="cy-btn" href={MAP_LINKS.naver} target="_blank" rel="noreferrer">네이버지도</a>
+            </div>
+
             {routeIndex !== null && (
                 <CyPhotoViewer
                     images={ROUTE_PHOTOS}
@@ -92,31 +103,26 @@ export default function CyLocation() {
 
             <div className="cy-location-info">
                 <div className="cy-location-address">
-                    <span>{address}</span>
-                    <button type="button" className={copied ? 'cy-btn' : 'cy-btn-complete'} onClick={copyAddress}>
-                        {copied ? '복사완료' : '주소복사'}
-                    </button>
+
                 </div>
             </div>
 
-            <div className="cy-location-buttons">
-                <a className="cy-btn" href={MAP_LINKS.kakao} target="_blank" rel="noreferrer">카카오맵</a>
-                <a className="cy-btn" href={MAP_LINKS.naver} target="_blank" rel="noreferrer">네이버지도</a>
-            </div>
+
 
             <div className="cy-route">
                 <div className="cy-route-heading">
                     웨딩시티 오시는 길
                     {/* 누르면 길 안내 사진 1~4가 순서대로 */}
-                    <button type="button" className="cy-route-photo-link" onClick={() => setRouteIndex(0)}>
+                    {/* <button type="button" className="cy-route-photo-link" onClick={() => setRouteIndex(0)}>
                         📷 사진 보기
-                    </button>
+                    </button> */}
                 </div>
 
                 <div className="cy-route-section">
                     <div className="cy-route-title">
                         <span className="cy-route-icon">🚇</span> 지하철 이용 시
                     </div>
+                    <div className="cy-bus-stop">
                     <div className="cy-route-lines">
                         <span className="cy-line-badge line1">1호선</span>
                         <span className="cy-line-badge line2">2호선</span>
@@ -125,6 +131,7 @@ export default function CyLocation() {
                     <p className="cy-route-desc">
                         신도림역 <b>②, ③번 출구</b> (지하철 역과 건물 지하 직접 연결)
                     </p>
+                    </div>
                 </div>
 
                 <div className="cy-route-section">

@@ -7,7 +7,7 @@ import CyBgm from './CyBgm';
 import CyNav from './CyNav';
 import { useTodayCounter } from '../hooks/useTodayCounter';
 import logo from '../assets/logo-circle.webp?w=96&format=webp&imagetools';
-import cyAvatar from '../assets/gallery/baby-removebg.webp?w=860&format=webp&imagetools';
+import cyAvatar from '../assets/gallery/main.webp?w=860&format=webp&imagetools';
 import CyMiniRoom from './CyMiniRoom';
 import CyGuestbook from './CyGuestbook';
 
@@ -44,20 +44,6 @@ export default function CyworldApp() {
                         <div className="cy-avatar" >
                             <img className="cy-avatar-img" src={cyAvatar} alt="미니룸" />
                         </div>
-                        <div className="cy-profile-info">
-                            <div className="cy-desc">{date.year}.{date.month}.{date.day} 토요일 12:10</div>
-                            <div className="cy-desc">신도림 웨딩시티 8F 아모르홀 </div>
-                        </div>
-                    </section>
-
-                    {/* <section className="cy-card cy-menu">
-                        <div>다이어리 <span>0/0</span></div>
-                        <div>사진첩 <span>0/0</span></div>
-                        <div>쥬크박스 <span>1/1</span></div>
-                        <div>방명록 <span>0/0</span></div>
-                    </section> */}
-
-                    <section id="cy-introduce" className="cy-card">
                         <div>
                             <h2 className="cy-section-title">Introduce</h2>
                             <div className="cy-intro-text">
@@ -74,10 +60,10 @@ export default function CyworldApp() {
                                 <br></br>
                                 <div className="cy-all-family">
                                     <div className="cy-family">
-                                        <div className="cy-person-name">김승준</div>&nbsp;<div className="cy-person-name">조춘열</div>&nbsp;의 아들&nbsp;<div className="cy-person-name">김재민</div>
+                                        <div className="cy-person-name">김승준</div>&nbsp;·<div className="cy-person-name">조춘열</div>&nbsp;의 아들&nbsp;<div className="cy-person-name">김재민</div>
                                     </div>
                                     <div className="cy-family">
-                                        <div className="cy-person-name">공진환</div>&nbsp;<div className="cy-person-name">안미환</div>&nbsp;의 딸&nbsp;<div className="cy-person-name">공국명</div>
+                                        <div className="cy-person-name">공진환</div>&nbsp;·<div className="cy-person-name">안미환</div>&nbsp;의 딸&nbsp;<div className="cy-person-name">공국명</div>
                                     </div>
                                 </div>
                             </div>

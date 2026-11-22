@@ -120,11 +120,7 @@ html:not(.fonts-ready) .cy-frame {
     gap: 16px;
 }
 
-.cy-avatar {
-    background: #ddd;
-    flex-shrink: 0;
-    border: 1px #b7adad solid;
-}
+
 
 .cy-today {
     flex-shrink: 0;
@@ -381,7 +377,7 @@ html:not(.fonts-ready) .cy-frame {
 
 .cy-cal-year {
     color: var(--cy-orange);
-    font-size: 18px;
+    font-size: 16px;
     flex-shrink: 0;
 }
 
@@ -648,6 +644,7 @@ html:not(.fonts-ready) .cy-frame {
     display: flex;
     gap: 6px;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 /* 오시는 길 안내 */
@@ -710,7 +707,6 @@ html:not(.fonts-ready) .cy-frame {
 .cy-route-desc b {
     color: var(--cy-text);
     font-weight: normal;
-    text-decoration: underline dotted;
 }
 
 .cy-route-lines {
@@ -765,10 +761,6 @@ html:not(.fonts-ready) .cy-frame {
 
 .cy-bus-stop {
     margin-top: 8px;
-    padding: 8px 10px;
-    background: #f7f9fb;
-    border: 1px solid #e3e8ec;
-    border-radius: 6px;
 }
 
 .cy-bus-stop-name {
@@ -809,7 +801,7 @@ html:not(.fonts-ready) .cy-frame {
     border: 1px solid #b5b5b5;
     border-radius: 2px;
     background: linear-gradient(#ffffff, #e6e6e6);
-    color: #ff3b3b;
+    color: var(--cy-orange);
     font: inherit;
     font-size: 11px;
     line-height: 1.6;
@@ -1148,17 +1140,21 @@ html:not(.fonts-ready) .cy-frame {
 
 .cy-family {
     display: flex;
+    align-items: center;
 }
 
 .cy-all-family {
     display: flex;
     gap: 10px;
     flex-direction: column;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 15px;
+    font-weight: 400;
 }
 
 .cy-person-name {
-    font-weight: bold;
-    color: #5555a1;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 /* 모바일: TODAY가 한 줄에 들어가도록 플레이어를 작게 */
@@ -1444,6 +1440,9 @@ html:not(.fonts-ready) .cy-frame {
 }
 
 .cy-son-font {
-    margin-bottom: -10px;
-    font-size: 20px;
+    margin: 0;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.9;
 }

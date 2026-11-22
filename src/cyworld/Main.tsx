@@ -12,6 +12,7 @@ Promise.race([
   Promise.all([
     document.fonts.load('14px Galmuri11', '오랜 시간'),
     document.fonts.load('bold 14px Galmuri11', '결혼합니다'),
+    document.fonts.load('14px "Noto Serif KR"', '오랜 시간'),
   ]),
   new Promise(resolve => setTimeout(resolve, FONT_TIMEOUT)),
 ])

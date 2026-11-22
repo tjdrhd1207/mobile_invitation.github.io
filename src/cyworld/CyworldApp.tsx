@@ -11,7 +11,7 @@ import cyAvatar from '../assets/gallery/main.webp?w=860&format=webp&imagetools';
 import CyMiniRoom from './CyMiniRoom';
 import CyGuestbook from './CyGuestbook';
 
-const { groom, bride, date } = WEDDING;
+const { groom, bride } = WEDDING;
 
 export default function CyworldApp() {
     const counts = useTodayCounter();

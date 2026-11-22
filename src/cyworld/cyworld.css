@@ -1,1448 +1,1235 @@
+/* 미니홈피 청첩장 스타일
+   - 글씨체: 갈무리11(Galmuri11, 픽셀 폰트) 하나로 통일, 크기는 :root의 --fs-* 변수로 조절
+   - 탭 메뉴: 화면 위에 가로로 고정(.cy-nav)
+   - 사진첩: 가로 슬라이드(.cy-slide-*), 달력: 달력 + D-day(.cy-cal-*) */
 :root {
-    /* 밝은 화면 전용 (다크모드 강제 변환 방지, index.html의 meta와 같은 설정) */
-    color-scheme: only light;
-    --cy-blue: #1ea0d7;
-    --cy-orange: #f07b2a;
-    --cy-bg: #eef1f4;
-    --cy-text: #333;
-    --cy-frame: #a8d5e5;
-    /* 상단바 + 오른쪽 테두리 띠 */
+  color-scheme: only light;
+  --cy-blue: #1ea0d7;
+  --cy-orange: #f07b2a;
+  --cy-bg: #eef1f4;
+  --cy-text: #333;
+  --cy-frame: #a8d5e5;
+  --cy-dot:
+    "Galmuri11",
+    "Apple SD Gothic Neo",
+    sans-serif;
+  --fs-small: 11px;
+  --fs-body: 14px;
+  --fs-title: 15px;
+  --fs-name: 16px;
+}
+body {
+  margin: 0;
+  background-color: var(--cy-bg);
+  background-size: 12px 12px;
+  color: var(--cy-text);
+  font-family: var(--cy-dot);
+  font-size: var(--fs-body);
+}
+@font-face {
+  font-family: Galmuri11;
+  src: url(../assets/fonts/Galmuri11.woff2) format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Galmuri11;
+  src: url(../assets/fonts/Galmuri11-Bold.woff2) format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+.cy-frame {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  max-width: 430px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  transition: opacity .3s ease-out;
+}
+html:not(.fonts-ready) .cy-frame {
+  opacity: 0;
+}
+.cy-topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 12px;
+  background: var(--cy-frame);
+}
+.cy-topbar:after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 6px;
+  border-bottom: 2px dashed rgba(255, 255, 255, .95);
+  pointer-events: none;
+}
+.cy-logo {
+  display: block;
+  width: 30px;
+  height: 30px;
+}
+.cy-logo-text {
+  font-family: var(--cy-dot);
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: .5px;
+}
+.cy-title {
+  font-size: 17px;
+  font-weight: 500;
+  margin: 20px 12px 12px;
+}
+.cy-card {
+  background: #fff;
+  border-radius: 10px;
+  margin: 0 8px 10px;
+  padding: 16px;
+}
+.cy-card2 {
+  background: #fff;
+  border-radius: 10px;
+  margin: 0 8px 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.cy-profile {
+  display: flex;
+  gap: 16px;
+}
+.cy-today {
+  flex-shrink: 0;
+  font-family: var(--cy-dot);
+  font-size: 11px;
+  color: #999;
+  white-space: nowrap;
+}
+.cy-today b {
+  color: var(--cy-orange);
+}
+.cy-name {
+  font-size: 18px;
+  margin: 6px 0;
+}
+.cy-text {
+  color: #6858e3;
+  font-family: var(--cy-dot);
+  font-weight: 700;
+  font-style: italic;
+}
+.cy-desc {
+  font-size: 18px;
+  color: #5555a1;
+}
+.cy-menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  color: var(--cy-blue);
+  font-size: 14px;
+}
+.cy-menu span {
+  color: var(--cy-orange);
+}
+.cy-section-title {
+  font-family: var(--cy-dot);
+  font-weight: 700;
+  color: var(--cy-blue);
+  font-size: var(--fs-title);
+  margin: 0 0 14px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed #cfe3ec;
+}
+.cy-miniroom {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #f7c6cf;
+  overflow: hidden;
+}
+.cy-miniroom img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+  opacity: 0;
+  transition: opacity .8s ease-in-out;
+}
+.cy-miniroom img.is-active {
+  opacity: 1;
+}
+.cy-avatar-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.cy-slide-view {
+  position: relative;
+}
+.cy-slide-track {
+  display: flex;
+  aspect-ratio: 3 / 4;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.cy-slide-track::-webkit-scrollbar {
+  display: none;
+}
+.cy-slide-item {
+  flex: 0 0 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  cursor: zoom-in;
+}
+.cy-slide-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.cy-slide-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #ffffffbf;
+  color: #555;
+  font-size: 22px;
+  line-height: 30px;
+  box-shadow: 0 1px 4px #00000026;
+  cursor: pointer;
+}
+.cy-slide-arrow.left {
+  left: 4px;
+}
+.cy-slide-arrow.right {
+  right: 4px;
+}
+.cy-slide-count {
+  margin-top: 12px;
+  text-align: center;
+  font-size: var(--fs-small);
+  color: #aaa;
+}
+.cy-slide-count b {
+  color: var(--cy-text);
+  font-weight: 400;
+}
+.cy-slide-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  height: 14px;
+  margin-top: 6px;
+}
+.cy-slide-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d6dde1;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.cy-slide-dots span.edge {
+  transform: scale(.6);
+}
+.cy-slide-dots span.active {
+  background: var(--cy-blue);
+  transform: scale(1.15);
+}
+.cy-gallery-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #000c;
+  color: #fff;
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+.cy-gallery-modal-photo {
+  position: relative;
+  display: inline-flex;
+}
+.cy-gallery-modal img {
+  display: block;
+  max-width: min(calc(100vw - 40px), 400px);
+  max-height: 65vh;
+  max-height: 65dvh;
+  object-fit: contain;
+  box-sizing: border-box;
+  animation: cy-modal-fade .2s ease-out;
+}
+.cy-gallery-modal-photo.uniform {
+  width: min(calc(100vw - 40px), 400px, 48.75dvh);
+  aspect-ratio: 3 / 4;
+  background: #111;
+}
+.cy-gallery-modal-photo.uniform img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+}
+@keyframes cy-modal-fade {
+  0% {
+    opacity: 0;
+  }
+}
+.cy-gallery-modal-arrow,
+.cy-gallery-modal-close {
+  position: absolute;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #ffffffd9;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+.cy-gallery-modal-arrow {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 52px;
+  background: #0000004d;
+  color: #fff;
+  font-size: 30px;
+}
+.cy-gallery-modal-arrow.left {
+  left: 0;
+  border-radius: 0 4px 4px 0;
+}
+.cy-gallery-modal-arrow.right {
+  right: 0;
+  border-radius: 4px 0 0 4px;
+}
+.cy-gallery-modal-close {
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
+}
+.cy-gallery-modal-count {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: #ffffffb3;
+}
+.cy-cal-head {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: var(--fs-name);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.cy-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  row-gap: 4px;
+  text-align: center;
+}
+.cy-cal-weekday {
+  padding: 6px 0;
+  margin-bottom: 4px;
+  border-bottom: 1px dashed #d5e3ea;
+  font-size: var(--fs-small);
+  color: #999;
+}
+.cy-cal-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  color: var(--cy-text);
+}
+.cy-cal-weekday.sun,
+.cy-cal-day.sun {
+  color: #e5534b;
+}
+.cy-cal-weekday.sat,
+.cy-cal-day.sat {
+  color: var(--cy-blue);
+}
+.cy-cal-heart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  padding-bottom: 4px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 8' shape-rendering='crispEdges' fill='%23ff6b8a'%3E%3Crect x='1' y='0' width='1' height='1'/%3E%3Crect x='2' y='0' width='1' height='1'/%3E%3Crect x='6' y='0' width='1' height='1'/%3E%3Crect x='7' y='0' width='1' height='1'/%3E%3Crect x='0' y='1' width='1' height='1'/%3E%3Crect x='1' y='1' width='1' height='1'/%3E%3Crect x='2' y='1' width='1' height='1'/%3E%3Crect x='3' y='1' width='1' height='1'/%3E%3Crect x='5' y='1' width='1' height='1'/%3E%3Crect x='6' y='1' width='1' height='1'/%3E%3Crect x='7' y='1' width='1' height='1'/%3E%3Crect x='8' y='1' width='1' height='1'/%3E%3Crect x='0' y='2' width='1' height='1'/%3E%3Crect x='1' y='2' width='1' height='1'/%3E%3Crect x='2' y='2' width='1' height='1'/%3E%3Crect x='3' y='2' width='1' height='1'/%3E%3Crect x='4' y='2' width='1' height='1'/%3E%3Crect x='5' y='2' width='1' height='1'/%3E%3Crect x='6' y='2' width='1' height='1'/%3E%3Crect x='7' y='2' width='1' height='1'/%3E%3Crect x='8' y='2' width='1' height='1'/%3E%3Crect x='0' y='3' width='1' height='1'/%3E%3Crect x='1' y='3' width='1' height='1'/%3E%3Crect x='2' y='3' width='1' height='1'/%3E%3Crect x='3' y='3' width='1' height='1'/%3E%3Crect x='4' y='3' width='1' height='1'/%3E%3Crect x='5' y='3' width='1' height='1'/%3E%3Crect x='6' y='3' width='1' height='1'/%3E%3Crect x='7' y='3' width='1' height='1'/%3E%3Crect x='8' y='3' width='1' height='1'/%3E%3Crect x='1' y='4' width='1' height='1'/%3E%3Crect x='2' y='4' width='1' height='1'/%3E%3Crect x='3' y='4' width='1' height='1'/%3E%3Crect x='4' y='4' width='1' height='1'/%3E%3Crect x='5' y='4' width='1' height='1'/%3E%3Crect x='6' y='4' width='1' height='1'/%3E%3Crect x='7' y='4' width='1' height='1'/%3E%3Crect x='2' y='5' width='1' height='1'/%3E%3Crect x='3' y='5' width='1' height='1'/%3E%3Crect x='4' y='5' width='1' height='1'/%3E%3Crect x='5' y='5' width='1' height='1'/%3E%3Crect x='6' y='5' width='1' height='1'/%3E%3Crect x='3' y='6' width='1' height='1'/%3E%3Crect x='4' y='6' width='1' height='1'/%3E%3Crect x='5' y='6' width='1' height='1'/%3E%3Crect x='4' y='7' width='1' height='1'/%3E%3C/svg%3E") center / contain no-repeat;
+  color: #fff;
+  font-weight: 700;
+  image-rendering: pixelated;
+}
+.cy-cal-dday {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed #d5e3ea;
+  text-align: center;
+}
+.cy-cal-dday p {
+  margin: 0;
+}
+.cy-cal-dday b {
+  color: #ff6b8a;
+  font-size: var(--fs-name);
+}
+.cy-cal-when {
+  margin-top: 4px !important;
+  color: #888;
+}
+.cy-map-frame {
+  position: relative;
+  height: 240px;
+  border: 3px solid #f7c6cf;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff5f7;
+}
+.cy-map-canvas {
+  width: 100%;
+  height: 100%;
+}
+.cy-map-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 12px;
+  color: #888;
+}
+.cy-map-fallback img {
+  width: 44px;
+  image-rendering: pixelated;
+  margin-bottom: 6px;
+}
+.cy-map-fallback p {
+  margin: 0;
+}
+.cy-map-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--cy-dot);
+}
+.cy-map-marker img {
+  width: 36px;
+  image-rendering: pixelated;
+  filter: drop-shadow(1px 0 0 #555) drop-shadow(-1px 0 0 #555) drop-shadow(0 1px 0 #555) drop-shadow(0 -1px 0 #555);
+}
+.cy-map-bubble {
+  position: relative;
+  margin-bottom: 8px;
+  padding: 3px 8px;
+  background: #fff;
+  border: 2px solid #333;
+  border-radius: 10px;
+  font-size: 11px;
+  color: #333;
+  white-space: nowrap;
+}
+.cy-map-bubble:after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-right: 2px solid #333;
+  border-bottom: 2px solid #333;
+  transform: translate(-50%) rotate(45deg);
+}
+.cy-location-info {
+  margin-top: 12px;
+  font-size: 13px;
+}
+.cy-place {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.cy-place-icon {
+  font-size: var(--fs-body);
+  line-height: 1.5;
+}
+.cy-place-name {
+  font-size: var(--fs-name);
+  font-weight: 700;
+  line-height: 1.4;
+}
+.cy-place-line {
+  margin: 4px 0 0;
+}
+.cy-place-sub {
+  margin: 2px 0 0;
+  font-size: var(--fs-small);
+  color: #999;
+}
+.cy-location-address {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cy-location-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.cy-route {
+  margin-top: 16px;
+  font-size: 12px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+.cy-route-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border-left: 3px solid var(--cy-orange);
+  background: #fffaf3;
+  color: var(--cy-orange);
+  font-size: 13px;
+}
+.cy-route-photo-link {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 11px;
+  color: var(--cy-blue);
+  cursor: pointer;
+}
+.cy-route-section {
+  padding: 12px 2px;
+  border-bottom: 1px dashed #d5d5d5;
+}
+.cy-route-section:last-child {
+  border-bottom: none;
+}
+.cy-route-title {
+  color: var(--cy-blue);
+  font-size: var(--fs-body);
+  margin: 4px 0 8px;
+}
+.cy-route-icon {
+  margin-right: 2px;
+}
+.cy-route-desc {
+  margin: 4px 0 5px;
+  color: #666;
+}
+.cy-route-sub {
+  display: block;
+  margin-top: 2px;
+  font-size: .88em;
+  color: #999;
+}
+.cy-address-main {
+  color: var(--cy-text);
+}
+.cy-route-desc b {
+  color: var(--cy-text);
+  font-weight: 400;
+}
+.cy-route-lines {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.cy-line-badge,
+.cy-bus-badge {
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 0 6px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.cy-line-badge.line1 {
+  background: #0052a4;
+}
+.cy-line-badge.line2 {
+  background: #00a84d;
+}
+.cy-bus-badge.blue {
+  background: #3d6fd6;
+}
+.cy-bus-badge.green {
+  background: #4caf3a;
+}
+.cy-bus-badge.red {
+  background: #e04848;
+}
+.cy-bus-badge.lime {
+  background: #8cbf3f;
+}
+.cy-bus-badge.gray {
+  background: #8a8a8a;
+}
+.cy-bus-badge.sky {
+  background: #3fa9d6;
+}
+.cy-bus-stop {
+  margin-top: 8px;
+}
+.cy-bus-stop-name {
+  color: var(--cy-text);
+}
+.cy-bus-list {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.cy-bus-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 2px 0;
+}
+.cy-btn {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid #b5b5b5;
+  border-radius: 2px;
+  background: linear-gradient(#fff, #e6e6e6);
+  color: #555;
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.6;
+  text-decoration: none;
+  cursor: pointer;
+}
+.cy-btn-complete {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid #b5b5b5;
+  border-radius: 2px;
+  background: linear-gradient(#fff, #e6e6e6);
+  color: var(--cy-orange);
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.6;
+  text-decoration: none;
+  cursor: pointer;
+}
+.cy-btn:active {
+  background: linear-gradient(#e6e6e6, #fff);
+}
+.cy-account-guide {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #888;
+}
+.cy-account-group + .cy-account-group {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #e5e5e5;
+}
+/* 신랑측/신부측 제목줄: 누르면 접고 펼침 */
+.cy-account-group-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 4px 2px;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--cy-blue);
+  text-align: left;
+  cursor: pointer;
+}
+.cy-account-arrow {
+  font-size: 10px;
+  color: #999;
+  transition: transform .2s;
+}
+.cy-account-group.open .cy-account-arrow {
+  transform: rotate(180deg);
+}
+.cy-account-group.open .cy-account-group-title {
+  margin-bottom: 8px;
+}
+.cy-account-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.cy-account-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+.cy-account-radio {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.cy-account-radio input {
+  margin: 0;
+  accent-color: #555;
+}
+.cy-account-option.selected .cy-account-radio {
+  font-weight: 700;
+}
+.cy-account-thumb {
+  display: block;
+  width: 100%;
+  filter: drop-shadow(1px 2px 0 rgba(0, 0, 0, .08));
+  transition: transform .15s;
+}
+.cy-account-option.selected .cy-account-thumb {
+  filter: drop-shadow(2px 0 0 var(--cy-orange)) drop-shadow(-2px 0 0 var(--cy-orange)) drop-shadow(0 2px 0 var(--cy-orange)) drop-shadow(0 -2px 0 var(--cy-orange));
+  transform: translateY(-2px);
+}
+.cy-envelope {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+.cy-account-tip {
+  position: relative;
+  margin-top: 12px;
+  padding: 8px 10px;
+  border: 1px solid #f5b98a;
+  background: #fffaf3;
+  color: var(--cy-orange);
+  font-size: 12px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+.cy-account-tip:before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: var(--tip-left, 50%);
+  width: 9px;
+  height: 9px;
+  background: #fffaf3;
+  border-top: 1px solid #f5b98a;
+  border-left: 1px solid #f5b98a;
+  transform: translate(-50%) rotate(45deg);
+}
+.cy-account-tip b {
+  font-weight: 400;
+  color: #c75a14;
+}
+.cy-account-holder {
+  color: #999;
+  font-size: 11px;
+}
+.cy-account-message {
+  margin-top: 4px;
+  color: var(--cy-blue);
+  font-size: 11px;
+}
+.cy-account-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+.cy-btn:disabled {
+  color: #bbb;
+  cursor: default;
+}
+.bgm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.cy-bgm-hint {
+  margin: 3px 2px 0 0;
+  font-size: 10px;
+  color: #aaa;
+  text-align: right;
+}
+.cy-bgm-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px 2px 8px;
+  border: 1px solid #c8c8c8;
+  border-radius: 3px;
+  background: linear-gradient(#fafafa, #e9e9e9);
+  font-size: 11px;
+  color: #666;
+}
+.cy-bgm-player button {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.cy-bgm-divider {
+  color: #bbb;
+}
+.cy-bgm-controls {
+  display: inline-flex;
+  gap: 2px;
+  margin-left: 2px;
+}
+.cy-bgm-player .cy-bgm-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 14px;
+  height: 12px;
+  padding: 0 2px;
+  border: 1px solid #b5b5b5;
+  border-radius: 2px;
+  background: #fff;
+  font-family: sans-serif;
+  font-size: 7px;
+  letter-spacing: -1px;
+  color: #777;
+}
+.cy-bgm-player .cy-bgm-icon.playing {
+  color: var(--cy-orange);
+}
+.cy-bgm-player .cy-bgm-icon:active {
+  background: #eee;
+}
+.cy-bgm-title {
+  position: relative;
+  width: 84px;
+  height: 14px;
+  margin-right: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.cy-bgm-title span {
+  position: absolute;
+  top: 0;
+  color: var(--cy-blue);
+  line-height: 14px;
+  animation: cy-bgm-flow 6s linear infinite;
+  animation-delay: -3s;
+  animation-play-state: paused;
+}
+.cy-bgm-title span.playing {
+  animation-play-state: running;
+}
+@keyframes cy-bgm-flow {
+  0% {
+    left: 0;
+    transform: translate(-100%);
+  }
+  to {
+    left: 100%;
+    transform: translate(0);
+  }
+}
+.cy-layout {
+  position: relative;
+}
+.cy-content {
+  min-width: 0;
+}
+.cy-content [id^=cy-] {
+  scroll-margin-top: 56px;
+}
+.cy-nav {
+  --tab-color: #2b8db3;
+  --tab-border: #1f6f8f;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 2px;
+  padding: 6px 6px 0;
+  background: var(--cy-frame);
+  border-bottom: 2px solid var(--tab-border);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 2px 6px #1f6f8f26;
+}
+.cy-nav::-webkit-scrollbar {
+  display: none;
+}
+.cy-nav button {
+  flex: 1 0 auto;
+  padding: 7px 5px 6px;
+  border: 1px solid var(--tab-border);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  background: var(--tab-color);
+  color: #fff;
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: -.3px;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+}
+.cy-nav button.active {
+  background: #fff;
+  color: var(--tab-border);
+  font-weight: 700;
+  margin-bottom: -2px;
+  padding-bottom: 8px;
+}
+.cy-jukebox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  justify-content: space-between;
+}
+.cy-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cy-family {
+  display: flex;
+  align-items: center;
+}
+.cy-all-family {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  font-size: var(--fs-body);
+  color: #777;
+}
+.cy-person-name {
+  color: var(--cy-text);
 }
 
-body {
-    margin: 0;
-    background: var(--cy-bg);
-    color: var(--cy-text);
-    font-family: 'WeddingFont', serif;
+@media (max-width: 480px) {
+  .cy-bgm-player {
+    gap: 3px;
+    padding: 2px 3px 2px 6px;
+  }
+  .cy-bgm-toggle-text,
+  .cy-bgm-divider {
+    display: none;
+  }
+  .cy-bgm-title {
+    width: 64px;
+    margin-right: 2px;
+  }
+}
+.cy-guestbook-write {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: 1px dashed var(--cy-blue);
+  background: #f5fbfe;
+  color: var(--cy-blue);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.cy-guestbook-write:disabled {
+  opacity: .5;
+  cursor: default;
+}
+.cy-guestbook-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+}
+.cy-guestbook-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  font: inherit;
+  font-size: 13px;
+  resize: vertical;
+}
+.cy-guestbook-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cy-guestbook-count {
+  margin-right: auto;
+  font-size: 11px;
+  color: #999;
+}
+.cy-guestbook-actions button {
+  padding: 4px 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.cy-guestbook-actions button.primary {
+  border-color: var(--cy-orange);
+  background: var(--cy-orange);
+  color: #fff;
+}
+.cy-guestbook-actions button:disabled {
+  opacity: .6;
+}
+.cy-guestbook-empty {
+  margin: 16px 0;
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+}
+.cy-guestbook-list {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.cy-guestbook-entry + .cy-guestbook-entry {
+  margin-top: 14px;
+}
+.cy-guestbook-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 6px 8px;
+  border-top: 2px solid #999;
+  background: #f2f2f2;
+  font-size: 12px;
+}
+.cy-guestbook-no {
+  color: #555;
+}
+.cy-guestbook-name {
+  color: var(--cy-blue);
+  font-weight: 700;
+}
+.cy-guestbook-date {
+  font-size: 10px;
+  color: #aaa;
+}
+.cy-guestbook-body {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 8px;
+}
+.cy-guestbook-minimi {
+  flex: 0 0 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+.cy-guestbook-minimi img {
+  height: 60px;
+  image-rendering: pixelated;
+}
+.cy-guestbook-message {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.cy-minimi-editor {
+  display: flex;
+  gap: 10px;
+}
+.cy-minimi-preview {
+  flex: 0 0 90px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+.cy-minimi-preview img {
+  height: 96px;
+  image-rendering: pixelated;
+}
+.cy-minimi-panel {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cy-minimi-tabs {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #ddd;
+}
+.cy-minimi-tabs button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 6px 4px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font: inherit;
+  font-size: 11px;
+  color: #888;
+  cursor: pointer;
+}
+.cy-minimi-tabs button.active {
+  border-bottom-color: var(--cy-orange);
+  color: var(--cy-orange);
+  font-weight: 700;
+}
+.cy-minimi-tabs img {
+  height: 30px;
+  image-rendering: pixelated;
+}
+.cy-minimi-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  gap: 4px;
+}
+.cy-minimi-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  height: 58px;
+  padding: 3px 2px;
+  border: 2px solid #eee;
+  background: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+.cy-minimi-item.selected {
+  border-color: var(--cy-orange);
+}
+.cy-minimi-item img {
+  height: 36px;
+  image-rendering: pixelated;
+}
+.cy-minimi-none {
+  height: 36px;
+  line-height: 36px;
+  font-size: 10px;
+  color: #bbb;
+}
+.cy-minimi-item-label {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 9px;
+  color: #777;
+}
+.cy-minimi-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cy-minimi-colors button {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #ccc;
+  cursor: pointer;
+}
+.cy-minimi-colors button.selected {
+  box-shadow: 0 0 0 2px var(--cy-orange);
+}
+.cy-son-font {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: 2;
+}
+.cy-gallery-pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+}
+.cy-gallery-pager button {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 4px;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  color: #999;
+  cursor: pointer;
+}
+.cy-gallery-pager button.active {
+  color: var(--cy-orange);
+  font-weight: 700;
+  text-decoration: underline;
+}
+.cy-gallery-pager button:disabled {
+  color: #ddd;
+  cursor: default;
 }
 
 @font-face {
-    font-family: 'WeddingFont';
+    font-family: 'WeddingFont2';
     src: url('../assets/fonts/DOSSaemmul.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 
-@font-face {
-    font-family: 'OksuniSNostalgicHandwriting';
-    src: url('../assets/fonts/NanumBugGeugSeong.woff2') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+.cy-nav, .cy-logo-text, .cy-section-title {
+    font-family: 'WeddingFont2', sans-serif;
 }
 
-.cy-intro-text {
-    font-family: 'OksuniSNostalgicHandwriting', cursive;
-    font-weight: bold;
-}
-
-@font-face {
-    font-family: 'WeddingFontBolder';
-    src: url('../assets/fonts/DOSGothic.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-.cy-frame {
-    max-width: 430px;
-    margin: 0 auto;
-    padding-bottom: 40px;
-    transition: opacity 0.3s ease-out;
-}
-
-/* 폰트 준비 전에는 숨겼다가 Main.tsx에서 fonts-ready를 붙이면 나타남 */
-html:not(.fonts-ready) .cy-frame {
-    opacity: 0;
-}
-
-.cy-topbar {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    height: 44px;
-    padding: 0 12px;
-    background: var(--cy-frame);
-}
-
-/* 상단바 아래쪽 흰 점선: 오른쪽 끝에서 세로 점선과 만나 ㄱ자로 이어짐 */
-.cy-topbar::after {
-    content: '';
-    position: absolute;
-    left: 8px;
-    right: 43px;
-    bottom: 6px;
-    border-bottom: 2px dashed rgba(255, 255, 255, 0.95);
-    pointer-events: none;
-}
-
-/* 로고: 주황 원만 잘라낸 투명 배경 이미지 (assets/logo-circle.webp) */
-.cy-logo {
-    display: block;
-    width: 30px;
-    height: 30px;
-}
-
-.cy-logo-text {
-    font-family: var(--cy-dot);
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-    letter-spacing: 0.5px;
-}
-
-.cy-title {
-    font-size: 17px;
-    font-weight: 500;
-    margin: 20px 12px 12px;
-}
-
-.cy-card {
-    background: #fff;
-    border-radius: 10px;
-    margin: 0 8px 10px;
-    padding: 16px;
-}
-
-.cy-card2 {
-    background: #fff;
-    border-radius: 10px;
-    margin: 0 8px 10px;
-    padding: 16px;
+.cy-wedding-info {
     display: flex;
     flex-direction: column;
-}
-
-.cy-profile {
-    display: flex;
-    gap: 16px;
-}
-
-
-
-.cy-today {
-    flex-shrink: 0;
-    font-family: var(--cy-dot);
-    font-size: 11px;
-    color: #999;
-    white-space: nowrap;
-}
-
-.cy-today b {
-    color: var(--cy-orange);
-}
-
-.cy-name {
-    font-size: 18px;
-    margin: 6px 0;
-}
-
-.cy-text {
-    color: #6858e3;
-    font-family: 'WeddingFontBolder', serif;
-    font-style: italic
-}
-
-.cy-desc {
-    font-size: 18px;
-    color: #5555a1;
-}
-
-.cy-menu {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    color: var(--cy-blue);
-    font-size: 14px;
-}
-
-.cy-menu span {
-    color: var(--cy-orange);
-}
-
-.cy-section-title {
-    font-family: var(--cy-dot);
-    color: var(--cy-blue);
-    font-size: 15px;
-    margin: 0 0 12px;
-}
-
-.cy-miniroom {
-   position: relative;
-    aspect-ratio: 16 / 10;
-    background: #f7c6cf;
-    overflow: hidden;
-}
-
-.cy-miniroom img {
-   position: absolute;
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    
-    image-rendering: pixelated;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-   
-}
-
-.cy-miniroom img.is-active {
-    opacity: 1;
-}
-
-.cy-avatar-img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-}
-
-/* Gallery */
-.cy-gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-}
-
-.cy-gallery-grid-item {
-    aspect-ratio: 1 / 1;
-    padding: 0;
-    border: 2px solid transparent;
-    background: #eee;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.cy-gallery-grid-item.selected {
-    border-color: var(--cy-orange);
-}
-
-.cy-gallery-grid-item img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.2s;
-}
-
-.cy-gallery-grid-item:hover img {
-    transform: scale(1.05);
-}
-
-.cy-gallery-pager {
-    display: flex;
-    justify-content: center;
     align-items: center;
     gap: 4px;
-    margin-top: 10px;
-}
-
-.cy-gallery-pager button {
-    min-width: 22px;
-    height: 22px;
-    padding: 0 4px;
-    border: none;
-    background: none;
-    font: inherit;
-    font-size: 12px;
-    color: #999;
-    cursor: pointer;
-}
-
-.cy-gallery-pager button.active {
-    color: var(--cy-orange);
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-.cy-gallery-pager button:disabled {
-    color: #ddd;
-    cursor: default;
-}
-
-.cy-gallery-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    /* 확대 화면 위에서 드래그·스크롤해도 뒤 페이지로 전달되지 않게 (좌우 스와이프는 JS로 처리) */
-    touch-action: none;
-    overscroll-behavior: contain;
-}
-
-/* 세로 사진이 화면을 꽉 채우지 않도록 높이를 65%로 제한
-   (dvh: 모바일 주소창을 뺀 실제 보이는 높이, 지원 안 하는 브라우저는 vh 사용) */
-/* 사진과 화살표를 감싸는 상자: 크기가 사진과 같아짐 */
-.cy-gallery-modal-photo {
-    position: relative;
-    display: inline-flex;
-}
-
-.cy-gallery-modal img {
-    display: block;
-    /* 상자가 사진 크기를 따라가므로 %가 아닌 화면 기준으로 최대 너비 지정 (좌우 여백 20px씩) */
-    max-width: min(calc(100vw - 40px), 400px);
-    max-height: 65vh;
-    max-height: 65dvh;
-    object-fit: contain;
-    box-sizing: border-box;
-    animation: cy-modal-fade 0.2s ease-out;
-}
-
-/* uniform: 사진마다 크기가 달라도 같은 3:4 액자에 맞춰 보여줌 (잘리지 않게 contain)
-   너비는 화면 너비 / 400px / 화면 높이 65%에 맞춘 너비 중 가장 작은 값 */
-.cy-gallery-modal-photo.uniform {
-    width: min(calc(100vw - 40px), 400px, calc(65dvh * 3 / 4));
-    aspect-ratio: 3 / 4;
-    background: #111;
-}
-
-.cy-gallery-modal-photo.uniform img {
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    max-height: none;
-}
-
-@keyframes cy-modal-fade {
-    from {
-        opacity: 0;
-    }
-}
-
-.cy-gallery-modal-arrow,
-.cy-gallery-modal-close {
-    position: absolute;
-    padding: 0;
-    border: none;
-    background: none;
-    color: rgba(255, 255, 255, 0.85);
-    font: inherit;
-    line-height: 1;
-    cursor: pointer;
-}
-
-/* 사진 양끝 안쪽에 붙는 화살표 (밝은 사진 위에서도 보이게 반투명 배경) */
-.cy-gallery-modal-arrow {
-    top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 52px;
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
-    font-size: 30px;
-}
-
-.cy-gallery-modal-arrow.left {
-    left: 0;
-    border-radius: 0 4px 4px 0;
-}
-
-.cy-gallery-modal-arrow.right {
-    right: 0;
-    border-radius: 4px 0 0 4px;
-}
-
-.cy-gallery-modal-close {
-    top: 12px;
-    right: 12px;
-    width: 36px;
-    height: 36px;
-    font-size: 22px;
-}
-
-.cy-gallery-modal-count {
-    margin: 10px 0 0;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-/* Calendar */
-.cy-cal-top {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 4px;
-}
-
-.cy-cal-year {
-    color: var(--cy-orange);
-    font-size: 16px;
-    flex-shrink: 0;
-}
-
-.cy-cal-tabs {
-    display: flex;
-    overflow-x: auto;
-    scrollbar-width: none;
-}
-
-.cy-cal-tabs button,
-.cy-cal-tabs span {
-    padding: 2px 3px;
-    border: none;
-    background: none;
-    font: inherit;
-    font-size: 11px;
-    color: #999;
-    cursor: pointer;
-}
-
-.cy-cal-tabs button.active,
-.cy-cal-tabs span.active {
-    color: var(--cy-blue);
-    border-bottom: 2px solid var(--cy-blue);
-}
-
-.cy-cal-book {
-    position: relative;
-    display: flex;
-    min-height: 260px;
-    border: 1px solid #ccc;
-    border-radius: 14px;
-    background: #fff;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-}
-
-.cy-cal-left {
-    width: 30%;
-    flex-shrink: 0;
-    box-sizing: border-box;
-    padding: 12px 14px 12px 8px;
-    border-right: 1px solid #ccc;
-}
-
-.cy-cal-month {
-    font-size: 10px;
-    color: #9cc3e0;
-    border-bottom: 1px solid #b9d6ec;
-    padding-bottom: 2px;
-    margin-bottom: 10px;
-}
-
-.cy-cal-todos {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: 10px;
-    line-height: 1.4;
-}
-
-.cy-cal-todos li {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 8px;
-    cursor: pointer;
-}
-
-.cy-cal-todos li.done {
-    color: #aaa;
-    text-decoration: line-through;
-}
-
-.cy-cal-checkbox {
-    flex-shrink: 0;
-    width: 9px;
-    height: 9px;
-    margin-top: 2px;
-    border: 1px solid #aaa;
-    font-size: 9px;
-    line-height: 9px;
-    text-align: center;
-    color: var(--cy-orange);
-}
-
-/* 스프링 링: 왼쪽 페이지 경계선 위에 걸쳐서 배치 */
-.cy-cal-rings {
-    position: absolute;
-    top: 14%;
-    bottom: 14%;
-    left: 30%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    pointer-events: none;
-}
-
-.cy-cal-rings span {
-    display: block;
-    width: 20px;
-    height: 7px;
-    border-radius: 4px;
-    background: linear-gradient(#eee, #777 50%, #ccc);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-}
-
-.cy-cal-right {
-    flex: 1;
-    min-width: 0;
-    padding: 10px 6px 10px 14px;
-}
-
-.cy-cal-weekdays,
-.cy-cal-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-}
-
-.cy-cal-weekdays div {
-    text-align: center;
-    font-size: 8px;
-    font-weight: bold;
-    color: #444;
-    padding-bottom: 4px;
-}
-
-.cy-cal-grid {
-    border-top: 1px solid #999;
-    border-left: 4px solid #ccc;
-}
-
-.cy-cal-cell {
-    min-height: 36px;
-    padding: 2px;
-    border-right: 1px solid #999;
-    border-bottom: 1px solid #999;
-    font-size: 9px;
-    overflow: hidden;
-}
-
-.cy-cal-num {
-    text-decoration: underline;
-}
-
-.cy-cal-cell.sun .cy-cal-num {
-    color: #e53935;
-}
-
-.cy-cal-cell.sat .cy-cal-num {
-    color: #1e5fb4;
-}
-
-.cy-cal-cell.wedding {
-    background: #fff0f3;
-}
-
-.cy-cal-cell.wedding .cy-cal-num {
-    color: #e53935;
-}
-
-.cy-cal-label {
-    display: block;
-    margin-top: 2px;
-    font-size: 8px;
-    color: #e53935;
-    white-space: nowrap;
-}
-
-/* Location */
-.cy-map-frame {
-    position: relative;
-    height: 240px;
-    border: 3px solid #f7c6cf;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #fff5f7;
-}
-
-.cy-map-canvas {
-    width: 100%;
-    height: 100%;
-}
-
-.cy-map-fallback {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    font-size: 12px;
-    color: #888;
-}
-
-.cy-map-fallback img {
-    width: 44px;
-    image-rendering: pixelated;
-    margin-bottom: 6px;
-}
-
-.cy-map-fallback p {
-    margin: 0;
-}
-
-/* 지도 위 미니미 + 말풍선 (CustomOverlay 안에 들어가는 요소) */
-.cy-map-marker {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'WeddingFont', serif;
-}
-
-.cy-map-marker img {
-    width: 36px;
-    image-rendering: pixelated;
-    filter: drop-shadow(1px 0 0 #555) drop-shadow(-1px 0 0 #555) drop-shadow(0 1px 0 #555) drop-shadow(0 -1px 0 #555);
-}
-
-.cy-map-bubble {
-    position: relative;
-    margin-bottom: 8px;
-    padding: 3px 8px;
-    background: #fff;
-    border: 2px solid #333;
-    border-radius: 10px;
-    font-size: 11px;
-    color: #333;
-    white-space: nowrap;
-}
-
-.cy-map-bubble::after {
-    content: '';
-    position: absolute;
-    bottom: -7px;
-    left: 50%;
-    width: 6px;
-    height: 6px;
-    background: #fff;
-    border-right: 2px solid #333;
-    border-bottom: 2px solid #333;
-    transform: translateX(-50%) rotate(45deg);
-}
-
-.cy-location-info {
-    margin-top: 12px;
-    font-size: 13px;
-}
-
-.cy-location-venue {
-    color: var(--cy-blue);
-    margin-bottom: 4px;
-}
-
-.cy-location-address {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.cy-location-buttons {
-    display: flex;
-    gap: 6px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-/* 오시는 길 안내 */
-.cy-route {
-    margin-top: 16px;
-    font-size: 12px;
-    line-height: 1.6;
-    word-break: keep-all;
-}
-
-/* 제목 왼쪽, '사진 보기' 버튼 오른쪽 끝 */
-.cy-route-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 6px 10px;
-    border-left: 3px solid var(--cy-orange);
-    background: #fffaf3;
-    color: var(--cy-orange);
-    font-size: 13px;
-}
-
-/* '사진 보기': 버튼 모양 없이 파란 글씨 */
-.cy-route-photo-link {
-    padding: 0;
-    border: none;
-    background: none;
-    font: inherit;
-    font-size: 11px;
-    color: var(--cy-blue);
-    cursor: pointer;
-}
-
-.cy-route-section {
-    padding: 12px 2px;
-    border-bottom: 1px dashed #d5d5d5;
-}
-
-.cy-route-section:last-child {
-    border-bottom: none;
-}
-
-.cy-route-title {
-    color: var(--cy-blue);
-    font-size: 13px;
-    margin-top: 4px;
-}
-
-.cy-route-icon {
-    margin-right: 2px;
-}
-
-.cy-route-desc {
-    margin: 4px 0 0;
-    color: #666;
-    margin-bottom: 5px;
-}
-
-.cy-route-desc b {
-    color: var(--cy-text);
-    font-weight: normal;
-}
-
-.cy-route-lines {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-/* 지하철 호선 / 버스 종류 배지 */
-.cy-line-badge,
-.cy-bus-badge {
-    display: inline-block;
-    flex-shrink: 0;
-    padding: 0 6px;
-    border-radius: 10px;
-    color: #fff;
-    font-size: 11px;
-    line-height: 1.7;
-}
-
-.cy-line-badge.line1 {
-    background: #0052a4;
-}
-
-.cy-line-badge.line2 {
-    background: #00a84d;
-}
-
-.cy-bus-badge.blue {
-    background: #3d6fd6;
-}
-
-.cy-bus-badge.green {
-    background: #4caf3a;
-}
-
-.cy-bus-badge.red {
-    background: #e04848;
-}
-
-.cy-bus-badge.lime {
-    background: #8cbf3f;
-}
-
-.cy-bus-badge.gray {
-    background: #8a8a8a;
-}
-
-.cy-bus-badge.sky {
-    background: #3fa9d6;
-}
-
-.cy-bus-stop {
-    margin-top: 8px;
-}
-
-.cy-bus-stop-name {
-    color: var(--cy-text);
-}
-
-.cy-bus-list {
-    margin: 6px 0 0;
-    padding: 0;
-    list-style: none;
-}
-
-.cy-bus-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-    padding: 2px 0;
-}
-
-/* 싸이월드풍 작은 회색 버튼 */
-.cy-btn {
-    display: inline-block;
-    padding: 2px 8px;
-    border: 1px solid #b5b5b5;
-    border-radius: 2px;
-    background: linear-gradient(#ffffff, #e6e6e6);
-    color: #555;
-    font: inherit;
-    font-size: 11px;
-    line-height: 1.6;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.cy-btn-complete {
-        display: inline-block;
-    padding: 2px 8px;
-    border: 1px solid #b5b5b5;
-    border-radius: 2px;
-    background: linear-gradient(#ffffff, #e6e6e6);
-    color: var(--cy-orange);
-    font: inherit;
-    font-size: 11px;
-    line-height: 1.6;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.cy-btn:active {
-    background: linear-gradient(#e6e6e6, #ffffff);
-}
-
-/* Account */
-.cy-account-guide {
-    margin: 0 0 12px;
-    font-size: 13px;
-    color: #888;
-}
-
-.cy-account-group+.cy-account-group {
-    margin-top: 16px;
-    padding-top: 14px;
-    border-top: 1px solid #e5e5e5;
-}
-
-.cy-account-group-title {
-    font-size: 13px;
-    color: var(--cy-blue);
-    margin-bottom: 8px;
-}
-
-.cy-account-options {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-}
-
-.cy-account-option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-}
-
-.cy-account-radio {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    font-size: 12px;
-    white-space: nowrap;
-}
-
-.cy-account-radio input {
-    margin: 0;
-    accent-color: #555;
-}
-
-.cy-account-option.selected .cy-account-radio {
-    font-weight: bold;
-}
-
-/* 썸네일: 도트 편지봉투 (그림은 envelope.ts) */
-.cy-account-thumb {
-    display: block;
-    width: 100%;
-    filter: drop-shadow(1px 2px 0 rgba(0, 0, 0, 0.08));
-    transition: transform 0.15s;
-}
-
-/* 선택된 봉투는 주황 도트 테두리 + 살짝 떠오름 */
-.cy-account-option.selected .cy-account-thumb {
-    filter: drop-shadow(2px 0 0 var(--cy-orange)) drop-shadow(-2px 0 0 var(--cy-orange)) drop-shadow(0 2px 0 var(--cy-orange)) drop-shadow(0 -2px 0 var(--cy-orange));
-    transform: translateY(-2px);
-}
-
-.cy-envelope {
-    display: block;
-    width: 100%;
-    height: auto;
-    image-rendering: pixelated;
-}
-
-/* 주황 말풍선 안내 박스: 화살표가 선택된 칸을 가리킴 */
-.cy-account-tip {
-    position: relative;
-    margin-top: 12px;
-    padding: 8px 10px;
-    border: 1px solid #f5b98a;
-    background: #fffaf3;
-    color: var(--cy-orange);
-    font-size: 12px;
-    line-height: 1.6;
-    word-break: keep-all;
-}
-
-.cy-account-tip::before {
-    content: '';
-    position: absolute;
-    top: -6px;
-    left: var(--tip-left, 50%);
-    width: 9px;
-    height: 9px;
-    background: #fffaf3;
-    border-top: 1px solid #f5b98a;
-    border-left: 1px solid #f5b98a;
-    transform: translateX(-50%) rotate(45deg);
-}
-
-.cy-account-tip b {
-    font-weight: normal;
-    color: #c75a14;
-}
-
-.cy-account-holder {
-    color: #999;
-    font-size: 11px;
-}
-
-.cy-account-message {
-    margin-top: 4px;
-    color: var(--cy-blue);
-    font-size: 11px;
-}
-
-.cy-account-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 8px;
-}
-
-.cy-btn:disabled {
-    color: #bbb;
-    cursor: default;
-}
-
-/* BGM 플레이어: 회색 미니 바 */
-.bgm {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.cy-bgm-hint {
-    margin: 3px 2px 0 0;
-    font-size: 10px;
-    color: #aaa;
-    text-align: right;
-}
-
-.cy-bgm-player {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 2px 4px 2px 8px;
-    border: 1px solid #c8c8c8;
-    border-radius: 3px;
-    background: linear-gradient(#fafafa, #e9e9e9);
-    font-size: 11px;
-    color: #666;
-}
-
-.cy-bgm-player button {
-    padding: 0;
-    border: none;
-    background: none;
-    font: inherit;
-    color: inherit;
-    cursor: pointer;
-}
-
-.cy-bgm-divider {
-    color: #bbb;
-}
-
-.cy-bgm-controls {
-    display: inline-flex;
-    gap: 2px;
-    margin-left: 2px;
-}
-
-/* .cy-bgm-player button 보다 우선 적용되도록 부모 클래스까지 지정 */
-.cy-bgm-player .cy-bgm-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 14px;
-    height: 12px;
-    padding: 0 2px;
-    border: 1px solid #b5b5b5;
-    border-radius: 2px;
-    background: #fff;
-    font-family: sans-serif;
-    font-size: 7px;
-    letter-spacing: -1px;
-    color: #777;
-}
-
-.cy-bgm-player .cy-bgm-icon.playing {
-    color: var(--cy-orange);
-}
-
-.cy-bgm-player .cy-bgm-icon:active {
-    background: #eee;
-}
-
-.cy-bgm-title {
-    position: relative;
-    width: 84px;
-    height: 14px;
-    margin-right: 4px;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.cy-bgm-title span {
-    position: absolute;
-    top: 0;
-    color: var(--cy-blue);
-    line-height: 14px;
-    animation: cy-bgm-flow 6s linear infinite;
-    /* 처음엔 가운데쯤에 보이도록 애니메이션 중간 지점에서 시작 */
-    animation-delay: -3s;
-    animation-play-state: paused;
-}
-
-.cy-bgm-title span.playing {
-    animation-play-state: running;
-}
-
-/* 왼쪽 밖에서 들어와 오른쪽 밖으로 나감 */
-@keyframes cy-bgm-flow {
-    from {
-        left: 0;
-        transform: translateX(-100%);
-    }
-
-    to {
-        left: 100%;
-        transform: translateX(0);
-    }
-}
-
-/* 따라다니는 탭 메뉴: 본문 오른쪽 끝에 붙어 있는 파란 인덱스 탭 */
-.cy-layout {
-    --frame-color: var(--cy-frame);
-    /* 테두리 띠: 상단바와 같은 연한 하늘색 */
-    --tab-color: #2b8db3;
-    /* 탭: 띠보다 진한 청록 파랑 */
-    --tab-border: #1f6f8f;
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    padding-right: 4px;
-    /* 오른쪽 46px(점선 여백 4px + 탭 38px + 여백 4px)을 위아래 끝까지 테두리 띠로 */
-    background: linear-gradient(to left, var(--frame-color) 46px, transparent 46px);
-}
-
-/* 테두리 띠 안쪽의 노트 같은 흰 점선 */
-.cy-layout::after {
-    content: '';
-    position: absolute;
-    /* 위로 끌어올려 상단바 점선과 모서리에서 이어지게 (상단바 점선 bottom 6px + 두께 2px) */
-    top: -8px;
-    bottom: 8px;
-    right: 43px;
-    border-left: 2px dashed rgba(255, 255, 255, 0.95);
-    pointer-events: none;
-}
-
-.cy-content {
-    padding-right: 4px;
-    flex: 1;
-    min-width: 0;
-}
-
-/* 탭이 카드 오른쪽 끝에 바로 붙도록 카드 오른쪽 여백 제거 */
-.cy-content .cy-card {
-    margin-right: 0;
-}
-
-/* 탭 클릭으로 이동했을 때 섹션 위쪽에 약간의 여유 */
-.cy-content [id^="cy-"] {
-    scroll-margin-top: 12px;
-}
-
-.cy-nav {
-    position: sticky;
-    top: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    width: 38px;
-    flex-shrink: 0;
-    /* 점선 오른쪽에서 탭이 시작되도록 */
-    margin-left: 4px;
-    z-index: 1;
-    /* 첫 카드 높이쯤에서 시작 */
-    margin-top: 56px;
-}
-
-.cy-nav button {
-    padding: 6px 2px;
-    border: 1px solid var(--tab-border);
-    border-radius: 0 5px 5px 0;
-    background: var(--tab-color);
-    color: #fff;
-    font: inherit;
-    font-size: 8.5px;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-    word-break: keep-all;
-    text-align: center;
-    cursor: pointer;
-}
-
-/* 현재 보고 있는 섹션 탭은 흰색 */
-.cy-nav button.active {
-    background: #fff;
-    color: var(--tab-border);
-    font-weight: bold;
-}
-
-.cy-jukebox {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 5px;
-    justify-content: space-between;
-}
-
-.cy-profile-info {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.cy-family {
-    display: flex;
-    align-items: center;
-}
-
-.cy-all-family {
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    font-family: 'Noto Serif KR', serif;
-    font-size: 15px;
-    font-weight: 400;
-}
-
-.cy-person-name {
-    font-size: 15px;
-    font-weight: 500;
-}
-
-/* 모바일: TODAY가 한 줄에 들어가도록 플레이어를 작게 */
-@media (max-width: 480px) {
-    .cy-bgm-player {
-        gap: 3px;
-        padding: 2px 3px 2px 6px;
-    }
-
-    .cy-bgm-title {
-        width: 64px;
-        margin-right: 2px;
-    }
-
-    .cy-bgm-toggle-text,
-    .cy-bgm-divider {
-        display: none;
-    }
-}
-/* Guestbook */
-.cy-guestbook-write {
-    display: block;
-    width: 100%;
-    padding: 8px;
-    border: 1px dashed var(--cy-blue);
-    background: #f5fbfe;
-    color: var(--cy-blue);
-    font: inherit;
-    font-size: 13px;
-    cursor: pointer;
-}
-
-.cy-guestbook-write:disabled {
-    opacity: 0.5;
-    cursor: default;
-}
-
-.cy-guestbook-form {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    background: #fafafa;
-}
-
-.cy-guestbook-input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 6px 8px;
-    border: 1px solid #ccc;
-    font: inherit;
-    font-size: 13px;
-    resize: vertical;
-}
-
-.cy-guestbook-actions {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.cy-guestbook-count {
-    margin-right: auto;
-    font-size: 11px;
-    color: #999;
-}
-
-.cy-guestbook-actions button {
-    padding: 4px 12px;
-    border: 1px solid #ccc;
-    background: #fff;
-    font: inherit;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.cy-guestbook-actions button.primary {
-    border-color: var(--cy-orange);
-    background: var(--cy-orange);
-    color: #fff;
-}
-
-.cy-guestbook-actions button:disabled {
-    opacity: 0.6;
-}
-
-.cy-guestbook-empty {
-    margin: 16px 0;
-    text-align: center;
-    font-size: 13px;
-    color: #999;
-}
-
-.cy-guestbook-list {
-    margin: 12px 0 0;
-    padding: 0;
-    list-style: none;
-}
-
-.cy-guestbook-entry + .cy-guestbook-entry {
-    margin-top: 14px;
-}
-
-.cy-guestbook-head {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-    padding: 6px 8px;
-    border-top: 2px solid #999;
-    background: #f2f2f2;
-    font-size: 12px;
-}
-
-.cy-guestbook-no {
-    color: #555;
-}
-
-.cy-guestbook-name {
-    color: var(--cy-blue);
-    font-weight: bold;
-}
-
-.cy-guestbook-date {
-    font-size: 10px;
-    color: #aaa;
-}
-
-.cy-guestbook-body {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 10px 8px;
-}
-
-.cy-guestbook-minimi {
-    flex: 0 0 72px;
-    height: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ddd;
-    background: #fff;
-}
-
-.cy-guestbook-minimi img {
-    height: 60px;
-    image-rendering: pixelated;
-}
-
-.cy-guestbook-message {
-    margin: 0;
-    font-size: 13px;
-    line-height: 1.5;
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-/* Minimi editor */
-.cy-minimi-editor {
-    display: flex;
-    gap: 10px;
-}
-
-.cy-minimi-preview {
-    flex: 0 0 90px;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ddd;
-    background: #fff;
-}
-
-.cy-minimi-preview img {
-    height: 96px;
-    image-rendering: pixelated;
-}
-
-.cy-minimi-panel {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.cy-minimi-tabs {
-    display: flex;
-    justify-content: space-around;
-    border-bottom: 1px solid #ddd;
-}
-
-.cy-minimi-tabs button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    padding: 2px 6px 4px;
-    border: none;
-    border-bottom: 2px solid transparent;
-    background: none;
-    font: inherit;
-    font-size: 11px;
-    color: #888;
-    cursor: pointer;
-}
-
-.cy-minimi-tabs button.active {
-    border-bottom-color: var(--cy-orange);
-    color: var(--cy-orange);
-    font-weight: bold;
-}
-
-.cy-minimi-tabs img {
-    height: 30px;
-    image-rendering: pixelated;
-}
-
-.cy-minimi-items {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
-    gap: 4px;
-}
-
-.cy-minimi-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 2px;
-    height: 58px;
-    padding: 3px 2px;
-    border: 2px solid #eee;
-    background: #fff;
-    font: inherit;
-    cursor: pointer;
-}
-
-.cy-minimi-item.selected {
-    border-color: var(--cy-orange);
-}
-
-.cy-minimi-item img {
-    height: 36px;
-    image-rendering: pixelated;
-}
-
-.cy-minimi-none {
-    height: 36px;
-    line-height: 36px;
-    font-size: 10px;
-    color: #bbb;
-}
-
-.cy-minimi-item-label {
-    max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-size: 9px;
-    color: #777;
-}
-
-.cy-minimi-colors {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.cy-minimi-colors button {
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    box-shadow: 0 0 0 1px #ccc;
-    cursor: pointer;
-}
-
-.cy-minimi-colors button.selected {
-    box-shadow: 0 0 0 2px var(--cy-orange);
-}
-
-.cy-son-font {
-    margin: 0;
-    font-family: 'Noto Serif KR', serif;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.9;
+    margin-bottom: 12px;
 }

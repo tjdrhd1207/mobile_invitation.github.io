@@ -1,63 +1,111 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { photos } from '../component/PolaroidGallery';
 import CyPhotoViewer from './CyPhotoViewer';
 
-// 바둑판 한 페이지: 3열 x 4행
-const PAGE_SIZE = 12;
-const totalPages = Math.ceil(photos.length / PAGE_SIZE);
+// 아래 점(인디케이터)은 최대 이 개수만 보여주고, 넘기면 따라 움직임
+const MAX_DOTS = 7;
 
 const viewerImages = photos.map(photo => ({ key: photo.id, src: photo.src }));
 
+const clamp = (i: number) => Math.max(0, Math.min(photos.length - 1, i));
+
+/** 사진첩: 좌우로 밀어서 넘기는 슬라이드, 누르면 크게 보기 */
 export default function CyGallery() {
-    const [selectedId, setSelectedId] = useState<number>(photos[0].id);
+    const [current, setCurrent] = useState(0);
     // 크게 보고 있는 사진의 순번 (닫혀 있으면 null)
     const [openIndex, setOpenIndex] = useState<number | null>(null);
-    const [page, setPage] = useState(0);
-    const pagePhotos = photos.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+    const trackRef = useRef<HTMLDivElement>(null);
 
-    const show = (index: number) => {
-        setOpenIndex(index);
-        setSelectedId(photos[index].id);
-        // 넘기다가 다른 페이지 사진이 되면 바둑판 페이지도 따라감
-        setPage(Math.floor(index / PAGE_SIZE));
+    // 손으로 밀어서 넘긴 경우에도 현재 순번을 따라감
+    useEffect(() => {
+        const track = trackRef.current;
+        if (!track) return;
+        let frame = 0;
+        const onScroll = () => {
+            if (frame) return;
+            frame = requestAnimationFrame(() => {
+                frame = 0;
+                setCurrent(clamp(Math.round(track.scrollLeft / track.clientWidth)));
+            });
+        };
+        track.addEventListener('scroll', onScroll, { passive: true });
+        return () => {
+            cancelAnimationFrame(frame);
+            track.removeEventListener('scroll', onScroll);
+        };
+    }, []);
+
+    const goTo = (index: number, smooth = true) => {
+        const track = trackRef.current;
+        if (!track) return;
+        const next = clamp(index);
+        track.scrollTo({ left: next * track.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
+        setCurrent(next);
     };
 
-    return (
-        <div>
-            <div className="cy-gallery-grid">
-                {pagePhotos.map((photo, i) => (
-                    <button
-                        key={photo.id}
-                        className={`cy-gallery-grid-item ${selectedId === photo.id ? 'selected' : ''}`}
-                        onClick={() => show(page * PAGE_SIZE + i)}
-                    >
-                        <img src={photo.thumb} loading="lazy" decoding="async" />
-                    </button>
-                ))}
-            </div>
+    // 크게 보기에서 넘기면 슬라이드도 같은 사진으로 맞춤
+    const onViewerChange = (index: number) => {
+        setOpenIndex(index);
+        goTo(index, false);
+    };
 
-            {totalPages > 1 && (
-                <div className="cy-gallery-pager">
-                    <button onClick={() => setPage((p) => p - 1)} disabled={page === 0} aria-label="이전 페이지">‹</button>
-                    {Array.from({ length: totalPages }, (_, i) => (
+    // 현재 사진이 가운데 오도록 보여줄 점 범위를 정함
+    const dotStart = Math.max(0, Math.min(photos.length - MAX_DOTS, current - Math.floor(MAX_DOTS / 2)));
+    const dots = photos.slice(dotStart, dotStart + MAX_DOTS).map((_, i) => dotStart + i);
+
+    return (
+        <div className="cy-slide">
+            <div className="cy-slide-view">
+                <div className="cy-slide-track" ref={trackRef}>
+                    {photos.map((photo, i) => (
                         <button
-                            key={i}
-                            className={i === page ? 'active' : ''}
-                            onClick={() => setPage(i)}
-                            aria-current={i === page ? 'page' : undefined}
+                            key={photo.id}
+                            type="button"
+                            className="cy-slide-item"
+                            onClick={() => setOpenIndex(i)}
+                            aria-label={`${i + 1}번째 사진 크게 보기`}
                         >
-                            {i + 1}
+                            <img
+                                src={photo.src}
+                                alt=""
+                                loading={Math.abs(i - current) <= 1 ? 'eager' : 'lazy'}
+                                decoding="async"
+                            />
                         </button>
                     ))}
-                    <button onClick={() => setPage((p) => p + 1)} disabled={page === totalPages - 1} aria-label="다음 페이지">›</button>
                 </div>
-            )}
+
+                {current > 0 && (
+                    <button type="button" className="cy-slide-arrow left" onClick={() => goTo(current - 1)} aria-label="이전 사진">‹</button>
+                )}
+                {current < photos.length - 1 && (
+                    <button type="button" className="cy-slide-arrow right" onClick={() => goTo(current + 1)} aria-label="다음 사진">›</button>
+                )}
+            </div>
+
+            <div className="cy-slide-count">
+                <b>{current + 1}</b> / {photos.length}
+            </div>
+
+            <div className="cy-slide-dots" aria-hidden="true">
+                {dots.map(i => {
+                    // 양 끝 점은 뒤에 더 있다는 표시로 작게
+                    const edge = (i === dots[0] && i > 0) || (i === dots[dots.length - 1] && i < photos.length - 1);
+                    return (
+                        <span
+                            key={i}
+                            className={`${i === current ? 'active' : ''} ${edge ? 'edge' : ''}`}
+                            onClick={() => goTo(i)}
+                        />
+                    );
+                })}
+            </div>
 
             {openIndex !== null && (
                 <CyPhotoViewer
                     images={viewerImages}
                     index={openIndex}
-                    onChange={show}
+                    onChange={onViewerChange}
                     onClose={() => setOpenIndex(null)}
                 />
             )}

@@ -6,8 +6,8 @@ import propose from '../assets/bgm/propose.mp3';
 
 // 재생 목록: 순서대로 재생되고, 마지막 곡이 끝나면 처음으로 돌아감
 const PLAYLIST = [
+    { title: 'Beatles - i will', src: iwill },    
     { title: 'Alex - 화분', src: alex },
-    { title: 'Beatles - i will', src: iwill },
     { title: '이수훈 - 고백', src: goback },
     { title: '노을 - 청혼', src: propose },
 ];

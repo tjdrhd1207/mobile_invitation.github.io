@@ -26,7 +26,7 @@ export const accountGroups: AccountGroup[] = [
                 relation: "신랑",
                 name: "김재민",
                 bank: "신한은행",
-                accountNumber: "110373494850",
+                accountNumber: "110-373-494850",
             },
             {
                 id: "groom-father",
@@ -53,8 +53,8 @@ export const accountGroups: AccountGroup[] = [
                 id: "bride-self",
                 relation: "신부",
                 name: "공국명",
-                bank: "",
-                accountNumber: "",
+                bank: "국민은행",
+                accountNumber: "228002-04-157889",
             },
             {
                 id: "bride-father",

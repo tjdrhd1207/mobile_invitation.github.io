@@ -5,6 +5,6 @@ export const WEDDING = {
     date: { year: 2027, month: 2, day: 13 },
     time: "12:10",
     dayOfWeek: "토요일",
-    venue: "웨딩시티 신도림",
+    venue: "웨딩시티",
     address: "서울특별시 구로구 새말로 97",
 };

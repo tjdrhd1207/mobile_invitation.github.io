@@ -7,6 +7,11 @@ const COLUMNS = 3;
 export default function CyAccount() {
     const [selectedId, setSelectedId] = useState(accountGroups[0].accounts[0].id);
     const [message, setMessage] = useState('');
+    // 펼쳐진 그룹(신랑측/신부측) id 목록. 처음에는 모두 접힌 상태
+    const [openGroups, setOpenGroups] = useState<string[]>([]);
+
+    const toggleGroup = (id: string) =>
+        setOpenGroups(prev => (prev.includes(id) ? prev.filter(g => g !== id) : [...prev, id]));
 
     const select = (id: string) => {
         setSelectedId(id);
@@ -24,16 +29,30 @@ export default function CyAccount() {
 
     return (
         <div className="cy-account">
-            <p className="cy-account-guide">마음 전하실 곳을 선택하시면 계좌를 확인하실 수 있습니다.</p>
+            <p className="cy-account-guide">신랑측·신부측을 눌러 마음 전하실 곳을 선택해 주세요.</p>
 
             {accountGroups.map(group => {
                 const selectedIndex = group.accounts.findIndex(a => a.id === selectedId);
                 const selected = group.accounts[selectedIndex];
+                const isOpen = openGroups.includes(group.id);
+                const panelId = `cy-account-panel-${group.id}`;
 
                 return (
-                    <div key={group.id} className="cy-account-group">
-                        <div className="cy-account-group-title">{group.title}</div>
+                    <div key={group.id} className={`cy-account-group ${isOpen ? 'open' : ''}`}>
+                        {/* 제목줄을 누르면 계좌 선택 영역을 접고 펼침 */}
+                        <button
+                            type="button"
+                            className="cy-account-group-title"
+                            onClick={() => toggleGroup(group.id)}
+                            aria-expanded={isOpen}
+                            aria-controls={panelId}
+                        >
+                            {group.title}
+                            <span className="cy-account-arrow" aria-hidden="true">▼</span>
+                        </button>
 
+                        {isOpen && (
+                        <div id={panelId}>
                         <div className="cy-account-options">
                             {group.accounts.map((account, index) => (
                                 <label
@@ -88,6 +107,8 @@ export default function CyAccount() {
                                     계좌복사
                                 </button>
                             </div>
+                        )}
+                        </div>
                         )}
                     </div>
                 );

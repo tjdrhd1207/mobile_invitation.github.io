@@ -23,6 +23,9 @@ export default function CyworldApp() {
                 <span className="cy-logo-text">MarryWorld</span>
             </header>
 
+            {/* 화면 위에 붙어서 스크롤을 따라다니는 탭 메뉴 */}
+            <CyNav />
+
             <div className="cy-layout">
                 <main className="cy-content">
                     <h1 id="cy-home" className="cy-title">{groom.name} ♥ {bride.name} 결혼합니다.</h1>
@@ -40,11 +43,15 @@ export default function CyworldApp() {
                         <p className="cy-bgm-hint">♪ 재생 버튼을 누르시면 배경음악과 함께 보실 수 있어요</p>
                     </section >
 
-                    <section className="cy-card2 cy-profile">
+                    <section id="cy-introduce" className="cy-card2 cy-profile">
                         <div className="cy-avatar" >
                             <img className="cy-avatar-img" src={cyAvatar} alt="미니룸" />
                         </div>
                         <div>
+                            <div className="cy-wedding-info">
+                                <div>2027년 2월 13일 토요일 12시 10분</div>
+                                <div>웨딩시티 신도림</div>
+                            </div>
                             <h2 className="cy-section-title">Introduce</h2>
                             <div className="cy-intro-text">
                                 <p className="cy-son-font">오랜 시간 곁에서 서로를 아껴온 저희가</p>
@@ -60,23 +67,25 @@ export default function CyworldApp() {
                                 <br></br>
                                 <div className="cy-all-family">
                                     <div className="cy-family">
-                                        <div className="cy-person-name">김승준</div>&nbsp;·<div className="cy-person-name">조춘열</div>&nbsp;의 아들&nbsp;<div className="cy-person-name">김재민</div>
+                                        <div className="cy-person-name">김승준</div>&nbsp;·<div className="cy-person-name">조춘열</div>&nbsp;의 아들&nbsp;<div className="cy-person-name main">김재민</div>
                                     </div>
                                     <div className="cy-family">
-                                        <div className="cy-person-name">공진환</div>&nbsp;·<div className="cy-person-name">안미환</div>&nbsp;의 딸&nbsp;<div className="cy-person-name">공국명</div>
+                                        <div className="cy-person-name">공진환</div>&nbsp;·<div className="cy-person-name">안미환</div>&nbsp;의 딸&nbsp;<div className="cy-person-name main">공국명</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </section >
 
-                    <section id="cy-miniroom" className="cy-card">
-                        <CyMiniRoom />
+
+                    <section id="cy-location" className="cy-card">
+                        <h2 className="cy-section-title">Location</h2>
+                        <CyLocation />
                     </section>
 
-                    <section id="cy-gallery" className="cy-card">
-                        <h2 className="cy-section-title">Gallery</h2>
-                        <CyGallery />
+                    
+                    <section id="cy-miniroom" className="cy-card">
+                        <CyMiniRoom />
                     </section>
 
                     <section id="cy-calendar" className="cy-card">
@@ -84,10 +93,14 @@ export default function CyworldApp() {
                         <CyCalendar />
                     </section>
 
-                    <section id="cy-location" className="cy-card">
-                        <h2 className="cy-section-title">Location</h2>
-                        <CyLocation />
+
+
+                    <section id="cy-gallery" className="cy-card">
+                        <h2 className="cy-section-title">Gallery</h2>
+                        <CyGallery />
                     </section>
+
+
 
                     <section id="cy-account" className="cy-card">
                         <h2 className="cy-section-title">Account</h2>
@@ -99,9 +112,6 @@ export default function CyworldApp() {
                         <CyGuestbook />
                     </section>
                 </main>
-
-                {/* 오른쪽에 붙어서 스크롤을 따라다니는 탭 메뉴 */}
-                <CyNav />
             </div>
 
         </div >

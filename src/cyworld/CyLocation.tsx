@@ -26,8 +26,9 @@ const BUS_STOPS: { name: string; desc?: string; buses: { type: string; color: st
 ];
 
 // 안내용 상세 주소 (지도 검색에는 WEDDING.address 사용)
-const FULL_ADDRESS1 = '서울 구로구 새말로 97 (구로동 3-25)';
-const FULL_ADDRESS2 = '신도림 테크노마트 8층 아모르홀';
+const ROAD_ADDRESS = '서울 구로구 새말로 97';
+const LOT_ADDRESS = '(구로동 3-25)';
+const HALL = '신도림 테크노마트 8층 아모르홀';
 
 export default function CyLocation() {
     const mapRef = useRef<HTMLDivElement>(null);
@@ -63,16 +64,16 @@ export default function CyLocation() {
 
     return (
         <div className="cy-location">
-            <div className="cy-route-section">
-                <div className="cy-location-venue">{venue}</div>
+            {/* 예식장 이름 → 층/홀 → 도로명 주소 순으로 줄을 나눠 표시 */}
+            <div className="cy-place">
+                <span className="cy-place-icon" aria-hidden="true">📍</span>
+                <div>
+                    <div className="cy-place-name">{venue}</div>
+                    <p className="cy-place-line">{HALL}</p>
+                    <p className="cy-place-sub">{ROAD_ADDRESS} {LOT_ADDRESS}</p>
+                </div>
             </div>
-            <div className="cy-route-title">
-                <span className="cy-route-icon">📍</span> 주소
-            </div>
-            <p className="cy-route-desc">{FULL_ADDRESS1}</p>
-            <p className="cy-route-desc">{FULL_ADDRESS2}</p>
             <div className="cy-location-buttons">
-
                 <button type="button" className={copied ? 'cy-btn' : 'cy-btn-complete'} onClick={copyAddress}>
                     {copied ? '복사완료' : '주소복사'}
                 </button>
@@ -101,14 +102,6 @@ export default function CyLocation() {
                 )}
             </div>
 
-            <div className="cy-location-info">
-                <div className="cy-location-address">
-
-                </div>
-            </div>
-
-
-
             <div className="cy-route">
                 <div className="cy-route-heading">
                     웨딩시티 오시는 길
@@ -129,7 +122,8 @@ export default function CyLocation() {
                         <span>신도림역</span>
                     </div>
                     <p className="cy-route-desc">
-                        신도림역 <b>②, ③번 출구</b> (지하철 역과 건물 지하 직접 연결)
+                        신도림역 <b>②, ③번 출구</b>
+                        <span className="cy-route-sub">지하철역과 건물 지하가 바로 연결돼요</span>
                     </p>
                     </div>
                 </div>
@@ -161,8 +155,7 @@ export default function CyLocation() {
                     </div>
                     <p className="cy-route-desc">
                         웨딩홀 건물 지하주차장 <b>B3~B7</b>
-                        <br />
-                        약 2,500대 수용 / <b>3시간 무료</b>
+                        <span className="cy-route-sub">약 2,500대 수용 · <b>3시간 무료</b></span>
                     </p>
                 </div>
 

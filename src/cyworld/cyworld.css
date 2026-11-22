@@ -919,7 +919,7 @@ html:not(.fonts-ready) .cy-frame {
   flex-direction: row;
   align-items: center;
   gap: 5px;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 .cy-profile-info {
   display: flex;

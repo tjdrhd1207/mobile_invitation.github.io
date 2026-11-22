@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 
-// 탭 이름과 이동할 섹션 id (CyworldApp의 section id와 맞춰야 함)
+// 탭 이름과 이동할 섹션 id (CyworldApp의 section id·순서와 맞춰야 함)
 export const NAV_ITEMS = [
     { id: 'cy-home', label: '홈' },
     { id: 'cy-introduce', label: '소개' },
-    { id: 'cy-miniroom', label: '미니룸' },
-    { id: 'cy-gallery', label: '사진첩' },
-    { id: 'cy-calendar', label: '달력' },
     { id: 'cy-location', label: '오시는길' },
+    { id: 'cy-miniroom', label: '미니룸' },
+    { id: 'cy-calendar', label: '달력' },
+    { id: 'cy-gallery', label: '사진첩' },
     { id: 'cy-account', label: '마음전달' },
     { id: 'cy-guestbook', label: '방명록' },
 ];

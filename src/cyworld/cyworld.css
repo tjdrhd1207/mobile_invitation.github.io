@@ -64,7 +64,8 @@ html:not(.fonts-ready) .cy-frame {
   content: "";
   position: absolute;
   left: 8px;
-  right: 8px;
+  /* 오른쪽 탭 띠의 세로 점선과 모서리에서 이어지도록 */
+  right: 43px;
   bottom: 6px;
   border-bottom: 2px dashed rgba(255, 255, 255, .95);
   pointer-events: none;
@@ -863,56 +864,84 @@ html:not(.fonts-ready) .cy-frame {
     transform: translate(0);
   }
 }
+/* 따라다니는 탭 메뉴: 본문 오른쪽 끝에 붙어 있는 파란 인덱스 탭 */
 .cy-layout {
-  position: relative;
+    --frame-color: var(--cy-frame);
+    /* 테두리 띠: 상단바와 같은 연한 하늘색 */
+    --tab-color: #2b8db3;
+    /* 탭: 띠보다 진한 청록 파랑 */
+    --tab-border: #1f6f8f;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    padding-right: 4px;
+    /* 오른쪽 46px(점선 여백 4px + 탭 38px + 여백 4px)을 위아래 끝까지 테두리 띠로 */
+    background: linear-gradient(to left, var(--frame-color) 46px, transparent 46px);
 }
+
+/* 테두리 띠 안쪽의 노트 같은 흰 점선 */
+.cy-layout::after {
+    content: '';
+    position: absolute;
+    /* 위로 끌어올려 상단바 점선과 모서리에서 이어지게 (상단바 점선 bottom 6px + 두께 2px) */
+    top: -8px;
+    bottom: 8px;
+    right: 43px;
+    border-left: 2px dashed rgba(255, 255, 255, 0.95);
+    pointer-events: none;
+}
+
 .cy-content {
-  min-width: 0;
+    padding-right: 4px;
+    flex: 1;
+    min-width: 0;
 }
-.cy-content [id^=cy-] {
-  scroll-margin-top: 56px;
+
+/* 탭이 카드 오른쪽 끝에 바로 붙도록 카드 오른쪽 여백 제거 */
+.cy-content .cy-card {
+    margin-right: 0;
 }
+
+/* 탭 클릭으로 이동했을 때 섹션 위쪽에 약간의 여유 */
+.cy-content [id^="cy-"] {
+    scroll-margin-top: 12px;
+}
+
 .cy-nav {
-  --tab-color: #2b8db3;
-  --tab-border: #1f6f8f;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  gap: 2px;
-  padding: 6px 6px 0;
-  background: var(--cy-frame);
-  border-bottom: 2px solid var(--tab-border);
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  box-shadow: 0 2px 6px #1f6f8f26;
+    position: sticky;
+    top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 38px;
+    flex-shrink: 0;
+    /* 점선 오른쪽에서 탭이 시작되도록 */
+    margin-left: 4px;
+    z-index: 1;
+    /* 첫 카드 높이쯤에서 시작 */
+    margin-top: 56px;
 }
-.cy-nav::-webkit-scrollbar {
-  display: none;
-}
+
 .cy-nav button {
-  flex: 1 0 auto;
-  padding: 7px 5px 6px;
-  border: 1px solid var(--tab-border);
-  border-bottom: none;
-  border-radius: 6px 6px 0 0;
-  background: var(--tab-color);
-  color: #fff;
-  font: inherit;
-  font-size: 11px;
-  letter-spacing: -.3px;
-  line-height: 1.2;
-  white-space: nowrap;
-  text-align: center;
-  cursor: pointer;
+    padding: 6px 2px;
+    border: 1px solid var(--tab-border);
+    border-radius: 0 5px 5px 0;
+    background: var(--tab-color);
+    color: #fff;
+    font: inherit;
+    font-size: 8.5px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    word-break: keep-all;
+    text-align: center;
+    cursor: pointer;
 }
+
+/* 현재 보고 있는 섹션 탭은 흰색 */
 .cy-nav button.active {
-  background: #fff;
-  color: var(--tab-border);
-  font-weight: 700;
-  margin-bottom: -2px;
-  padding-bottom: 8px;
+    background: #fff;
+    color: var(--tab-border);
+    font-weight: bold;
 }
 .cy-jukebox {
   display: flex;
@@ -1222,7 +1251,7 @@ html:not(.fonts-ready) .cy-frame {
     font-display: swap;
 }
 
-.cy-nav, .cy-logo-text, .cy-section-title {
+.cy-nav, .cy-logo-text, .cy-section-title, .cy-title {
     font-family: 'WeddingFont2', sans-serif;
 }
 
@@ -1232,4 +1261,9 @@ html:not(.fonts-ready) .cy-frame {
     align-items: center;
     gap: 4px;
     margin-bottom: 12px;
+    font-family: 'Noto Serif KR', sans-serif;
+}
+
+.cy-intro-text {
+    font-family: 'Noto Serif KR', sans-serif;    
 }

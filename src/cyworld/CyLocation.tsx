@@ -122,7 +122,7 @@ export default function CyLocation() {
                         <span>신도림역</span>
                     </div>
                     <p className="cy-route-desc">
-                        신도림역 <b>②, ③번 출구</b>
+                        신도림역 <b>2, 3번 출구</b>
                         <span className="cy-route-sub">지하철역과 건물 지하가 바로 연결돼요</span>
                     </p>
                     </div>

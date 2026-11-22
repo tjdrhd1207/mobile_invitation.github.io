@@ -13,8 +13,8 @@ export const NAV_ITEMS = [
 ];
 
 // 화면 맨 위에서 이 거리(px) 안에 섹션 윗부분이 들어오면 그 섹션을 현재 탭으로 봄
-// (위에 고정된 탭 메뉴 높이 + CSS의 scroll-margin-top 56px보다 조금 크게)
-const ACTIVE_LINE = 80;
+// (CSS의 scroll-margin-top 12px보다 조금 크게: 탭으로 이동한 섹션이 짧아도 그대로 잡히도록)
+const ACTIVE_LINE = 40;
 
 // 현재 스크롤 위치에서 보고 있는 섹션 id
 function findActiveId() {
@@ -86,15 +86,6 @@ export default function CyNav() {
             window.removeEventListener('keydown', onKey);
         };
     }, []);
-
-    // 탭 메뉴가 화면보다 넓을 때, 현재 탭이 가운데 보이도록 탭 줄을 가로로 스크롤
-    useEffect(() => {
-        const nav = navRef.current;
-        const active = nav?.querySelector<HTMLButtonElement>('button.active');
-        if (!nav || !active) return;
-        const left = active.offsetLeft - (nav.clientWidth - active.offsetWidth) / 2;
-        nav.scrollTo({ left, behavior: 'smooth' });
-    }, [activeId]);
 
     const moveTo = (id: string) => {
         setActiveId(id);

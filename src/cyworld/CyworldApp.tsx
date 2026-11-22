@@ -23,9 +23,6 @@ export default function CyworldApp() {
                 <span className="cy-logo-text">MarryWorld</span>
             </header>
 
-            {/* 화면 위에 붙어서 스크롤을 따라다니는 탭 메뉴 */}
-            <CyNav />
-
             <div className="cy-layout">
                 <main className="cy-content">
                     <h1 id="cy-home" className="cy-title">{groom.name} ♥ {bride.name} 결혼합니다.</h1>
@@ -112,6 +109,9 @@ export default function CyworldApp() {
                         <CyGuestbook />
                     </section>
                 </main>
+
+                {/* 오른쪽에 붙어서 스크롤을 따라다니는 탭 메뉴 */}
+                <CyNav />
             </div>
 
         </div >

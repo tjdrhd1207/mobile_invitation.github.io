@@ -15,6 +15,8 @@ export default function CyGallery() {
     // 크게 보고 있는 사진의 순번 (닫혀 있으면 null)
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const trackRef = useRef<HTMLDivElement>(null);
+    // 화살표·점을 눌러 이동 중인 목표 순번 (이동 중 지나가는 사진으로 점이 깜빡이지 않게)
+    const targetRef = useRef<number | null>(null);
 
     // 손으로 밀어서 넘긴 경우에도 현재 순번을 따라감
     useEffect(() => {
@@ -25,13 +27,23 @@ export default function CyGallery() {
             if (frame) return;
             frame = requestAnimationFrame(() => {
                 frame = 0;
-                setCurrent(clamp(Math.round(track.scrollLeft / track.clientWidth)));
+                const index = clamp(Math.round(track.scrollLeft / track.clientWidth));
+                if (targetRef.current !== null) {
+                    // 버튼으로 이동 중: 목표에 도착하기 전까지는 무시
+                    if (index !== targetRef.current) return;
+                    targetRef.current = null;
+                }
+                setCurrent(index);
             });
         };
+        // 손가락으로 직접 밀기 시작하면 버튼 이동 목표는 취소
+        const onTouchStart = () => { targetRef.current = null; };
         track.addEventListener('scroll', onScroll, { passive: true });
+        track.addEventListener('touchstart', onTouchStart, { passive: true });
         return () => {
             cancelAnimationFrame(frame);
             track.removeEventListener('scroll', onScroll);
+            track.removeEventListener('touchstart', onTouchStart);
         };
     }, []);
 
@@ -39,14 +51,16 @@ export default function CyGallery() {
         const track = trackRef.current;
         if (!track) return;
         const next = clamp(index);
+        targetRef.current = smooth ? next : null;
         track.scrollTo({ left: next * track.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
         setCurrent(next);
     };
 
-    // 크게 보기에서 넘기면 슬라이드도 같은 사진으로 맞춤
-    const onViewerChange = (index: number) => {
-        setOpenIndex(index);
-        goTo(index, false);
+    // 크게 보기를 닫을 때, 보던 사진으로 슬라이드를 한 번만 맞춤
+    // (열려 있는 동안 계속 맞추면 반투명 배경 뒤로 점들이 넘길 때마다 움직여 보였음)
+    const closeViewer = () => {
+        if (openIndex !== null) goTo(openIndex, false);
+        setOpenIndex(null);
     };
 
     // 현재 사진이 가운데 오도록 보여줄 점 범위를 정함
@@ -105,8 +119,8 @@ export default function CyGallery() {
                 <CyPhotoViewer
                     images={viewerImages}
                     index={openIndex}
-                    onChange={onViewerChange}
-                    onClose={() => setOpenIndex(null)}
+                    onChange={setOpenIndex}
+                    onClose={closeViewer}
                 />
             )}
         </div>

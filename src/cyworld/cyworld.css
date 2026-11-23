@@ -2,8 +2,13 @@
    - 글씨체: 갈무리11(Galmuri11, 픽셀 폰트) 하나로 통일, 크기는 :root의 --fs-* 변수로 조절
    - 탭 메뉴: 화면 위에 가로로 고정(.cy-nav)
    - 사진첩: 가로 슬라이드(.cy-slide-*), 달력: 달력 + D-day(.cy-cal-*) */
+/* 다크모드 대응
+   카카오톡 등 안드로이드 내장 브라우저(WebView)는 페이지가 '다크 지원'을 밝히지 않으면
+   화면 색을 강제로 어둡게 바꿈. ('only light'로 두면 오히려 강제 변환 대상이 됨)
+   그래서 최상위 html만 'light dark'로 다크 지원을 밝혀 강제 변환을 피하고,
+   실제 화면인 body 아래는 'only light'로 고정해 항상 밝게 보이게 함 */
 :root {
-    color-scheme: only light;
+    color-scheme: light dark;
     --cy-blue: #1ea0d7;
     --cy-orange: #f07b2a;
     --cy-bg: #eef1f4;
@@ -19,7 +24,13 @@
     --fs-name: 16px;
 }
 
+html {
+    background-color: var(--cy-bg);
+}
+
 body {
+    /* 입력칸·버튼·라디오·스크롤바 등 기본 요소까지 밝은 모양으로 고정 (위 다크모드 대응 참고) */
+    color-scheme: only light;
     margin: 0;
     background-color: var(--cy-bg);
     background-size: 12px 12px;
@@ -306,7 +317,7 @@ html:not(.fonts-ready) .cy-frame {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 20px 8px;
     background: #000c;
     color: #fff;
     touch-action: none;
@@ -318,11 +329,13 @@ html:not(.fonts-ready) .cy-frame {
     display: inline-flex;
 }
 
+/* 크게 보기 사진 크기: 가로는 화면 폭 - 양옆 8px(최대 480px), 세로는 화면 높이의 80%까지
+   (휴대폰에서 세로 사진은 가로 폭에 먼저 걸리므로, 크게 하려면 가로 여백을 줄이는 게 효과적) */
 .cy-gallery-modal img {
     display: block;
-    max-width: min(calc(100vw - 40px), 400px);
-    max-height: 65vh;
-    max-height: 65dvh;
+    max-width: min(calc(100vw - 16px), 480px);
+    max-height: 80vh;
+    max-height: 80dvh;
     object-fit: contain;
     box-sizing: border-box;
     animation: cy-modal-fade .2s ease-out;

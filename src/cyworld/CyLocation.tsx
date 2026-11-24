@@ -2,14 +2,6 @@ import { useRef, useState } from 'react';
 import { WEDDING } from '../data/wedding';
 import { getMapLinks, useKakaoMap } from '../hooks/useKakaoMap';
 import { MINIMI_SRC } from './minimi';
-import CyPhotoViewer from './CyPhotoViewer';
-// 길 안내 사진 (주소를 누르면 순서대로 크게 보기). 원본이 큰 사진은 줄여서 사용
-import route1 from '../assets/gallery/route/1.webp?w=860&format=webp&imagetools';
-import route2 from '../assets/gallery/route/2.webp?w=860&format=webp&imagetools';
-import route3 from '../assets/gallery/route/3.webp?format=webp&imagetools';
-import route4 from '../assets/gallery/route/4.webp?format=webp&imagetools';
-
-const ROUTE_PHOTOS = [route1, route2, route3, route4].map((src, i) => ({ key: i, src }));
 
 const { venue, address } = WEDDING;
 const MAP_LINKS = getMapLinks(venue);
@@ -33,8 +25,6 @@ const HALL = '신도림 테크노마트 8층 아모르홀';
 export default function CyLocation() {
     const mapRef = useRef<HTMLDivElement>(null);
     const [copied, setCopied] = useState(false);
-    // 길 안내 사진 크게 보기 순번 (닫혀 있으면 null)
-    const [routeIndex, setRouteIndex] = useState<number | null>(null);
 
     const { mapError } = useKakaoMap(mapRef, address, (kakao, map, position) => {
         // 기본 핀 대신 미니미 + 도트 말풍선을 지도 위에 올림
@@ -81,15 +71,6 @@ export default function CyLocation() {
                 <a className="cy-btn" href={MAP_LINKS.naver} target="_blank" rel="noreferrer">네이버지도</a>
             </div>
 
-            {routeIndex !== null && (
-                <CyPhotoViewer
-                    images={ROUTE_PHOTOS}
-                    index={routeIndex}
-                    onChange={setRouteIndex}
-                    onClose={() => setRouteIndex(null)}
-                    uniform
-                />
-            )}
             <div className="cy-map-frame">
                 <div ref={mapRef} className="cy-map-canvas" aria-label={`${venue} 위치 지도`} />
 
@@ -105,10 +86,6 @@ export default function CyLocation() {
             <div className="cy-route">
                 <div className="cy-route-heading">
                     웨딩시티 오시는 길
-                    {/* 누르면 길 안내 사진 1~4가 순서대로 */}
-                    {/* <button type="button" className="cy-route-photo-link" onClick={() => setRouteIndex(0)}>
-                        📷 사진 보기
-                    </button> */}
                 </div>
 
                 <div className="cy-route-section">

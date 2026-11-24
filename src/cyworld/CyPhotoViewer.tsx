@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useZoomPan } from './useZoomPan';
 
 // 이 거리(px) 이상 옆으로 밀어야 다음/이전 사진으로 넘어감
 const SWIPE_THRESHOLD = 40;
@@ -10,14 +11,15 @@ type Props = {
     /** 넘길 때 호출 (처음/끝에서는 반대쪽으로 이어진 순번이 전달됨) */
     onChange: (index: number) => void;
     onClose: () => void;
-    /** true면 모든 사진을 같은 크기(3:4) 액자에 맞춰 보여줌 */
-    uniform?: boolean;
 };
 
-/** 사진 크게 보기: 좌우로 밀기 / 양끝 화살표 / 키보드 ← → 로 넘기고, 배경·✕·Esc로 닫기 */
-export default function CyPhotoViewer({ images, index, onChange, onClose, uniform = false }: Props) {
+/** 사진 크게 보기: 좌우로 밀기 / 양끝 화살표 / 키보드 ← → 로 넘기고, 배경·✕·Esc로 닫기, 핀치·휠로 확대 */
+export default function CyPhotoViewer({ images, index, onChange, onClose }: Props) {
     const touchStartX = useRef<number | null>(null);
+    const boxRef = useRef<HTMLDivElement>(null);
+    const imgRef = useRef<HTMLImageElement>(null);
     const photo = images[index];
+    const zoom = useZoomPan(boxRef, imgRef, index);
 
     const go = (next: number) => onChange((next + images.length) % images.length);
 
@@ -50,12 +52,21 @@ export default function CyPhotoViewer({ images, index, onChange, onClose, unifor
         };
     }, []);
 
-    // 모바일: 좌우로 밀어서 넘기기
+    // 모바일: 좌우로 밀어서 넘기기 (확대 중이거나 핀치·두 번 탭을 한 터치는 제외)
     const onTouchStart = (e: React.TouchEvent) => {
+        if (e.touches.length > 1) {
+            touchStartX.current = null;
+            return;
+        }
+        zoom.clearGesture();
         touchStartX.current = e.touches[0].clientX;
     };
     const onTouchEnd = (e: React.TouchEvent) => {
         if (touchStartX.current === null) return;
+        if (zoom.shouldBlockSwipe()) {
+            touchStartX.current = null;
+            return;
+        }
         const dx = e.changedTouches[0].clientX - touchStartX.current;
         touchStartX.current = null;
         if (Math.abs(dx) < SWIPE_THRESHOLD) return;
@@ -71,11 +82,12 @@ export default function CyPhotoViewer({ images, index, onChange, onClose, unifor
 
             {/* 사진 크기만큼의 상자: 화살표가 화면이 아닌 사진 양끝에 붙음 */}
             <div
-                className={`cy-gallery-modal-photo ${uniform ? 'uniform' : ''}`}
+                ref={boxRef}
+                className="cy-gallery-modal-photo"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* key를 바꿔서 넘길 때마다 살짝 나타나는 효과 */}
-                <img key={photo.key} src={photo.src} alt="" />
+                {/* key를 바꿔서 넘길 때마다 살짝 나타나는 효과 (확대도 새 사진에서 원래대로) */}
+                <img ref={imgRef} key={photo.key} src={photo.src} alt="" draggable={false} />
 
                 {images.length > 1 && (
                     <>

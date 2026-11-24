@@ -5,7 +5,8 @@ import CyPhotoViewer from './CyPhotoViewer';
 // 아래 점(인디케이터)은 최대 이 개수만 보여주고, 넘기면 따라 움직임
 const MAX_DOTS = 7;
 
-const viewerImages = photos.map(photo => ({ key: photo.id, src: photo.src }));
+// 크게 보기는 고화질 버전 (열었을 때만 받음)
+const viewerImages = photos.map(photo => ({ key: photo.id, src: photo.full }));
 
 const clamp = (i: number) => Math.max(0, Math.min(photos.length - 1, i));
 

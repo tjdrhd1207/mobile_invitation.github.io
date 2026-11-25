@@ -7,9 +7,13 @@
 // 작은 그림을 화면에서 키우면 흐려지므로 처음부터 크게 그려서 또렷하게
 const SCALE = 8;
 
+/**
+ * @param background 배경색을 그림 안에 같이 칠함 (CSS 배경은 다크모드에서 어두워지지만 이미지 안의 색은 그대로)
+ */
 export function pixelArtToPng(
     rows: ArrayLike<ArrayLike<string>>,
     colorOf: (ch: string) => string | undefined,
+    background?: string,
 ): string {
     const height = rows.length;
     const width = rows[0]?.length ?? 0;
@@ -19,6 +23,11 @@ export function pixelArtToPng(
     canvas.height = height * SCALE;
     const ctx = canvas.getContext('2d');
     if (!ctx) return '';
+
+    if (background) {
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 
     for (let y = 0; y < height; y++) {
         const row = rows[y];

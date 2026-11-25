@@ -680,9 +680,9 @@ function paletteFor(cfg: MinimiConfig): Record<string, string> {
     };
 }
 
-function toDataUri(grid: string[][], palette: Record<string, string>) {
+function toDataUri(grid: string[][], palette: Record<string, string>, background?: string) {
     // SVG가 아닌 PNG로 만들어야 삼성인터넷 다크모드에서 색(특히 검은 눈)이 바뀌지 않음
-    return pixelArtToPng(grid, ch => palette[ch]);
+    return pixelArtToPng(grid, ch => palette[ch], background);
 }
 
 function compose(parts: Part[]) {
@@ -713,6 +713,29 @@ export function renderMinimi(value: Partial<MinimiConfig> | undefined) {
     const cfg = normalizeMinimi(value);
     const key = `m:${cfg.skin}-${cfg.hair}-${cfg.hairColor}-${cfg.outfit}-${cfg.outfitColor}`;
     return render(key, [BODY, OUTFITS[cfg.outfit], HAIRS[cfg.hair]], cfg);
+}
+
+/**
+ * 흰 배경 액자에 넣은 미니미 (방명록 목록·꾸미기 미리보기용)
+ * 상자의 흰 배경을 CSS가 아닌 이미지 안에 그려서, 다크모드에서도 흰 배경이 유지되게 함.
+ * frameW × frameH 는 칸 수 (상자 가로세로 비율과 맞춰야 이미지가 상자를 꽉 채움)
+ */
+export function renderMinimiFramed(value: Partial<MinimiConfig> | undefined, frameW: number, frameH: number) {
+    const cfg = normalizeMinimi(value);
+    const key = `f${frameW}x${frameH}:${cfg.skin}-${cfg.hair}-${cfg.hairColor}-${cfg.outfit}-${cfg.outfitColor}`;
+    let uri = cache.get(key);
+    if (!uri) {
+        const grid = compose([BODY, OUTFITS[cfg.outfit], HAIRS[cfg.hair]]);
+        // 미니미를 액자 가운데에 놓도록 위아래·양옆을 빈칸으로 채움
+        const left = Math.floor((frameW - WIDTH) / 2);
+        const top = Math.floor((frameH - HEIGHT) / 2);
+        const framed = Array.from({ length: frameH }, (_, y) =>
+            Array.from({ length: frameW }, (_, x) => grid[y - top]?.[x - left] ?? '.'),
+        );
+        uri = toDataUri(framed, paletteFor(cfg), '#ffffff');
+        cache.set(key, uri);
+    }
+    return uri;
 }
 
 /** 선택 목록에 보여줄 파츠 단독 이미지 */

@@ -6,6 +6,7 @@ import {
     OUTFIT_COLORS,
     SKIN_COLORS,
     renderMinimi,
+    renderMinimiFramed,
     renderPart,
     type MinimiConfig,
 } from './minimiParts';
@@ -30,7 +31,8 @@ export default function MinimiEditor({ value, onChange }: Props) {
     return (
         <div className="cy-minimi-editor">
             <div className="cy-minimi-preview">
-                <img src={renderMinimi(value)} alt="내 미니미" />
+                {/* 90×120 상자(3:4) → 24×32칸 액자 */}
+                <img src={renderMinimiFramed(value, 24, 32)} alt="내 미니미" />
             </div>
 
             <div className="cy-minimi-panel">

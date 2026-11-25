@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import MinimiEditor from './MinimiEditor';
-import { DEFAULT_MINIMI, normalizeMinimi, renderMinimi, type MinimiConfig } from './minimiParts';
+import { DEFAULT_MINIMI, normalizeMinimi, renderMinimiFramed, type MinimiConfig } from './minimiParts';
 
 const NAME_MAX = 10;
 const MESSAGE_MAX = 200;
@@ -190,7 +190,8 @@ export default function CyGuestbook() {
                         </div>
                         <div className="cy-guestbook-body">
                             <div className="cy-guestbook-minimi">
-                                <img src={renderMinimi(entry.minimi)} alt={`${entry.name}의 미니미`} />
+                                {/* 72×72 정사각형 상자 → 28×28칸 액자 */}
+                                <img src={renderMinimiFramed(entry.minimi, 28, 28)} alt={`${entry.name}의 미니미`} />
                             </div>
                             <p className="cy-guestbook-message">{entry.message}</p>
                         </div>

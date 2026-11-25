@@ -1263,8 +1263,11 @@ html:not(.fonts-ready) .cy-frame {
     background: #fff;
 }
 
+/* 흰 배경이 그려진 이미지가 상자를 꽉 채움 (다크모드에서도 흰 배경 유지) */
 .cy-guestbook-minimi img {
-    height: 60px;
+    display: block;
+    width: 100%;
+    height: 100%;
     image-rendering: pixelated;
 }
 
@@ -1292,7 +1295,9 @@ html:not(.fonts-ready) .cy-frame {
 }
 
 .cy-minimi-preview img {
-    height: 96px;
+    display: block;
+    width: 100%;
+    height: 100%;
     image-rendering: pixelated;
 }
 

@@ -45,6 +45,11 @@ jobs:
         with:
           path: ./dist
 
+      # 업로드 직후 바로 배포하면 빌드 파일이 아직 조회되지 않아
+      # "No artifacts named github-pages" 로 실패하는 경우가 있어서 잠시 대기
+      - name: Wait for artifact
+        run: sleep 30
+
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v5

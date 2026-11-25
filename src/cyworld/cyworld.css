@@ -1485,3 +1485,36 @@ html:not(.fonts-ready) .cy-frame {
     font-family: var(--cy-dot);
     letter-spacing: 0;
 }
+/* 삼성인터넷 다크모드 안내 (CyDarkNotice) */
+.cy-dark-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 12px 8px 0;
+    padding: 8px 10px;
+    border: 1px solid #f5b98a;
+    border-radius: 6px;
+    background: #fffaf3;
+    color: #8a4a1c;
+    font-size: var(--fs-small);
+    line-height: 1.6;
+}
+
+.cy-dark-notice p {
+    flex: 1;
+    margin: 0;
+}
+
+.cy-dark-notice b {
+    color: var(--cy-orange);
+}
+
+.cy-dark-notice button {
+    flex-shrink: 0;
+    padding: 0 2px;
+    border: none;
+    background: none;
+    color: #b07a52;
+    font: inherit;
+    cursor: pointer;
+}

@@ -1,3 +1,5 @@
+import { pixelArtToPng } from './pixelImage';
+
 // 신랑·신부 도트 미니미 (한 글자 = 한 픽셀, '.'은 투명)
 // 이미지로 바꾸고 싶으면 MINIMI_SRC 대신 import한 이미지 경로를 쓰면 된다.
 const PALETTE: Record<string, string> = {
@@ -50,18 +52,5 @@ const BRIDE = [
 const GAP = '..';
 const ROWS = GROOM.map((row, i) => row + GAP + BRIDE[i]);
 
-function toSvg(rows: string[]) {
-    const width = rows[0].length;
-    const height = rows.length;
-    const rects = rows.flatMap((row, y) =>
-        [...row].map((ch, x) =>
-            PALETTE[ch]
-                ? `<rect x="${x}" y="${y}" width="1" height="1" fill="${PALETTE[ch]}"/>`
-                : ''
-        )
-    ).join('');
-
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" shape-rendering="crispEdges">${rects}</svg>`;
-}
-
-export const MINIMI_SRC = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(toSvg(ROWS))}`;
+// SVG가 아닌 PNG로: 삼성인터넷 다크모드에서 색(특히 검은 눈)이 바뀌지 않도록 (pixelImage.ts 참고)
+export const MINIMI_SRC = pixelArtToPng(ROWS, ch => PALETTE[ch]);

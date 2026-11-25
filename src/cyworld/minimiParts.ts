@@ -1,3 +1,5 @@
+import { pixelArtToPng } from './pixelImage';
+
 // 방명록 미니미 꾸미기용 도트 파츠
 // 캔버스 16 x 24, 한 글자 = 한 픽셀, '.'은 투명
 // 그리는 순서: 몸 → 의상 → 머리 (뒤 레이어가 앞 레이어를 덮는다)
@@ -679,20 +681,8 @@ function paletteFor(cfg: MinimiConfig): Record<string, string> {
 }
 
 function toDataUri(grid: string[][], palette: Record<string, string>) {
-    // 같은 색이 가로로 이어지면 사각형 하나로 합쳐 SVG 크기를 줄인다
-    const rects: string[] = [];
-    grid.forEach((row, y) => {
-        let x = 0;
-        while (x < row.length) {
-            const color = palette[row[x]];
-            let end = x + 1;
-            while (end < row.length && row[end] === row[x]) end++;
-            if (color) rects.push(`<rect x="${x}" y="${y}" width="${end - x}" height="1" fill="${color}"/>`);
-            x = end;
-        }
-    });
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${HEIGHT}" shape-rendering="crispEdges">${rects.join('')}</svg>`;
-    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    // SVG가 아닌 PNG로 만들어야 삼성인터넷 다크모드에서 색(특히 검은 눈)이 바뀌지 않음
+    return pixelArtToPng(grid, ch => palette[ch]);
 }
 
 function compose(parts: Part[]) {

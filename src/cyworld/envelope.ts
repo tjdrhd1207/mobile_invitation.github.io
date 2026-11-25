@@ -1,3 +1,5 @@
+import { pixelArtToPng } from './pixelImage';
+
 // 계좌 선택용 도트 편지봉투 (minimi.ts 와 같은 방식: 한 칸 = 한 픽셀)
 // o: 테두리, b: 봉투 몸통, f: 봉투 덮개, h: 하트, '.': 투명
 const W = 32;
@@ -71,17 +73,6 @@ function withHeart(rows: string[]) {
     });
 }
 
-function toSvg(rows: string[], palette: Palette) {
-    const rects = rows.flatMap((row, y) =>
-        [...row].map((ch, x) => {
-            const color = palette[ch as keyof Palette];
-            return color ? `<rect x="${x}" y="${y}" width="1" height="1" fill="${color}"/>` : '';
-        })
-    ).join('');
-
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" shape-rendering="crispEdges">${rects}</svg>`;
-}
-
 const CLOSED = withHeart(closedEnvelope());
 const OPEN = withHeart(openEnvelope());
 
@@ -90,5 +81,6 @@ export function envelopeSrc(groupId: 'groom' | 'bride', index: number, selected:
     const palettes = PALETTES[groupId];
     const palette = palettes[index % palettes.length];
     const rows = selected ? OPEN : CLOSED;
-    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(toSvg(rows, palette))}`;
+    // SVG가 아닌 PNG로: 삼성인터넷 다크모드에서 색이 바뀌지 않도록 (pixelImage.ts 참고)
+    return pixelArtToPng(rows, ch => palette[ch as keyof Palette]);
 }

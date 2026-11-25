@@ -20,6 +20,7 @@ export function useKakaoMap(
     onReady?: MapReady,
     level = 3,
 ) {
+    console.log("useKakaoMap", { mapRef, address, onReady, level });
     const [mapError, setMapError] = useState(false);
 
     // onReady가 렌더링마다 바뀌어도 지도를 다시 만들지 않도록 ref로 보관

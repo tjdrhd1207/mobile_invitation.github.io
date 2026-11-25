@@ -10,7 +10,6 @@ import logo from '../assets/logo-circle.webp?w=96&format=webp&imagetools';
 import cyAvatar from '../assets/gallery/main.webp?w=860&format=webp&imagetools';
 import CyMiniRoom from './CyMiniRoom';
 import CyGuestbook from './CyGuestbook';
-import CyDarkNotice from './CyDarkNotice';
 
 const { groom, bride } = WEDDING;
 
@@ -26,7 +25,6 @@ export default function CyworldApp() {
 
             <div className="cy-layout">
                 <main className="cy-content">
-                    <CyDarkNotice />
                     <h1 id="cy-home" className="cy-title">{groom.name} ♥ {bride.name} 결혼합니다.</h1>
 
                     <section className="cy-card">

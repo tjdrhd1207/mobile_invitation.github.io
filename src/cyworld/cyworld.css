@@ -109,8 +109,11 @@ html:not(.fonts-ready) .cy-frame {
     margin: 20px 12px 12px;
 }
 
+/* 테두리: 라이트 모드에선 거의 안 보이지만, 삼성인터넷 등 강제 다크모드에서
+   배경과 카드가 비슷한 어두운 색이 돼 섹션이 이어져 보이는 것을 막아줌 */
 .cy-card {
     background: #fff;
+    border: 1px solid #dde3ea;
     border-radius: 10px;
     margin: 0 8px 10px;
     padding: 16px;
@@ -118,6 +121,7 @@ html:not(.fonts-ready) .cy-frame {
 
 .cy-card2 {
     background: #fff;
+    border: 1px solid #dde3ea;
     border-radius: 10px;
     margin: 0 8px 10px;
     padding: 16px;
@@ -1484,37 +1488,4 @@ html:not(.fonts-ready) .cy-frame {
 .cy-map-marker {
     font-family: var(--cy-dot);
     letter-spacing: 0;
-}
-/* 삼성인터넷 다크모드 안내 (CyDarkNotice) */
-.cy-dark-notice {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    margin: 12px 8px 0;
-    padding: 8px 10px;
-    border: 1px solid #f5b98a;
-    border-radius: 6px;
-    background: #fffaf3;
-    color: #8a4a1c;
-    font-size: var(--fs-small);
-    line-height: 1.6;
-}
-
-.cy-dark-notice p {
-    flex: 1;
-    margin: 0;
-}
-
-.cy-dark-notice b {
-    color: var(--cy-orange);
-}
-
-.cy-dark-notice button {
-    flex-shrink: 0;
-    padding: 0 2px;
-    border: none;
-    background: none;
-    color: #b07a52;
-    font: inherit;
-    cursor: pointer;
 }

@@ -10,6 +10,7 @@ import {
     renderPart,
     type MinimiConfig,
 } from './minimiParts';
+import { swatchPng } from './pixelImage';
 
 type Tab = 'body' | 'hair' | 'outfit';
 
@@ -150,9 +151,11 @@ function ColorSwatches({
                     aria-checked={selected === i}
                     aria-label={`${label} ${i + 1}`}
                     className={selected === i ? 'selected' : ''}
-                    style={{ background: color }}
                     onClick={() => onSelect(i)}
-                />
+                >
+                    {/* 색을 이미지로 칠해야 다크모드에서도 미니미에 입혀지는 색과 똑같이 보임 */}
+                    <img src={swatchPng(color)} alt="" />
+                </button>
             ))}
         </div>
     );

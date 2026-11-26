@@ -40,3 +40,36 @@ export function pixelArtToPng(
     }
     return canvas.toDataURL('image/png');
 }
+
+const swatchCache = new Map<string, string>();
+
+/**
+ * 색 고르기 동그라미 (흰 테두리 + 가운데 색) PNG
+ * CSS 배경색으로 칠하면 삼성인터넷 다크모드가 색을 바꿔서, 고른 색과 미니미 색이 달라 보였음
+ */
+export function swatchPng(color: string): string {
+    let uri = swatchCache.get(color);
+    if (uri) return uri;
+
+    const size = 48; // 화면에서는 20px로 줄여서 보여주므로 넉넉하게
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return '';
+
+    const center = size / 2;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(center, center, center, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(center, center, center - 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    uri = canvas.toDataURL('image/png');
+    swatchCache.set(color, uri);
+    return uri;
+}

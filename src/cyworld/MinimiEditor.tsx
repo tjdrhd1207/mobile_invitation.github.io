@@ -10,7 +10,7 @@ import {
     renderPart,
     type MinimiConfig,
 } from './minimiParts';
-import { swatchPng } from './pixelImage';
+import { swatchPng, whitePng } from './pixelImage';
 
 type Tab = 'body' | 'hair' | 'outfit';
 
@@ -120,6 +120,8 @@ function ItemButton({
         <button
             type="button"
             className={`cy-minimi-item ${selected ? 'selected' : ''}`}
+            // 흰 배경을 이미지로 칠해서 다크모드에서도 칸이 하얗게 유지되게
+            style={{ backgroundImage: `url(${whitePng()})` }}
             onClick={onClick}
             aria-pressed={selected}
             title={label}

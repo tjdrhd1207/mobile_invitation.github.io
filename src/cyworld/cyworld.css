@@ -1356,7 +1356,9 @@ html:not(.fonts-ready) .cy-frame {
     height: 58px;
     padding: 3px 2px;
     border: 2px solid #eee;
-    background: #fff;
+    /* 흰 배경은 MinimiEditor에서 이미지(whitePng)로 칠함 → 다크모드에서도 흰색 유지 */
+    background-color: #fff;
+    background-size: 100% 100%;
     font: inherit;
     cursor: pointer;
 }

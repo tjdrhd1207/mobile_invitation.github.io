@@ -1343,23 +1343,18 @@ html:not(.fonts-ready) .cy-frame {
 
 .cy-minimi-items {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+    /* 칸 크기를 고정해야 칸 크기로 그린 이미지와 딱 맞음 (minimiParts.ts TILE_WIDTH/HEIGHT + 테두리 2px) */
+    grid-template-columns: repeat(auto-fill, 54px);
     gap: 4px;
 }
 
 .cy-minimi-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 2px;
+    box-sizing: border-box;
+    width: 54px;
     height: 58px;
-    padding: 3px 2px;
+    padding: 0;
     border: 2px solid #eee;
-    /* 흰 배경은 MinimiEditor에서 이미지(whitePng)로 칠함 → 다크모드에서도 흰색 유지 */
-    background-color: #fff;
-    background-size: 100% 100%;
-    font: inherit;
+    background: #fff;
     cursor: pointer;
 }
 
@@ -1367,25 +1362,11 @@ html:not(.fonts-ready) .cy-frame {
     border-color: var(--cy-orange);
 }
 
+/* 흰 배경·그림·이름이 모두 그려진 이미지가 칸을 꽉 채움 → 다크모드에서도 칸 전체가 하얗게 */
 .cy-minimi-item img {
-    height: 36px;
-    image-rendering: pixelated;
-}
-
-.cy-minimi-none {
-    height: 36px;
-    line-height: 36px;
-    font-size: 10px;
-    color: #bbb;
-}
-
-.cy-minimi-item-label {
-    max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-size: 9px;
-    color: #777;
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .cy-minimi-colors {

@@ -75,24 +75,3 @@ export function swatchPng(color: string): string {
     swatchCache.set(color, uri);
     return uri;
 }
-
-let whiteCache = '';
-
-/**
- * 흰색 배경용 PNG (CSS background-image로 사용)
- * CSS 배경색(#fff)은 다크모드에서 어두워지므로 이미지로 칠함.
- * 작은 단색 이미지는 다크모드가 아이콘으로 보고 검게 뒤집어서(8×8로 시험 시 검게 변함) 크게 만듦.
- */
-export function whitePng(): string {
-    if (whiteCache) return whiteCache;
-    const size = 128;
-    const canvas = document.createElement('canvas');
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return '';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, size, size);
-    whiteCache = canvas.toDataURL('image/png');
-    return whiteCache;
-}

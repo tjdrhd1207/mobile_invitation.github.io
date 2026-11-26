@@ -739,20 +739,79 @@ export function renderMinimiFramed(value: Partial<MinimiConfig> | undefined, fra
 }
 
 /** 선택 목록에 보여줄 파츠 단독 이미지 */
-export function renderPart(kind: 'hair' | 'outfit', index: number, colorIndex: number, whiteBackground = false) {
+export function renderPart(kind: 'hair' | 'outfit', index: number, colorIndex: number) {
     const cfg = normalizeMinimi(
         kind === 'hair' ? { hair: index, hairColor: colorIndex } : { outfit: index, outfitColor: colorIndex },
     );
     const part = kind === 'hair' ? HAIRS[cfg.hair] : OUTFITS[cfg.outfit];
-    if (!whiteBackground) return render(`${kind}:${index}-${colorIndex}`, [part], cfg);
+    return render(`${kind}:${index}-${colorIndex}`, [part], cfg);
+}
 
-    // 삼성인터넷 다크모드는 배경이 투명한 이미지를 아이콘으로 보고 색을 뒤집음
-    // (갈색 머리가 핑크로 보였음) → 흰 배경을 꽉 채운 불투명 이미지로 만듦
-    const key = `w:${kind}:${index}-${colorIndex}`;
-    let uri = cache.get(key);
-    if (!uri) {
-        uri = toDataUri(compose([part]), paletteFor(cfg), '#ffffff');
-        cache.set(key, uri);
+// 머리·의상 고르는 칸 하나의 안쪽 크기(px). cyworld.css의 .cy-minimi-item 크기와 맞춰야 함
+export const TILE_WIDTH = 50;
+export const TILE_HEIGHT = 54;
+
+/**
+ * 머리·의상 고르는 칸 전체(흰 배경 + 파츠 그림 + 이름)를 한 장의 이미지로 그림.
+ * 칸의 흰 배경이나 이름 글자를 CSS로 그리면 삼성인터넷 다크모드에서 어둡게 바뀌어
+ * 칸 안에 흰 네모만 떠 보였음 → 칸 크기와 똑같은 불투명 이미지 하나로 채움.
+ * index 0(없음)은 그림 없이 글자만.
+ */
+export function renderPartTile(kind: 'hair' | 'outfit', index: number, colorIndex: number, label: string) {
+    const key = `t:${kind}:${index}-${colorIndex}`;
+    const cached = cache.get(key);
+    if (cached) return cached;
+
+    const ratio = 4; // 화면보다 4배 크게 그려 또렷하게
+    const canvas = document.createElement('canvas');
+    canvas.width = TILE_WIDTH * ratio;
+    canvas.height = TILE_HEIGHT * ratio;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return '';
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const fontFamily = 'Galmuri11, "Apple SD Gothic Neo", sans-serif';
+    ctx.textAlign = 'center';
+
+    if (index === 0) {
+        ctx.fillStyle = '#bbbbbb';
+        ctx.font = `${10 * ratio}px ${fontFamily}`;
+        ctx.textBaseline = 'middle';
+        ctx.fillText(label, canvas.width / 2, canvas.height / 2);
+    } else {
+        const cfg = normalizeMinimi(
+            kind === 'hair' ? { hair: index, hairColor: colorIndex } : { outfit: index, outfitColor: colorIndex },
+        );
+        const grid = compose([kind === 'hair' ? HAIRS[cfg.hair] : OUTFITS[cfg.outfit]]);
+        const palette = paletteFor(cfg);
+
+        // 파츠 그림: 한 칸 = 화면 1.5px (전과 같은 36px 높이), 위쪽 가운데
+        const cell = 1.5 * ratio;
+        const left = (canvas.width - WIDTH * cell) / 2;
+        const top = 2 * ratio;
+        grid.forEach((row, y) =>
+            row.forEach((ch, x) => {
+                const color = palette[ch];
+                if (!color) return;
+                ctx.fillStyle = color;
+                ctx.fillRect(left + x * cell, top + y * cell, cell, cell);
+            }),
+        );
+
+        // 이름: 아래쪽 가운데, 넘치면 … 으로 줄임
+        ctx.fillStyle = '#777777';
+        ctx.font = `${9 * ratio}px ${fontFamily}`;
+        ctx.textBaseline = 'alphabetic';
+        const maxWidth = canvas.width - 2 * ratio;
+        let text = label;
+        while (text.length > 1 && ctx.measureText(text).width > maxWidth) text = text.slice(0, -1);
+        if (text !== label) text = text.slice(0, -1) + '…';
+        ctx.fillText(text, canvas.width / 2, canvas.height - 3 * ratio);
     }
+
+    const uri = canvas.toDataURL('image/png');
+    cache.set(key, uri);
     return uri;
 }

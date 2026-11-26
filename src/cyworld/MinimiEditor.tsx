@@ -8,9 +8,10 @@ import {
     renderMinimi,
     renderMinimiFramed,
     renderPart,
+    renderPartTile,
     type MinimiConfig,
 } from './minimiParts';
-import { swatchPng, whitePng } from './pixelImage';
+import { swatchPng } from './pixelImage';
 
 type Tab = 'body' | 'hair' | 'outfit';
 
@@ -59,7 +60,7 @@ export default function MinimiEditor({ value, onChange }: Props) {
                             <ItemButton
                                 key={hair.name}
                                 label={hair.name}
-                                src={i === 0 ? null : renderPart('hair', i, value.hairColor, true)}
+                                src={renderPartTile('hair', i, value.hairColor, hair.name)}
                                 selected={value.hair === i}
                                 onClick={() => set({ hair: i })}
                             />
@@ -69,7 +70,7 @@ export default function MinimiEditor({ value, onChange }: Props) {
                             <ItemButton
                                 key={outfit.name}
                                 label={outfit.name}
-                                src={i === 0 ? null : renderPart('outfit', i, value.outfitColor, true)}
+                                src={renderPartTile('outfit', i, value.outfitColor, outfit.name)}
                                 selected={value.outfit === i}
                                 onClick={() => set({ outfit: i })}
                             />
@@ -112,7 +113,7 @@ function ItemButton({
     onClick,
 }: {
     label: string;
-    src: string | null;
+    src: string;
     selected: boolean;
     onClick: () => void;
 }) {
@@ -120,14 +121,13 @@ function ItemButton({
         <button
             type="button"
             className={`cy-minimi-item ${selected ? 'selected' : ''}`}
-            // 흰 배경을 이미지로 칠해서 다크모드에서도 칸이 하얗게 유지되게
-            style={{ backgroundImage: `url(${whitePng()})` }}
             onClick={onClick}
             aria-pressed={selected}
+            aria-label={label}
             title={label}
         >
-            {src ? <img src={src} alt="" /> : <span className="cy-minimi-none">없음</span>}
-            <span className="cy-minimi-item-label">{label}</span>
+            {/* 흰 배경·그림·이름이 모두 들어간 칸 크기 이미지 (renderPartTile 참고) */}
+            <img src={src} alt="" />
         </button>
     );
 }

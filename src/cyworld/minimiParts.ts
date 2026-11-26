@@ -747,7 +747,7 @@ export function renderPart(kind: 'hair' | 'outfit', index: number, colorIndex: n
     return render(`${kind}:${index}-${colorIndex}`, [part], cfg);
 }
 
-// 머리·의상 고르는 칸 하나의 안쪽 크기(px). cyworld.css의 .cy-minimi-item 크기와 맞춰야 함
+// 머리·의상 고르는 칸 이미지의 기준 크기(px). 화면에서는 칸 폭에 맞춰 같은 비율로 늘고 줄어듦 (cyworld.css .cy-minimi-item img 의 aspect-ratio와 맞출 것)
 export const TILE_WIDTH = 50;
 export const TILE_HEIGHT = 54;
 

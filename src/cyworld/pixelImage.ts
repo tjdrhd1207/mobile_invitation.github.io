@@ -60,11 +60,11 @@ export function swatchPng(color: string): string {
     const ctx = canvas.getContext('2d');
     if (!ctx) return '';
 
+    // 모서리까지 흰색으로 채워 투명한 부분이 없게 함 (투명 부분이 있으면 아이콘으로 보고 색을 뒤집음)
+    // 동그란 모양은 CSS(border-radius)로 잘라서 보여줌
     const center = size / 2;
     ctx.fillStyle = '#ffffff';
-    ctx.beginPath();
-    ctx.arc(center, center, center, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.fillRect(0, 0, size, size);
 
     ctx.fillStyle = color;
     ctx.beginPath();

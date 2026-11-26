@@ -739,10 +739,20 @@ export function renderMinimiFramed(value: Partial<MinimiConfig> | undefined, fra
 }
 
 /** 선택 목록에 보여줄 파츠 단독 이미지 */
-export function renderPart(kind: 'hair' | 'outfit', index: number, colorIndex: number) {
+export function renderPart(kind: 'hair' | 'outfit', index: number, colorIndex: number, whiteBackground = false) {
     const cfg = normalizeMinimi(
         kind === 'hair' ? { hair: index, hairColor: colorIndex } : { outfit: index, outfitColor: colorIndex },
     );
     const part = kind === 'hair' ? HAIRS[cfg.hair] : OUTFITS[cfg.outfit];
-    return render(`${kind}:${index}-${colorIndex}`, [part], cfg);
+    if (!whiteBackground) return render(`${kind}:${index}-${colorIndex}`, [part], cfg);
+
+    // 삼성인터넷 다크모드는 배경이 투명한 이미지를 아이콘으로 보고 색을 뒤집음
+    // (갈색 머리가 핑크로 보였음) → 흰 배경을 꽉 채운 불투명 이미지로 만듦
+    const key = `w:${kind}:${index}-${colorIndex}`;
+    let uri = cache.get(key);
+    if (!uri) {
+        uri = toDataUri(compose([part]), paletteFor(cfg), '#ffffff');
+        cache.set(key, uri);
+    }
+    return uri;
 }

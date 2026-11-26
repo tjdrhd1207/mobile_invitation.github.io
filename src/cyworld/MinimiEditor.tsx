@@ -59,7 +59,7 @@ export default function MinimiEditor({ value, onChange }: Props) {
                             <ItemButton
                                 key={hair.name}
                                 label={hair.name}
-                                src={i === 0 ? null : renderPart('hair', i, value.hairColor)}
+                                src={i === 0 ? null : renderPart('hair', i, value.hairColor, true)}
                                 selected={value.hair === i}
                                 onClick={() => set({ hair: i })}
                             />
@@ -69,7 +69,7 @@ export default function MinimiEditor({ value, onChange }: Props) {
                             <ItemButton
                                 key={outfit.name}
                                 label={outfit.name}
-                                src={i === 0 ? null : renderPart('outfit', i, value.outfitColor)}
+                                src={i === 0 ? null : renderPart('outfit', i, value.outfitColor, true)}
                                 selected={value.outfit === i}
                                 onClick={() => set({ outfit: i })}
                             />

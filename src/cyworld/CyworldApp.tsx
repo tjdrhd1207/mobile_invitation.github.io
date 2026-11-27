@@ -100,7 +100,7 @@ export default function CyworldApp() {
 
 
                     <section id="cy-account" className="cy-card">
-                        <h2 className="cy-section-title">Account</h2>
+                        <h2 className="cy-section-title">To Heart</h2>
                         <CyAccount />
                     </section>
 
